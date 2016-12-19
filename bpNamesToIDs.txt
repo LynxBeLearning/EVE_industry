@@ -1,0 +1,3176 @@
+Clone Grade Beta Blueprint	681
+Clone Grade Gamma Blueprint	682
+Bantam Blueprint	683
+Condor Blueprint	684
+Griffin Blueprint	685
+Osprey Blueprint	686
+Caracal Blueprint	687
+Raven Blueprint	688
+Slasher Blueprint	689
+Probe Blueprint	690
+Rifter Blueprint	691
+Stabber Blueprint	692
+Tempest Blueprint	693
+Miner II Blueprint	784
+Miner I Blueprint	785
+Light Missile Launcher I Blueprint	786
+Heavy Missile Launcher I Blueprint	788
+Torpedo Launcher I Blueprint	790
+Mjolnir Cruise Missile Blueprint	803
+Scourge Cruise Missile Blueprint	804
+Inferno Cruise Missile Blueprint	805
+Nova Cruise Missile Blueprint	806
+Nova Heavy Missile Blueprint	807
+Mjolnir Heavy Missile Blueprint	808
+Inferno Heavy Missile Blueprint	809
+Scourge Heavy Missile Blueprint	810
+Scourge Light Missile Blueprint	811
+Inferno Light Missile Blueprint	812
+Mjolnir Light Missile Blueprint	813
+Nova Light Missile Blueprint	814
+125mm Gatling AutoCannon I Blueprint	819
+150mm Light AutoCannon I Blueprint	820
+200mm AutoCannon I Blueprint	821
+250mm Light Artillery Cannon I Blueprint	822
+280mm Howitzer Artillery I Blueprint	823
+Dual 180mm AutoCannon I Blueprint	824
+220mm Vulcan AutoCannon I Blueprint	825
+425mm AutoCannon I Blueprint	826
+650mm Artillery Cannon I Blueprint	827
+720mm Howitzer Artillery I Blueprint	828
+Dual 425mm AutoCannon I Blueprint	829
+Dual 650mm Repeating Cannon I Blueprint	830
+800mm Repeating Cannon I Blueprint	831
+1200mm Artillery Cannon I Blueprint	832
+1400mm Howitzer Artillery I Blueprint	833
+Gatling Pulse Laser I Blueprint	834
+Dual Light Pulse Laser I Blueprint	835
+Dual Light Beam Laser I Blueprint	836
+Small Focused Pulse Laser I Blueprint	837
+Small Focused Beam Laser I Blueprint	838
+Quad Light Beam Laser I Blueprint	839
+Focused Medium Pulse Laser I Blueprint	840
+Focused Medium Beam Laser I Blueprint	841
+Heavy Pulse Laser I Blueprint	842
+Heavy Beam Laser I Blueprint	843
+Dual Heavy Pulse Laser I Blueprint	844
+Dual Heavy Beam Laser I Blueprint	845
+Mega Pulse Laser I Blueprint	846
+Mega Beam Laser I Blueprint	847
+Tachyon Beam Laser I Blueprint	848
+Carbonized Lead S Blueprint	879
+Nuclear S Blueprint	880
+Proton S Blueprint	881
+Depleted Uranium S Blueprint	882
+Titanium Sabot S Blueprint	883
+Fusion S Blueprint	884
+Phased Plasma S Blueprint	885
+EMP S Blueprint	886
+Carbonized Lead M Blueprint	887
+Nuclear M Blueprint	888
+Proton M Blueprint	889
+Depleted Uranium M Blueprint	890
+Titanium Sabot M Blueprint	891
+Fusion M Blueprint	892
+Phased Plasma M Blueprint	893
+EMP M Blueprint	894
+Carbonized Lead L Blueprint	895
+Nuclear L Blueprint	896
+Proton L Blueprint	897
+Depleted Uranium L Blueprint	898
+Titanium Sabot L Blueprint	899
+Fusion L Blueprint	900
+Phased Plasma L Blueprint	901
+EMP L Blueprint	902
+Reaper Blueprint	935
+Executioner Blueprint	936
+Inquisitor Blueprint	937
+Tormentor Blueprint	938
+Navitas Blueprint	939
+Tristan Blueprint	940
+Incursus Blueprint	941
+Impairor Blueprint	943
+Punisher Blueprint	944
+Breacher Blueprint	945
+Burst Blueprint	946
+Minmatar Peacekeeper Ship Blueprint	947
+Ibis Blueprint	948
+Kestrel Blueprint	949
+Merlin Blueprint	950
+Heron Blueprint	952
+Velator Blueprint	953
+Imicus Blueprint	954
+Atron Blueprint	955
+Maulus Blueprint	956
+Devourer Blueprint	960
+Fury Blueprint	961
+Immolator Blueprint	962
+Medusa Blueprint	963
+Echo Blueprint	964
+Lynx Blueprint	965
+Swordspine Blueprint	966
+Caldari Shuttle Blueprint	967
+Moa Blueprint	968
+Maller Blueprint	969
+Augoror Blueprint	970
+Vexor Blueprint	971
+Thorax Blueprint	972
+Arbitrator Blueprint	973
+Rupture Blueprint	974
+Bellicose Blueprint	975
+Scythe Blueprint	976
+Blackbird Blueprint	977
+Celestis Blueprint	978
+Exequror Blueprint	979
+Badger Blueprint	983
+Tayra Blueprint	984
+Nereus Blueprint	985
+Hoarder Blueprint	986
+Mammoth Blueprint	987
+Wreathe Blueprint	988
+Kryos Blueprint	989
+Epithal Blueprint	990
+Miasmos Blueprint	991
+Iteron Mark V Blueprint	992
+Scorpion Blueprint	994
+Megathron Blueprint	995
+Apocalypse Blueprint	996
+Armageddon Blueprint	997
+Typhoon Blueprint	998
+Dominix Blueprint	999
+Erebus Blueprint	1002
+Small Shield Extender I Blueprint	1010
+Small Shield Extender II Blueprint	1013
+Shield Recharger I Blueprint	1026
+Shield Recharger II Blueprint	1027
+Small Shield Booster I Blueprint	1032
+Small Shield Booster II Blueprint	1033
+1MN Microwarpdrive I Blueprint	1067
+1MN Afterburner II Blueprint	1071
+1MN Afterburner I Blueprint	1072
+1MN Microwarpdrive II Blueprint	1073
+Cargo Scanner I Blueprint	1074
+Ship Scanner I Blueprint	1075
+Survey Scanner I Blueprint	1076
+Warp Scrambler I Blueprint	1079
+Warp Scrambler II Blueprint	1080
+Gyrostabilizer II Blueprint	1095
+Gyrostabilizer I Blueprint	1096
+Small Armor Repairer I Blueprint	1099
+Small Hull Repairer I Blueprint	1100
+Stasis Webifier I Blueprint	1102
+Stasis Webifier II Blueprint	1103
+Small Remote Capacitor Transmitter I Blueprint	1105
+Small Nosferatu I Blueprint	1106
+Small Energy Neutralizer I Blueprint	1109
+75mm Gatling Rail I Blueprint	1112
+Light Electron Blaster I Blueprint	1113
+Light Ion Blaster I Blueprint	1114
+Light Neutron Blaster I Blueprint	1115
+150mm Railgun I Blueprint	1116
+Heavy Electron Blaster I Blueprint	1117
+Dual 150mm Railgun I Blueprint	1118
+Heavy Neutron Blaster I Blueprint	1119
+Heavy Ion Blaster I Blueprint	1120
+250mm Railgun I Blueprint	1121
+Electron Blaster Cannon I Blueprint	1122
+Dual 250mm Railgun I Blueprint	1123
+Neutron Blaster Cannon I Blueprint	1124
+425mm Railgun I Blueprint	1125
+Ion Blaster Cannon I Blueprint	1126
+Medium Capacitor Booster I Blueprint	1128
+Adaptive Invulnerability Field I Blueprint	1129
+Iron Charge S Blueprint	1130
+Tungsten Charge S Blueprint	1131
+Iridium Charge S Blueprint	1132
+Lead Charge S Blueprint	1133
+Thorium Charge S Blueprint	1134
+Uranium Charge S Blueprint	1135
+Plutonium Charge S Blueprint	1136
+Antimatter Charge S Blueprint	1137
+Iron Charge M Blueprint	1138
+Tungsten Charge M Blueprint	1139
+Iridium Charge M Blueprint	1140
+Lead Charge M Blueprint	1141
+Thorium Charge M Blueprint	1142
+Uranium Charge M Blueprint	1143
+Plutonium Charge M Blueprint	1144
+Antimatter Charge M Blueprint	1145
+Iron Charge L Blueprint	1146
+Tungsten Charge L Blueprint	1147
+Iridium Charge L Blueprint	1148
+Lead Charge L Blueprint	1149
+Thorium Charge L Blueprint	1150
+Uranium Charge L Blueprint	1151
+Plutonium Charge L Blueprint	1152
+Antimatter Charge L Blueprint	1153
+Radio S Blueprint	1154
+Microwave S Blueprint	1155
+Infrared S Blueprint	1156
+Standard S Blueprint	1157
+Ultraviolet S Blueprint	1158
+Xray S Blueprint	1159
+Gamma S Blueprint	1160
+Multifrequency S Blueprint	1161
+Radio M Blueprint	1162
+Microwave M Blueprint	1163
+Infrared M Blueprint	1164
+Standard M Blueprint	1165
+Ultraviolet M Blueprint	1166
+Xray M Blueprint	1167
+Gamma M Blueprint	1168
+Multifrequency M Blueprint	1169
+Radio L Blueprint	1170
+Microwave L Blueprint	1171
+Infrared L Blueprint	1172
+Standard L Blueprint	1173
+Ultraviolet L Blueprint	1174
+Xray L Blueprint	1175
+Gamma L Blueprint	1176
+Multifrequency L Blueprint	1177
+Cap Booster 25 Blueprint	1178
+Cap Booster 50 Blueprint	1179
+Small Armor Repairer II Blueprint	1184
+Small Capacitor Battery I Blueprint	1186
+Small Remote Capacitor Transmitter II Blueprint	1191
+Cap Recharger I Blueprint	1196
+EM Plating I Blueprint	1204
+EM Plating II Blueprint	1205
+Auto Targeting System I Blueprint	1208
+ECM Burst I Blueprint	1210
+Passive Targeter I Blueprint	1212
+Wasp I Blueprint	1214
+Heavy Defender Missile I Blueprint	1215
+Mjolnir Auto-Targeting Light Missile I Blueprint	1216
+Python Mine Blueprint	1217
+Civilian Mining Drone Blueprint	1218
+Scourge Rocket Blueprint	1220
+Scourge Torpedo Blueprint	1221
+Overdrive Injector System II Blueprint	1237
+Overdrive Injector System I Blueprint	1245
+Capacitor Flux Coil I Blueprint	1247
+Capacitor Flux Coil II Blueprint	1249
+Shield Flux Coil I Blueprint	1255
+Shield Flux Coil II Blueprint	1257
+Explosive Plating I Blueprint	1265
+Explosive Plating II Blueprint	1267
+Layered Plating I Blueprint	1275
+Layered Plating II Blueprint	1277
+Kinetic Plating I Blueprint	1285
+Kinetic Plating II Blueprint	1287
+Thermic Plating I Blueprint	1295
+Thermic Plating II Blueprint	1297
+Adaptive Nano Plating I Blueprint	1305
+Adaptive Nano Plating II Blueprint	1307
+Expanded Cargohold I Blueprint	1318
+Expanded Cargohold II Blueprint	1320
+Reinforced Bulkheads I Blueprint	1334
+Reinforced Bulkheads II Blueprint	1336
+Reactor Control Unit I Blueprint	1354
+Reactor Control Unit II Blueprint	1356
+Inertia Stabilizers I Blueprint	1404
+Inertia Stabilizers II Blueprint	1406
+Shield Power Relay II Blueprint	1423
+Auto Targeting System II Blueprint	1437
+Capacitor Power Relay I Blueprint	1446
+Capacitor Power Relay II Blueprint	1448
+Power Diagnostic System I Blueprint	1540
+Power Diagnostic System II Blueprint	1542
+Small Proton Smartbomb I Blueprint	1548
+Small Proton Smartbomb II Blueprint	1550
+Small Graviton Smartbomb I Blueprint	1552
+Small Graviton Smartbomb II Blueprint	1554
+Small Plasma Smartbomb I Blueprint	1558
+Small Plasma Smartbomb II Blueprint	1560
+Small EMP Smartbomb I Blueprint	1564
+Small EMP Smartbomb II Blueprint	1566
+EM Ward Amplifier I Blueprint	1809
+Scourge Auto-Targeting Light Missile I Blueprint	1811
+Nova Auto-Targeting Light Missile I Blueprint	1815
+Inferno Auto-Targeting Light Missile I Blueprint	1817
+Scourge Auto-Targeting Heavy Missile I Blueprint	1819
+Mjolnir Auto-Targeting Heavy Missile I Blueprint	1821
+Nova Auto-Targeting Heavy Missile I Blueprint	1823
+Inferno Auto-Targeting Heavy Missile I Blueprint	1825
+Scourge Auto-Targeting Cruise Missile I Blueprint	1827
+Mjolnir Auto-Targeting Cruise Missile I Blueprint	1829
+Nova Auto-Targeting Cruise Missile I Blueprint	1831
+Inferno Auto-Targeting Cruise Missile I Blueprint	1833
+Ship Scanner II Blueprint	1856
+Rapid Light Missile Launcher I Blueprint	1876
+Rapid Light Missile Launcher II Blueprint	1878
+Bestower Blueprint	1945
+Omen Blueprint	2007
+Medium Capacitor Battery I Blueprint	2019
+Large Capacitor Battery I Blueprint	2021
+X-Large Capacitor Battery I Blueprint	2023
+Medium Capacitor Booster II Blueprint	2025
+Cap Recharger II Blueprint	2033
+Cargo Scanner II Blueprint	2039
+Damage Control I Blueprint	2047
+Damage Control II Blueprint	2049
+ECM Burst II Blueprint	2118
+Crucifier Blueprint	2162
+Infiltrator I Blueprint	2174
+Infiltrator II Blueprint	2176
+Sansha Wrath Cruise Missile Blueprint	2179
+Hammerhead I Blueprint	2184
+Hammerhead II Blueprint	2186
+Praetor I Blueprint	2194
+Praetor II Blueprint	2196
+Acolyte I Blueprint	2204
+Acolyte II Blueprint	2206
+Sansha Juggernaut Torpedo Blueprint	2211
+Ghost Heavy Missile Blueprint	2213
+Adaptive Invulnerability Field II Blueprint	2282
+Explosive Deflection Field I Blueprint	2290
+Kinetic Deflection Field I Blueprint	2292
+EM Ward Field I Blueprint	2294
+Thermic Dissipation Field I Blueprint	2296
+Explosive Deflection Field II Blueprint	2298
+Kinetic Deflection Field II Blueprint	2300
+EM Ward Field II Blueprint	2302
+Thermic Dissipation Field II Blueprint	2304
+Shield Power Relay I Blueprint	2332
+Survey Scanner II Blueprint	2334
+Passive Targeter II Blueprint	2342
+Small Hull Repairer II Blueprint	2356
+Light Missile Launcher II Blueprint	2405
+Heavy Missile Launcher II Blueprint	2411
+Torpedo Launcher II Blueprint	2421
+Wasp II Blueprint	2437
+Ogre I Blueprint	2445
+Ogre II Blueprint	2447
+Hobgoblin I Blueprint	2455
+Hobgoblin II Blueprint	2457
+Hornet I Blueprint	2465
+Hornet II Blueprint	2467
+Berserker I Blueprint	2477
+Berserker II Blueprint	2479
+Warrior I Blueprint	2487
+Warrior II Blueprint	2489
+Mjolnir Torpedo Blueprint	2507
+Nova Torpedo Blueprint	2509
+Inferno Torpedo Blueprint	2511
+Mjolnir Rocket Blueprint	2513
+Inferno Rocket Blueprint	2515
+Nova Rocket Blueprint	2517
+Explosive Deflection Amplifier I Blueprint	2530
+Explosive Deflection Amplifier II Blueprint	2532
+Thermic Dissipation Amplifier I Blueprint	2538
+Thermic Dissipation Amplifier II Blueprint	2540
+Kinetic Deflection Amplifier I Blueprint	2546
+Kinetic Deflection Amplifier II Blueprint	2548
+EM Ward Amplifier II Blueprint	2554
+Nanofiber Internal Structure I Blueprint	2604
+Nanofiber Internal Structure II Blueprint	2606
+Mjolnir Fury Light Missile Blueprint	2614
+Inferno Fury Cruise Missile Blueprint	2622
+Scourge Fury Heavy Missile Blueprint	2630
+Inferno Precision Cruise Missile Blueprint	2638
+Inferno Precision Light Missile Blueprint	2648
+Nova Precision Heavy Missile Blueprint	2656
+Scourge Rage Heavy Assault Missile Blueprint	2680
+Infrastructure Hub Blueprint	2735
+Warp Disruption Battery Blueprint	2736
+Territorial Claim Unit Blueprint	2737
+Sovereignty Blockade Unit Blueprint	2738
+Nanite Repair Paste Blueprint	2739
+Warp Scrambling Battery Blueprint	2740
+Stasis Webification Battery Blueprint	2741
+Biochemical Silo Blueprint	2742
+Catalyst Silo Blueprint	2743
+Coupling Array Blueprint	2744
+General Storage Blueprint	2745
+Hazardous Chemical Silo Blueprint	2746
+Hybrid Polymer Silo Blueprint	2747
+Silo Blueprint	2748
+Advanced Large Ship Assembly Array Blueprint	2749
+X-Large Ship Maintenance Array Blueprint	2750
+Advanced Medium Ship Assembly Array Blueprint	2751
+Ship Maintenance Array Blueprint	2752
+Advanced Small Ship Assembly Array Blueprint	2753
+Ammunition Assembly Array Blueprint	2754
+Ballistic Deflection Array Blueprint	2755
+Capital Ship Assembly Array Blueprint	2756
+Explosion Dampening Array Blueprint	2757
+Component Assembly Array Blueprint	2758
+Heat Dissipation Array Blueprint	2759
+Drone Assembly Array Blueprint	2760
+Photon Scattering Array Blueprint	2761
+Drug Lab Blueprint	2762
+Sensor Dampening Battery Blueprint	2763
+Equipment Assembly Array Blueprint	2764
+Intensive Reprocessing Array Blueprint	2765
+Large Ship Assembly Array Blueprint	2766
+Compression Array Blueprint	2767
+Medium Ship Assembly Array Blueprint	2768
+Reprocessing Array Blueprint	2769
+Rapid Equipment Assembly Array Blueprint	2770
+Small Ship Assembly Array Blueprint	2771
+Subsystem Assembly Array Blueprint	2772
+X-Large Ship Assembly Array Blueprint	2773
+Amarr Control Tower Blueprint	2774
+Amarr Control Tower Medium Blueprint	2775
+Amarr Control Tower Small Blueprint	2776
+Caldari Control Tower Blueprint	2777
+Caldari Control Tower Medium Blueprint	2778
+Caldari Control Tower Small Blueprint	2779
+Gallente Control Tower Blueprint	2780
+Gallente Control Tower Medium Blueprint	2781
+Gallente Control Tower Small Blueprint	2782
+Minmatar Control Tower Blueprint	2783
+Minmatar Control Tower Medium Blueprint	2784
+Minmatar Control Tower Small Blueprint	2785
+Moon Harvesting Array Blueprint	2786
+Corporate Hangar Array Blueprint	2787
+Cynosural Generator Array Blueprint	2788
+Cynosural System Jammer Blueprint	2789
+Biochemical Reactor Array Blueprint	2790
+Complex Reactor Array Blueprint	2791
+Ion Field Projection Battery Blueprint	2792
+Medium Biochemical Reactor Array Blueprint	2793
+Phase Inversion Battery Blueprint	2794
+Polymer Reactor Array Blueprint	2795
+Spatial Destabilization Battery Blueprint	2796
+Simple Reactor Array Blueprint	2797
+White Noise Generation Battery Blueprint	2798
+Energy Neutralizing Battery Blueprint	2799
+Jump Bridge Blueprint	2800
+Nova Javelin Torpedo Blueprint	2802
+Large Blaster Battery Blueprint	2803
+Large Railgun Battery Blueprint	2804
+Large Artillery Battery Blueprint	2805
+Medium Blaster Battery Blueprint	2806
+Large AutoCannon Battery Blueprint	2807
+Medium Railgun Battery Blueprint	2808
+Medium Artillery Battery Blueprint	2810
+Inferno Rage Torpedo Blueprint	2812
+Small Blaster Battery Blueprint	2813
+Medium AutoCannon Battery Blueprint	2814
+Small Railgun Battery Blueprint	2815
+Small Artillery Battery Blueprint	2816
+Mjolnir Rage Rocket Blueprint	2818
+Small AutoCannon Battery Blueprint	2819
+Experimental Laboratory Blueprint	2820
+Research Laboratory Blueprint	2821
+Citadel Torpedo Battery Blueprint	2822
+Cruise Missile Battery Blueprint	2823
+Torpedo Battery Blueprint	2824
+Small Pulse Laser Battery Blueprint	2825
+Small Beam Laser Battery Blueprint	2826
+Medium Pulse Laser Battery Blueprint	2827
+Medium Beam Laser Battery Blueprint	2828
+Large Pulse Laser Battery Blueprint	2829
+Large Beam Laser Battery Blueprint	2830
+Utu Blueprint	2835
+Adrestia Blueprint	2837
+Cerebral Accelerator Blueprint	2839
+Primae Blueprint	2864
+1200mm Artillery Cannon II Blueprint	2866
+125mm Gatling AutoCannon II Blueprint	2874
+200mm AutoCannon II Blueprint	2890
+220mm Vulcan AutoCannon II Blueprint	2898
+250mm Light Artillery Cannon II Blueprint	2906
+425mm AutoCannon II Blueprint	2914
+650mm Artillery Cannon II Blueprint	2922
+Dual 180mm AutoCannon II Blueprint	2938
+Dual 425mm AutoCannon II Blueprint	2946
+Shadow Blueprint	2949
+Dual 650mm Repeating Cannon II Blueprint	2954
+1400mm Howitzer Artillery II Blueprint	2962
+720mm Howitzer Artillery II Blueprint	2970
+280mm Howitzer Artillery II Blueprint	2978
+Dual Heavy Beam Laser II Blueprint	2986
+Dual Light Beam Laser II Blueprint	2994
+Dual Light Pulse Laser II Blueprint	3002
+Focused Medium Beam Laser II Blueprint	3010
+Gatling Pulse Laser II Blueprint	3018
+Heavy Beam Laser II Blueprint	3026
+Small Focused Beam Laser II Blueprint	3034
+Noctis Blueprint	3039
+Small Focused Pulse Laser II Blueprint	3042
+Mega Beam Laser II Blueprint	3050
+Mega Pulse Laser II Blueprint	3058
+Tachyon Beam Laser II Blueprint	3066
+150mm Railgun II Blueprint	3075
+250mm Railgun II Blueprint	3083
+425mm Railgun II Blueprint	3091
+75mm Gatling Rail II Blueprint	3099
+Dual 150mm Railgun II Blueprint	3107
+Dual 250mm Railgun II Blueprint	3115
+Electron Blaster Cannon II Blueprint	3123
+Heavy Electron Blaster II Blueprint	3131
+Heavy Ion Blaster II Blueprint	3139
+Heavy Neutron Blaster II Blueprint	3147
+Ion Blaster Cannon II Blueprint	3155
+Light Electron Blaster II Blueprint	3163
+Light Ion Blaster II Blueprint	3171
+Light Neutron Blaster II Blueprint	3179
+Neutron Blaster Cannon II Blueprint	3187
+Warp Disruptor I Blueprint	3243
+Warp Disruptor II Blueprint	3245
+Quad Light Beam Laser II Blueprint	3286
+X-Large Capacitor Battery II Blueprint	3473
+Small Capacitor Battery II Blueprint	3489
+Medium Capacitor Battery II Blueprint	3497
+Large Capacitor Battery II Blueprint	3505
+Focused Medium Pulse Laser II Blueprint	3513
+Revenant Blueprint	3515
+Malice Blueprint	3517
+Vangel Blueprint	3519
+Heavy Pulse Laser II Blueprint	3521
+Medium Armor Repairer I Blueprint	3529
+Medium Armor Repairer II Blueprint	3531
+Echelon Blueprint	3533
+Capital Inefficient Armor Repair Unit Blueprint	3535
+Capital Coaxial Remote Armor Repairer Blueprint	3537
+Large Armor Repairer I Blueprint	3539
+Large Armor Repairer II Blueprint	3541
+Capital Neutron Saturation Injector I Blueprint	3543
+Capital Murky Remote Shield Booster Blueprint	3545
+Limited Mega Ion Siege Blaster I Blueprint	3547
+Cap Booster 75 Blueprint	3553
+Cap Booster 100 Blueprint	3555
+Dual 1000mm 'Scout' I Accelerator Cannon Blueprint	3557
+Dual Modal Giga Pulse Laser I Blueprint	3560
+Dual Giga Modal Laser I Blueprint	3562
+'Limos' Citadel Cruise Launcher I Blueprint	3564
+Small Capacitor Booster I Blueprint	3567
+Small Capacitor Booster II Blueprint	3569
+Shock 'Limos' Citadel Torpedo Bay I Blueprint	3570
+Quad 3500mm Gallium I Cannon Blueprint	3572
+6x2500mm Heavy Gallium I Repeating Cannon Blueprint	3574
+Heavy Capacitor Booster I Blueprint	3577
+Heavy Capacitor Booster II Blueprint	3579
+Capital Murky Remote Capacitor Transmitter Blueprint	3580
+Purloined Sansha Data Analyzer Blueprint	3582
+Small Remote Shield Booster I Blueprint	3587
+Small Remote Shield Booster II Blueprint	3589
+Mangled Sansha Data Analyzer Blueprint	3590
+Medium Remote Shield Booster I Blueprint	3597
+Medium Remote Shield Booster II Blueprint	3599
+Large Remote Shield Booster I Blueprint	3607
+Large Remote Shield Booster II Blueprint	3609
+Capital Remote Shield Booster I Blueprint	3617
+Capital Remote Shield Booster II Blueprint	3619
+Medium Hull Repairer I Blueprint	3654
+Medium Hull Repairer II Blueprint	3656
+Large Hull Repairer I Blueprint	3664
+Large Hull Repairer II Blueprint	3666
+Cobra Mine Blueprint	3734
+Anaconda Mine Blueprint	3736
+Asp Mine Blueprint	3738
+SOCT 1 Blueprint	3752
+SOCT 2 Blueprint	3754
+Leviathan Blueprint	3765
+Vigil Blueprint	3767
+Amarr Police Frigate Blueprint	3769
+Data Subverter I Blueprint	3794
+Medium Shield Extender I Blueprint	3830
+Medium Shield Extender II Blueprint	3832
+Large Shield Extender I Blueprint	3840
+Large Shield Extender II Blueprint	3842
+Clones Blueprint	3927
+Hardware Blueprint	3928
+Medium Proton Smartbomb I Blueprint	3938
+Medium Proton Smartbomb II Blueprint	3940
+Medium Graviton Smartbomb I Blueprint	3942
+Medium Graviton Smartbomb II Blueprint	3944
+Medium Plasma Smartbomb I Blueprint	3948
+Medium Plasma Smartbomb II Blueprint	3950
+Medium EMP Smartbomb I Blueprint	3954
+Medium EMP Smartbomb II Blueprint	3956
+Customs Office Gantry Blueprint	3963
+Large Proton Smartbomb I Blueprint	3978
+Large Proton Smartbomb II Blueprint	3980
+Large Graviton Smartbomb I Blueprint	3982
+Large Graviton Smartbomb II Blueprint	3984
+Large Plasma Smartbomb I Blueprint	3988
+Large Plasma Smartbomb II Blueprint	3990
+Large Remote Hull Repairer II Blueprint	3991
+Large EMP Smartbomb I Blueprint	3994
+Large EMP Smartbomb II Blueprint	3996
+Scorpion Ishukone Watch Blueprint	4006
+Dual Heavy Pulse Laser II Blueprint	4148
+Warp Disruption Field Generator II Blueprint	4249
+Small Tractor Beam II Blueprint	4251
+Capital Tractor Beam II Blueprint	4253
+Micro Auxiliary Power Core II Blueprint	4255
+Bomb Launcher II Blueprint	4257
+Core Probe Launcher II Blueprint	4259
+Expanded Probe Launcher II Blueprint	4261
+Armored Warfare Link - Damage Control II Blueprint	4263
+Armored Warfare Link - Passive Defense II Blueprint	4265
+Armored Warfare Link - Rapid Repair II Blueprint	4267
+Information Warfare Link - Electronic Superiority II Blueprint	4269
+Information Warfare Link - Recon Operation II Blueprint	4271
+Information Warfare Link - Sensor Integrity II Blueprint	4273
+Mining Foreman Link - Harvester Capacitor Efficiency II Blueprint	4275
+Mining Foreman Link - Laser Optimization II Blueprint	4277
+Mining Foreman Link - Mining Laser Field Enhancement II Blueprint	4279
+Siege Warfare Link - Active Shielding II Blueprint	4281
+Siege Warfare Link - Shield Efficiency II Blueprint	4283
+Siege Warfare Link - Shield Harmonizing II Blueprint	4285
+Skirmish Warfare Link - Evasive Maneuvers II Blueprint	4287
+Skirmish Warfare Link - Interdiction Maneuvers II Blueprint	4289
+Skirmish Warfare Link - Rapid Deployment II Blueprint	4291
+Siege Module II Blueprint	4293
+Triage Module II Blueprint	4295
+Medium Remote Hull Repairer II Blueprint	4298
+Small Remote Hull Repairer II Blueprint	4300
+Oracle Blueprint	4305
+Naga Blueprint	4307
+Talos Blueprint	4309
+Tornado Blueprint	4311
+Gallente Fuel Block Blueprint	4313
+Caldari Fuel Block Blueprint	4314
+Amarr Fuel Block Blueprint	4315
+Minmatar Fuel Block Blueprint	4316
+Miasmos Quafe Ultra Edition Blueprint	4364
+Small Targeting Amplifier I Blueprint	4370
+Large Micro Jump Drive Blueprint	4384
+Mobile Large Jump Disruptor I Blueprint	4387
+Miasmos Quafe Ultramarine Edition Blueprint	4389
+Large Ancillary Shield Booster Blueprint	4392
+Drone Damage Amplifier I Blueprint	4394
+Medium Processor Overclocking Unit I Blueprint	4396
+Large Processor Overclocking Unit I Blueprint	4398
+Medium Processor Overclocking Unit II Blueprint	4400
+Large Processor Overclocking Unit II Blueprint	4402
+Reactive Armor Hardener Blueprint	4404
+Drone Damage Amplifier II Blueprint	4406
+Shield Booster Fuel Allocation Script Blueprint	4408
+Target Spectrum Breaker Blueprint	4410
+Magnetic Field Stabilizer I Blueprint	9945
+Civilian Shield Booster Blueprint	10040
+Magnetic Field Stabilizer II Blueprint	10191
+Mining Drone I Blueprint	10247
+Mining Drone II Blueprint	10251
+Rocket Launcher I Blueprint	10630
+Rocket Launcher II Blueprint	10632
+Countermeasure Launcher I Blueprint	10643
+125mm Railgun I Blueprint	10679
+125mm Railgun II Blueprint	10681
+Medium Shield Booster I Blueprint	10837
+Large Shield Booster I Blueprint	10839
+X-Large Shield Booster I Blueprint	10841
+X-Large Shield Booster II Blueprint	10843
+Medium Shield Booster II Blueprint	10851
+Large Shield Booster II Blueprint	10859
+Guardian-Vexor Blueprint	11012
+Talisman Alpha Blueprint	11074
+Gallente Shuttle Blueprint	11130
+Minmatar Shuttle Blueprint	11133
+Amarr Shuttle Blueprint	11135
+Helios Blueprint	11173
+Keres Blueprint	11175
+Crow Blueprint	11177
+Raptor Blueprint	11179
+Cheetah Blueprint	11183
+Crusader Blueprint	11185
+Malediction Blueprint	11187
+Anathema Blueprint	11189
+Sentinel Blueprint	11191
+Buzzard Blueprint	11193
+Kitsune Blueprint	11195
+Claw Blueprint	11197
+Stiletto Blueprint	11199
+Taranis Blueprint	11201
+Ares Blueprint	11203
+Basic Energized EM Membrane Blueprint	11216
+Energized EM Membrane I Blueprint	11218
+Energized EM Membrane II Blueprint	11220
+Basic Energized Explosive Membrane Blueprint	11226
+Energized Explosive Membrane I Blueprint	11228
+Energized Explosive Membrane II Blueprint	11230
+Basic Energized Armor Layering Membrane Blueprint	11236
+Energized Armor Layering Membrane I Blueprint	11238
+Energized Armor Layering Membrane II Blueprint	11240
+Basic Energized Kinetic Membrane Blueprint	11246
+Energized Kinetic Membrane I Blueprint	11248
+Energized Kinetic Membrane II Blueprint	11250
+Basic Energized Thermic Membrane Blueprint	11256
+Energized Thermic Membrane I Blueprint	11258
+Energized Thermic Membrane II Blueprint	11260
+Basic Energized Adaptive Nano Membrane Blueprint	11266
+Energized Adaptive Nano Membrane I Blueprint	11268
+Energized Adaptive Nano Membrane II Blueprint	11270
+Armor Thermic Hardener I Blueprint	11278
+1600mm Reinforced Steel Plates I Blueprint	11280
+Cap Booster 150 Blueprint	11284
+Cap Booster 200 Blueprint	11286
+Cap Booster 400 Blueprint	11288
+Cap Booster 800 Blueprint	11290
+50mm Reinforced Steel Plates I Blueprint	11292
+100mm Reinforced Steel Plates I Blueprint	11294
+200mm Reinforced Steel Plates I Blueprint	11296
+400mm Reinforced Steel Plates I Blueprint	11298
+800mm Reinforced Steel Plates I Blueprint	11300
+Armor EM Hardener I Blueprint	11302
+Armor Explosive Hardener I Blueprint	11304
+Armor Kinetic Hardener I Blueprint	11306
+Small Remote Armor Repairer I Blueprint	11356
+Medium Remote Armor Repairer I Blueprint	11358
+Large Remote Armor Repairer I Blueprint	11360
+Vengeance Blueprint	11366
+Wolf Blueprint	11372
+Blade Blueprint	11374
+Erinye Blueprint	11376
+Nemesis Blueprint	11378
+Hawk Blueprint	11380
+Harpy Blueprint	11382
+Gatherer Blueprint	11384
+Hyena Blueprint	11388
+Kishar Blueprint	11390
+Retribution Blueprint	11394
+Jaguar Blueprint	11401
+Shield Boost Amplifier I Blueprint	11562
+Micro Auxiliary Power Core I Blueprint	11564
+Avatar Blueprint	11568
+Heat Sink I Blueprint	11612
+Warp Core Stabilizer I Blueprint	11613
+Tracking Disruptor I Blueprint	11614
+Tracking Enhancer I Blueprint	11616
+Remote Tracking Computer I Blueprint	11617
+Co-Processor I Blueprint	11619
+Sensor Booster I Blueprint	11620
+Tracking Computer I Blueprint	11621
+ECCM - Gravimetric I Blueprint	11622
+ECCM - Ladar I Blueprint	11623
+ECCM - Magnetometric I Blueprint	11624
+ECCM - Radar I Blueprint	11625
+ECCM - Omni I Blueprint	11626
+ECM - Ion Field Projector I Blueprint	11628
+ECM - Multispectral Jammer I Blueprint	11629
+ECM - Phase Inverter I Blueprint	11630
+ECM - Spatial Destabilizer I Blueprint	11631
+ECM - White Noise Generator I Blueprint	11632
+Signal Amplifier I Blueprint	11634
+Warp Core Stabilizer II Blueprint	11641
+Armor EM Hardener II Blueprint	11643
+Armor Kinetic Hardener II Blueprint	11645
+Armor Explosive Hardener II Blueprint	11647
+Armor Thermic Hardener II Blueprint	11649
+Co-Processor II Blueprint	11747
+ECCM - Gravimetric II Blueprint	11750
+ECCM - Ladar II Blueprint	11754
+ECCM - Magnetometric II Blueprint	11758
+ECCM - Omni II Blueprint	11762
+ECCM - Radar II Blueprint	11766
+ECCM Projector I Blueprint	11770
+ECCM Projector II Blueprint	11771
+ECM - Ion Field Projector II Blueprint	11775
+ECM - Multispectral Jammer II Blueprint	11779
+ECM - Phase Inverter II Blueprint	11783
+ECM - Spatial Destabilizer II Blueprint	11787
+ECM - White Noise Generator II Blueprint	11791
+Heat Sink II Blueprint	11795
+Remote Sensor Booster I Blueprint	11798
+Remote Sensor Booster II Blueprint	11799
+Remote Sensor Dampener I Blueprint	11803
+Remote Sensor Dampener II Blueprint	11804
+Sensor Booster II Blueprint	11808
+Signal Amplifier II Blueprint	11812
+Gravimetric Backup Array I Blueprint	11820
+Gravimetric Backup Array II Blueprint	11821
+LADAR Backup Array I Blueprint	11824
+LADAR Backup Array II Blueprint	11825
+Magnetometric Backup Array I Blueprint	11828
+Magnetometric Backup Array II Blueprint	11829
+Multi Sensor Backup Array I Blueprint	11832
+Multi Sensor Backup Array II Blueprint	11833
+RADAR Backup Array I Blueprint	11836
+RADAR Backup Array II Blueprint	11837
+Tracking Computer II Blueprint	11840
+Tracking Disruptor II Blueprint	11844
+Tracking Enhancer II Blueprint	11848
+Remote Tracking Computer II Blueprint	11851
+R.Db - Roden Shipyards Blueprint	11857
+R.A.M.- Energy Tech Blueprint	11859
+R.A.M.- Cybernetics Blueprint	11860
+R.A.M.- Platform Tech Blueprint	11861
+Hacker Deck - LXD-27 Blueprint	11862
+Hacker Deck - Codex Blueprint	11863
+Hacker Deck - Hermes Blueprint	11864
+Hacker Deck - Shaman Blueprint	11865
+Hyper Net Uplink Blueprint	11866
+R.A.M.- Battleship Tech Blueprint	11867
+R.A.M.- Cruiser Tech Blueprint	11868
+R.A.M.- Industrial Tech Blueprint	11869
+R.A.M.- Electronics Blueprint	11870
+Terran Molecular Sequencer Blueprint	11871
+R.A.M.- Ammunition Tech Blueprint	11872
+R.A.M.- Armor/Hull Tech Blueprint	11873
+R.A.M.- Hypernet Tech Blueprint	11874
+R.Db - Boundless Creations Blueprint	11876
+R.Db - Core Complexion Blueprint	11877
+R.Db - CreoDron Blueprint	11878
+R.Db - Duvolle Labs Blueprint	11879
+R.Db - Carthum Conglomerate Blueprint	11880
+R.Db - Kaalakiota Blueprint	11881
+R.Db - Khanid Innovation Blueprint	11882
+R.Db - Thukker Mix Blueprint	11883
+R.Db - Viziam Blueprint	11884
+R.Db - Ishukone Blueprint	11885
+R.Db - Lai Dai Blueprint	11886
+R.A.M.- Robotics Blueprint	11887
+R.A.M.- Pharmaceuticals Blueprint	11888
+R.A.M.- Shield Tech Blueprint	11889
+R.A.M.- Starship Tech Blueprint	11890
+R.A.M.- Weapon Tech Blueprint	11891
+Hacker Deck - Alpha Blueprint	11892
+Apocalypse Imperial Issue Blueprint	11937
+Armageddon Imperial Issue Blueprint	11939
+Falcon Blueprint	11958
+Rook Blueprint	11960
+Huginn Blueprint	11962
+Rapier Blueprint	11964
+Pilgrim Blueprint	11966
+Arazu Blueprint	11970
+Lachesis Blueprint	11972
+Scimitar Blueprint	11979
+Basilisk Blueprint	11986
+Guardian Blueprint	11988
+Oneiros Blueprint	11990
+Cerberus Blueprint	11994
+Onyx Blueprint	11996
+Vagabond Blueprint	12000
+Zealot Blueprint	12004
+Ishtar Blueprint	12006
+Eagle Blueprint	12012
+Broadsword Blueprint	12014
+Muninn Blueprint	12016
+Devoter Blueprint	12018
+Sacrilege Blueprint	12020
+Phobos Blueprint	12022
+Deimos Blueprint	12024
+Manticore Blueprint	12031
+Hound Blueprint	12035
+Dagger Blueprint	12037
+Purifier Blueprint	12041
+Ishkur Blueprint	12043
+Enyo Blueprint	12045
+10MN Microwarpdrive I Blueprint	12053
+100MN Microwarpdrive I Blueprint	12055
+10MN Afterburner I Blueprint	12057
+10MN Afterburner II Blueprint	12059
+100MN Afterburner I Blueprint	12067
+100MN Afterburner II Blueprint	12069
+10MN Microwarpdrive II Blueprint	12077
+100MN Microwarpdrive II Blueprint	12085
+Large Remote Capacitor Transmitter II Blueprint	12103
+Improved Cloaking Device II Blueprint	12104
+Covert Ops Cloaking Device II Blueprint	12105
+Deep Core Mining Laser I Blueprint	12109
+Medium Remote Capacitor Transmitter I Blueprint	12218
+Capital Remote Capacitor Transmitter I Blueprint	12220
+Medium Remote Capacitor Transmitter II Blueprint	12222
+Capital Remote Capacitor Transmitter II Blueprint	12224
+Large Remote Capacitor Transmitter I Blueprint	12226
+Medium Nosferatu I Blueprint	12258
+Medium Nosferatu II Blueprint	12260
+Heavy Nosferatu I Blueprint	12262
+Heavy Nosferatu II Blueprint	12264
+Medium Energy Neutralizer I Blueprint	12266
+Medium Energy Neutralizer II Blueprint	12268
+Heavy Energy Neutralizer I Blueprint	12270
+Heavy Energy Neutralizer II Blueprint	12272
+Ballistic Control System I Blueprint	12275
+Mobile Small Warp Disruptor I Blueprint	12297
+Mobile Medium Warp Disruptor I Blueprint	12300
+Mobile Large Warp Disruptor I Blueprint	12301
+200mm Railgun I Blueprint	12345
+200mm Railgun II Blueprint	12347
+350mm Railgun I Blueprint	12355
+350mm Railgun II Blueprint	12357
+Lux S Blueprint	12553
+Gleam S Blueprint	12558
+Aurora S Blueprint	12560
+Blaze S Blueprint	12562
+Scorch S Blueprint	12564
+Conflagration S Blueprint	12566
+Hail S Blueprint	12609
+Desolation S Blueprint	12611
+Void S Blueprint	12613
+Null S Blueprint	12615
+Bolt S Blueprint	12617
+Spike S Blueprint	12619
+Javelin S Blueprint	12621
+Barrage S Blueprint	12626
+Storm S Blueprint	12628
+Shock S Blueprint	12630
+Quake S Blueprint	12632
+Tremor S Blueprint	12634
+Target Painter I Blueprint	12710
+Small Active Stealth System I Blueprint	12712
+Medium Active Stealth System I Blueprint	12714
+Large Active Stealth System I Blueprint	12716
+Huge Active Stealth System I Blueprint	12718
+Crane Blueprint	12730
+Bustard Blueprint	12732
+Prorator Blueprint	12734
+Prowler Blueprint	12736
+Viator Blueprint	12744
+Occator Blueprint	12746
+Mastodon Blueprint	12748
+Impel Blueprint	12754
+Quake L Blueprint	12762
+Shock L Blueprint	12764
+Tremor L Blueprint	12766
+Quake M Blueprint	12768
+Shock M Blueprint	12770
+Tremor M Blueprint	12772
+Barrage M Blueprint	12774
+Barrage L Blueprint	12776
+Hail M Blueprint	12778
+Hail L Blueprint	12780
+Storm M Blueprint	12782
+Storm L Blueprint	12784
+Null M Blueprint	12786
+Null L Blueprint	12788
+Void M Blueprint	12790
+Void L Blueprint	12792
+Desolation M Blueprint	12794
+Desolation L Blueprint	12796
+Bolt M Blueprint	12798
+Bolt L Blueprint	12800
+Javelin M Blueprint	12802
+Javelin L Blueprint	12804
+Spike M Blueprint	12806
+Spike L Blueprint	12808
+Blaze M Blueprint	12811
+Blaze L Blueprint	12813
+Conflagration M Blueprint	12815
+Conflagration L Blueprint	12817
+Scorch M Blueprint	12819
+Scorch L Blueprint	12821
+Aurora M Blueprint	12823
+Aurora L Blueprint	12825
+Gleam M Blueprint	12827
+Gleam L Blueprint	12829
+Lux M Blueprint	12831
+Lux L Blueprint	12833
+Prototype Cloaking Device I Blueprint	13000
+Small Nosferatu II Blueprint	13002
+Small Energy Neutralizer II Blueprint	13004
+Megathron Federate Issue Blueprint	13203
+Cruise Missile Launcher I Blueprint	13321
+Vespa I Blueprint	15509
+Valkyrie I Blueprint	15511
+Caldari Navy Co-Processor Blueprint	15676
+Federation Navy Co-Processor Blueprint	15678
+Caldari Navy Ballistic Control System Blueprint	15682
+Republic Fleet Ballistic Control System Blueprint	15684
+Imperial Navy Thermic Plating Blueprint	15686
+Imperial Navy EM Plating Blueprint	15688
+Imperial Navy Explosive Plating Blueprint	15690
+Imperial Navy Kinetic Plating Blueprint	15692
+Imperial Navy Adaptive Nano Plating Blueprint	15694
+Republic Fleet Thermic Plating Blueprint	15696
+Republic Fleet EM Plating Blueprint	15698
+Republic Fleet Explosive Plating Blueprint	15700
+Republic Fleet Kinetic Plating Blueprint	15702
+Republic Fleet Adaptive Nano Plating Blueprint	15704
+Imperial Navy Armor Thermic Hardener Blueprint	15706
+Imperial Navy Armor Kinetic Hardener Blueprint	15708
+Imperial Navy Armor Explosive Hardener Blueprint	15710
+Imperial Navy Armor EM Hardener Blueprint	15712
+Republic Fleet Armor Thermic Hardener Blueprint	15714
+Republic Fleet Armor Kinetic Hardener Blueprint	15716
+Republic Fleet Armor Explosive Hardener Blueprint	15718
+Republic Fleet Armor EM Hardener Blueprint	15720
+Imperial Navy Energized Thermic Membrane Blueprint	15722
+Imperial Navy Energized EM Membrane Blueprint	15724
+Imperial Navy Energized Explosive Membrane Blueprint	15726
+Imperial Navy Energized Kinetic Membrane Blueprint	15728
+Imperial Navy Energized Adaptive Nano Membrane Blueprint	15730
+Federation Navy Energized Thermic Membrane Blueprint	15732
+Federation Navy Energized EM Membrane Blueprint	15734
+Federation Navy Energized Explosive Membrane Blueprint	15736
+Federation Navy Energized Kinetic Membrane Blueprint	15738
+Federation Navy Energized Adaptive Nano Membrane Blueprint	15740
+Republic Fleet 1MN Microwarpdrive Blueprint	15748
+Republic Fleet 1MN Afterburner Blueprint	15750
+Republic Fleet 10MN Microwarpdrive Blueprint	15752
+Republic Fleet 10MN Afterburner Blueprint	15754
+Republic Fleet 100MN Microwarpdrive Blueprint	15756
+Republic Fleet 100MN Afterburner Blueprint	15758
+Federation Navy 1MN Microwarpdrive Blueprint	15760
+Federation Navy 1MN Afterburner Blueprint	15762
+Federation Navy 10MN Microwarpdrive Blueprint	15765
+Federation Navy 10MN Afterburner Blueprint	15767
+Federation Navy 100MN Microwarpdrive Blueprint	15769
+Federation Navy 100MN Afterburner Blueprint	15771
+Ammatar Navy Small Capacitor Booster Blueprint	15773
+Ammatar Navy Medium Capacitor Booster Blueprint	15777
+Ammatar Navy Heavy Capacitor Booster Blueprint	15779
+Imperial Navy Small Capacitor Booster Blueprint	15781
+Imperial Navy Micro Capacitor Booster Blueprint	15783
+Imperial Navy Medium Capacitor Booster Blueprint	15785
+Imperial Navy Heavy Capacitor Booster Blueprint	15787
+Ammatar Navy Cap Recharger Blueprint	15789
+Caldari Navy Cloaking Device Blueprint	15791
+Federation Navy Tracking Computer Blueprint	15793
+Ammatar Navy Small Energy Neutralizer Blueprint	15795
+Ammatar Navy Medium Energy Neutralizer Blueprint	15797
+Ammatar Navy Heavy Energy Neutralizer Blueprint	15799
+Imperial Navy Small Energy Neutralizer Blueprint	15801
+Imperial Navy Medium Energy Neutralizer Blueprint	15803
+Imperial Navy Heavy Energy Neutralizer Blueprint	15805
+Republic Fleet Gyrostabilizer Blueprint	15807
+Ammatar Navy Heat Sink Blueprint	15809
+Imperial Navy Heat Sink Blueprint	15811
+Caldari Navy 350mm Railgun Blueprint	15819
+Caldari Navy 200mm Railgun Blueprint	15822
+Federation Navy 350mm Railgun Blueprint	15839
+Federation Navy 200mm Railgun Blueprint	15842
+Ammatar Navy Small Nosferatu Blueprint	15876
+Ammatar Navy Medium Nosferatu Blueprint	15878
+Ammatar Navy Heavy Nosferatu Blueprint	15880
+Imperial Navy Small Nosferatu Blueprint	15882
+Imperial Navy Medium Nosferatu Blueprint	15884
+Imperial Navy Heavy Nosferatu Blueprint	15886
+Caldari Navy Warp Scrambler Blueprint	15888
+Caldari Navy Warp Disruptor Blueprint	15890
+Republic Fleet Warp Disruptor Blueprint	15892
+Republic Fleet Warp Scrambler Blueprint	15894
+Federation Navy Magnetic Field Stabilizer Blueprint	15896
+Caldari Navy Shield Boost Amplifier Blueprint	15906
+Republic Fleet Shield Boost Amplifier Blueprint	15908
+Caldari Navy EM Ward Amplifier Blueprint	15910
+Caldari Navy Kinetic Deflection Amplifier Blueprint	15912
+Caldari Navy Thermic Dissipation Amplifier Blueprint	15914
+Caldari Navy Explosive Deflection Amplifier Blueprint	15916
+Republic Fleet EM Ward Amplifier Blueprint	15918
+Republic Fleet Kinetic Deflection Amplifier Blueprint	15920
+Republic Fleet Thermic Dissipation Amplifier Blueprint	15922
+Republic Fleet Explosive Deflection Amplifier Blueprint	15924
+Caldari Navy Small Graviton Smartbomb Blueprint	15926
+Caldari Navy Micro Graviton Smartbomb Blueprint	15928
+Caldari Navy Medium Graviton Smartbomb Blueprint	15930
+Caldari Navy Large Graviton Smartbomb Blueprint	15932
+Republic Fleet Small Proton Smartbomb Blueprint	15936
+Republic Fleet Medium Proton Smartbomb Blueprint	15938
+Republic Fleet Large Proton Smartbomb Blueprint	15940
+Ammatar Navy Small EMP Smartbomb Blueprint	15942
+Ammatar Navy Medium EMP Smartbomb Blueprint	15946
+Ammatar Navy Large EMP Smartbomb Blueprint	15948
+Federation Navy Small Plasma Smartbomb Blueprint	15950
+Federation Navy Medium Plasma Smartbomb Blueprint	15954
+Federation Navy Large Plasma Smartbomb Blueprint	15956
+Imperial Navy Small EMP Smartbomb Blueprint	15958
+Imperial Navy Micro EMP Smartbomb Blueprint	15960
+Imperial Navy Medium EMP Smartbomb Blueprint	15962
+Imperial Navy Large EMP Smartbomb Blueprint	15964
+Republic Fleet Tracking Enhancer Blueprint	15966
+Federation Navy Remote Tracking Computer  Blueprint	15968
+800mm Repeating Cannon II Blueprint	16029
+150mm Light AutoCannon II Blueprint	16032
+Caldari Navy Cruise Missile Launcher Blueprint	16063
+Caldari Navy Rocket Launcher Blueprint	16066
+Ferox Blueprint	16228
+Brutix Blueprint	16230
+Cyclone Blueprint	16232
+Prophecy Blueprint	16234
+Coercer Blueprint	16237
+Cormorant Blueprint	16239
+Catalyst Blueprint	16241
+Thrasher Blueprint	16243
+Ice Harvester I Blueprint	16279
+Thermonuclear Trigger Unit Blueprint	17322
+Crystalline Carbonide Armor Plate Blueprint	17323
+Plasma Thruster Blueprint	17324
+Nanomechanical Microprocessor Blueprint	17325
+Nuclear Pulse Generator Blueprint	17326
+Scalar Capacitor Unit Blueprint	17327
+Titanium Diborite Armor Plate Blueprint	17328
+Ion Thruster Blueprint	17329
+Nanoelectrical Microprocessor Blueprint	17330
+Fusion Reactor Unit Blueprint	17331
+Graviton Pulse Generator Blueprint	17332
+Ladar Sensor Cluster Blueprint	17333
+Tesseract Capacitor Unit Blueprint	17334
+EM Pulse Generator Blueprint	17335
+Radar Sensor Cluster Blueprint	17336
+Oscillator Capacitor Unit Blueprint	17337
+Antimatter Reactor Unit Blueprint	17338
+Plasma Pulse Generator Blueprint	17339
+Gravimetric Sensor Cluster Blueprint	17340
+Pulse Shield Emitter Blueprint	17341
+Nuclear Reactor Unit Blueprint	17342
+Particle Accelerator Unit Blueprint	17344
+Magnetometric Sensor Cluster Blueprint	17345
+Deflection Shield Emitter Blueprint	17346
+Electrolytic Capacitor Unit Blueprint	17347
+Laser Focusing Crystals Blueprint	17348
+Fusion Thruster Blueprint	17349
+Tungsten Carbide Armor Plate Blueprint	17350
+Quantum Microprocessor Blueprint	17351
+Sustained Shield Emitter Blueprint	17352
+Graviton Reactor Unit Blueprint	17353
+Superconductor Rails Blueprint	17354
+Fernite Carbide Composite Armor Plate Blueprint	17355
+Magpulse Thruster Blueprint	17356
+Photon Microprocessor Blueprint	17357
+Linear Shield Emitter Blueprint	17359
+Covetor Blueprint	17477
+Retriever Blueprint	17479
+Procurer Blueprint	17481
+Strip Miner I Blueprint	17483
+Republic Fleet Cruise Missile Launcher Blueprint	17486
+Republic Fleet Rocket Launcher Blueprint	17489
+Caldari Navy Stasis Webifier Blueprint	17501
+Ammatar Navy Armor EM Hardener Blueprint	17503
+Ammatar Navy Armor Explosive Hardener Blueprint	17505
+Ammatar Navy Armor Kinetic Hardener Blueprint	17507
+Ammatar Navy Armor Thermic Hardener Blueprint	17509
+Ammatar Navy Capacitor Power Relay Blueprint	17511
+Ammatar Navy Kinetic Plating Blueprint	17513
+Ammatar Navy Adaptive Nano Plating Blueprint	17515
+Ammatar Navy Explosive Plating Blueprint	17517
+Ammatar Navy EM Plating Blueprint	17519
+Federation Navy Sensor Booster Blueprint	17521
+Ammatar Navy Reactor Control Unit Blueprint	17523
+Ammatar Navy Power Diagnostic System Blueprint	17525
+Imperial Navy Cap Recharger Blueprint	17527
+Imperial Navy Capacitor Power Relay Blueprint	17529
+Ammatar Navy Energized Adaptive Nano Membrane Blueprint	17537
+Ammatar Navy Energized Kinetic Membrane Blueprint	17539
+Ammatar Navy Energized Explosive Membrane Blueprint	17541
+Ammatar Navy Energized EM Membrane Blueprint	17543
+Ammatar Navy Energized Thermic Membrane Blueprint	17545
+Federation Navy Adaptive Nano Plating Blueprint	17550
+Federation Navy Kinetic Plating Blueprint	17552
+Federation Navy Explosive Plating Blueprint	17554
+Federation Navy EM Plating Blueprint	17556
+Federation Navy Thermic Plating Blueprint	17558
+Federation Navy Stasis Webifier Blueprint	17561
+Caldari Navy Hookbill Blueprint	17620
+Caracal Navy Issue Blueprint	17635
+Raven Navy Issue Blueprint	17637
+Antimatter Charge XL Blueprint	17649
+Iridium Charge XL Blueprint	17651
+Iron Charge XL Blueprint	17653
+Lead Charge XL Blueprint	17655
+Plutonium Charge XL Blueprint	17657
+Thorium Charge XL Blueprint	17659
+Tungsten Charge XL Blueprint	17661
+Uranium Charge XL Blueprint	17663
+Carbonized Lead XL Blueprint	17665
+Depleted Uranium XL Blueprint	17667
+EMP XL Blueprint	17669
+Fusion XL Blueprint	17671
+Nuclear XL Blueprint	17673
+Phased Plasma XL Blueprint	17675
+Proton XL Blueprint	17677
+Titanium Sabot XL Blueprint	17679
+Gamma XL Blueprint	17681
+Infrared XL Blueprint	17683
+Microwave XL Blueprint	17685
+Multifrequency XL Blueprint	17687
+Radio XL Blueprint	17689
+Standard XL Blueprint	17691
+Ultraviolet XL Blueprint	17693
+Xray XL Blueprint	17695
+Imperial Navy Slicer Blueprint	17704
+Khanid Navy Frigate Blueprint	17706
+Mordus Frigate Blueprint	17708
+Omen Navy Issue Blueprint	17710
+Stabber Fleet Issue Blueprint	17714
+Gila Blueprint	17716
+Phantasm Blueprint	17719
+Cynabal Blueprint	17721
+Vigilant Blueprint	17723
+Apocalypse Navy Issue Blueprint	17727
+Megathron Navy Issue Blueprint	17729
+Tempest Fleet Issue Blueprint	17733
+Nightmare Blueprint	17737
+Machariel Blueprint	17739
+Vindicator Blueprint	17741
+Republic Fleet Firetail Blueprint	17813
+Federation Navy Armor EM Hardener Blueprint	17833
+Federation Navy Armor Explosive Hardener Blueprint	17835
+Federation Navy Armor Kinetic Hardener Blueprint	17837
+Federation Navy Armor Thermic Hardener Blueprint	17839
+Federation Navy Comet Blueprint	17842
+Vexor Navy Issue Blueprint	17844
+Mjolnir Citadel Torpedo Blueprint	17858
+Scourge Citadel Torpedo Blueprint	17860
+Inferno Citadel Torpedo Blueprint	17862
+Nova Citadel Torpedo Blueprint	17864
+System Scanner I Blueprint	17874
+Recon System Scanner Blueprint	17885
+Scan Probe Launcher II Blueprint	17902
+Modulated Strip Miner II Blueprint	17913
+Rattlesnake Blueprint	17919
+Bhaalgorn Blueprint	17921
+Ashimmu Blueprint	17923
+Succubus Blueprint	17925
+Cruor Blueprint	17927
+Daredevil Blueprint	17929
+Worm Blueprint	17931
+Dramiel Blueprint	17933
+Core Probe Launcher I Blueprint	17939
+Arkonor Mining Crystal I Blueprint	18037
+Bistot Mining Crystal I Blueprint	18039
+Crokite Mining Crystal I Blueprint	18041
+Dark Ochre Mining Crystal I Blueprint	18043
+Gneiss Mining Crystal I Blueprint	18045
+Hedbergite Mining Crystal I Blueprint	18047
+Hemorphite Mining Crystal I Blueprint	18049
+Jaspet Mining Crystal I Blueprint	18051
+Kernite Mining Crystal I Blueprint	18053
+Mercoxit Mining Crystal I Blueprint	18055
+Omber Mining Crystal I Blueprint	18057
+Plagioclase Mining Crystal I Blueprint	18059
+Pyroxeres Mining Crystal I Blueprint	18061
+Scordite Mining Crystal I Blueprint	18063
+Spodumain Mining Crystal I Blueprint	18065
+Veldspar Mining Crystal I Blueprint	18067
+Modulated Deep Core Miner II Blueprint	18069
+Arkonor Mining Crystal II Blueprint	18591
+Bistot Mining Crystal II Blueprint	18593
+Crokite Mining Crystal II Blueprint	18595
+Dark Ochre Mining Crystal II Blueprint	18597
+Gneiss Mining Crystal II Blueprint	18599
+Hedbergite Mining Crystal II Blueprint	18601
+Hemorphite Mining Crystal II Blueprint	18603
+Jaspet Mining Crystal II Blueprint	18605
+Kernite Mining Crystal II Blueprint	18607
+Mercoxit Mining Crystal II Blueprint	18609
+Omber Mining Crystal II Blueprint	18611
+Plagioclase Mining Crystal II Blueprint	18613
+Pyroxeres Mining Crystal II Blueprint	18615
+Scordite Mining Crystal II Blueprint	18617
+Veldspar Mining Crystal II Blueprint	18619
+Spodumain Mining Crystal II Blueprint	18625
+Expanded Probe Launcher I Blueprint	18640
+Revelation Blueprint	19721
+Naglfar Blueprint	19723
+Moros Blueprint	19725
+Phoenix Blueprint	19727
+Cruise Missile Launcher II Blueprint	19740
+Sigil Blueprint	19745
+Target Painter II Blueprint	19807
+Partial Weapon Navigation Blueprint	19809
+Peripheral Weapon Navigation Diameter Blueprint	19811
+Parallel Weapon Navigation Transmitter Blueprint	19813
+Phased Weapon Navigation Array Generation Extron Blueprint	19815
+Arch Angel Carbonized Lead M Blueprint	19995
+Arch Angel Titanium Sabot M Blueprint	20003
+Gold Sculpture Blueprint	20108
+Curse Blueprint	20126
+Providence Blueprint	20184
+Charon Blueprint	20186
+Obelisk Blueprint	20188
+Fenrir Blueprint	20190
+Conjunctive Radar ECCM Scanning Array I Blueprint	20219
+Conjunctive Ladar ECCM Scanning Array I Blueprint	20225
+Conjunctive Gravimetric ECCM Scanning Array I Blueprint	20231
+Conjunctive Magnetometric ECCM Scanning Array I Blueprint	20237
+Secure Gravimetric Backup Cluster I Blueprint	20239
+Shielded Gravimetric Backup Cluster I Blueprint	20241
+Warded Gravimetric Backup Cluster I Blueprint	20243
+Secure Ladar Backup Cluster I Blueprint	20245
+Shielded Ladar Backup Cluster I Blueprint	20247
+Warded Ladar Backup Cluster I Blueprint	20249
+Secure Magnetometric Backup Cluster I Blueprint	20251
+Shielded Magnetometric Backup Cluster I Blueprint	20253
+Warded Magnetometric Backup Cluster I Blueprint	20255
+Secure Radar Backup Cluster I Blueprint	20261
+Shielded Radar Backup Cluster I Blueprint	20263
+Warded Radar Backup Cluster I Blueprint	20265
+Siege Module I Blueprint	20281
+50mm Reinforced Steel Plates II Blueprint	20344
+100mm Reinforced Steel Plates II Blueprint	20346
+200mm Reinforced Steel Plates II Blueprint	20348
+400mm Reinforced Steel Plates II Blueprint	20350
+800mm Reinforced Steel Plates II Blueprint	20352
+1600mm Reinforced Steel Plates II Blueprint	20354
+Smugglers Mask I Blueprint	20368
+Dual Giga Pulse Laser I Blueprint	20445
+Dual Giga Beam Laser I Blueprint	20447
+Dual 1000mm Railgun I Blueprint	20449
+Ion Siege Blaster Cannon I Blueprint	20451
+6x2500mm Repeating Cannon I Blueprint	20453
+Quad 3500mm Siege Artillery I Blueprint	20455
+Citadel Torpedo Launcher I Blueprint	20540
+Small 'Siesta' Capacitor Booster Blueprint	20556
+Medium 'Gattotte' Capacitor Booster Blueprint	20558
+Heavy 'Brave' Capacitor Booster Blueprint	20560
+Prototype 'Poncho' Cloaking Device I Blueprint	20562
+'Smokescreen' Covert Ops Cloaking Device II Blueprint	20564
+Improved 'Guise' Cloaking Device II Blueprint	20566
+'Dyad' Co-Processor I Blueprint	20568
+'Deuce' Co-Processor I Blueprint	20570
+'Marshall' Ion Field Projector Blueprint	20574
+'Gambler' Phase Inverter Blueprint	20576
+'Plunderer' Spatial Destabilizer Blueprint	20578
+'Heist' White Noise Generator Blueprint	20580
+'Ghost' ECM Burst Blueprint	20582
+150mm 'Musket' Railgun Blueprint	20588
+250mm 'Flintlock' Railgun Blueprint	20590
+425mm 'Popper' Railgun Blueprint	20592
+'Balefire' Rocket Launcher Blueprint	20594
+'Gallows' Light Missile Launcher Blueprint	20596
+'Pickaxe' Rapid Light Missile Launcher Blueprint	20598
+'Undertaker' Heavy Missile Launcher Blueprint	20600
+'Noose' Cruise Missile Launcher Blueprint	20602
+'Barrage' Torpedo Launcher Blueprint	20604
+'Whiskey' Explosive Deflection Amplifier Blueprint	20606
+'High Noon' Thermic Dissipation Amplifier Blueprint	20608
+'Cactus' Modified Kinetic Deflection Amplifier Blueprint	20610
+'Prospector' EM Ward Amplifier Blueprint	20612
+'Glycerine' Shield Boost Amplifier Blueprint	20614
+Small 'Settler' Shield Booster Blueprint	20618
+Medium 'Lone Ranger' Shield Booster Blueprint	20620
+Large 'Outlaw' Shield Booster Blueprint	20622
+X-Large 'Locomotive' Shield Booster Blueprint	20624
+Small 'Wolf' Shield Extender Blueprint	20626
+Micro 'Trapper' Shield Extender Blueprint	20628
+Medium 'Canyon' Shield Extender Blueprint	20630
+Large 'Sheriff' Shield Extender Blueprint	20632
+'Nugget' Kinetic Deflection Field Blueprint	20634
+'Desert Heat' Thermic Dissipation Field Blueprint	20636
+'Posse' Adaptive Invulnerability Field Blueprint	20638
+'Poacher' EM Ward Field Blueprint	20640
+'Snake Eyes' Explosive Deflection Field Blueprint	20642
+Capital Armor Repairer I Blueprint	20702
+Capital Shield Booster I Blueprint	20704
+Capital Propulsion Engine Blueprint	21010
+Capital Turret Hardpoint Blueprint	21012
+Capital Sensor Cluster Blueprint	21014
+Capital Armor Plates Blueprint	21018
+Capital Capacitor Battery Blueprint	21020
+Capital Power Generator Blueprint	21022
+Capital Shield Emitter Blueprint	21024
+Capital Jump Drive Blueprint	21026
+Capital Cargo Bay Blueprint	21028
+Capital Drone Bay Blueprint	21030
+Capital Computer System Blueprint	21036
+Capital Construction Parts Blueprint	21038
+Capital Siege Array Blueprint	21040
+Capital Launcher Hardpoint Blueprint	21042
+Crude Sculpture Blueprint	21055
+Cynosural Field I Blueprint	21095
+Goru's Shuttle Blueprint	21098
+Guristas Antimatter Charge S Blueprint	21335
+1MN Analog Booster Rockets Blueprint	21471
+10MN Analog Booster Rockets Blueprint	21473
+100MN Analog Booster Rockets Blueprint	21475
+1MN Digital Booster Rockets Blueprint	21477
+10MN Digital Booster Rockets Blueprint	21479
+100MN Digital Booster Rockets Blueprint	21481
+Ballistic 'Purge' Targeting System I Blueprint	21483
+'Full Duplex' Ballistic Targeting System Blueprint	21485
+'Kindred' Stabilization Actuator I Blueprint	21487
+Monophonic Stabilization Actuator I Blueprint	21489
+Synthetic Hull Conversion Overdrive Injector I Blueprint	21492
+Limited Expanded 'Archiver' Cargo I Blueprint	21494
+Synthetic Hull Conversion Reinforced Bulkheads I Blueprint	21497
+Synthetic Hull Conversion Inertia Stabilizers I Blueprint	21499
+Synthetic Hull Conversion Nanofiber Structure I Blueprint	21501
+Small 'Integrative' Hull Repair Unit Blueprint	21505
+Medium 'Integrative' Hull Repair Unit Blueprint	21507
+Large 'Integrative' Hull Repair Unit Blueprint	21509
+Process-Interruptive Warp Disruptor Blueprint	21511
+'Delineative' Warp Scrambler Blueprint	21513
+Gravimetric Firewall Blueprint	21522
+LADAR Firewall Blueprint	21524
+Magnetometric Firewall Blueprint	21526
+Multi Sensor Firewall Blueprint	21528
+RADAR Firewall Blueprint	21530
+Small Degenerative Concussion Bomb I Blueprint	21535
+Medium Degenerative Concussion Bomb I Blueprint	21537
+Large Degenerative Concussion Bomb I Blueprint	21539
+'Inception' Target Painter I Blueprint	21541
+N-1 Neon Type Rocket Bay Blueprint	21543
+200mm Light 'Jolt' Autocannon I Blueprint	21546
+250mm Light 'Jolt' Artillery I Blueprint	21548
+280mm 'Jolt' Artillery I Blueprint	21550
+425mm Medium 'Jolt' Autocannon I Blueprint	21552
+650mm Medium 'Jolt' Artillery I Blueprint	21554
+720mm 'Jolt' Artillery I Blueprint	21556
+800mm Heavy 'Jolt' Repeating Cannon I Blueprint	21558
+1200mm Heavy 'Jolt' Artillery I Blueprint	21560
+1400mm 'Jolt' Artillery I Blueprint	21562
+Cynosural Field Generator I Blueprint	21604
+Guristas Shuttle Blueprint	21629
+Vespa II Blueprint	21639
+Valkyrie II Blueprint	21641
+Civilian Armor Repairer Blueprint	21854
+Civilian Expanded Cargohold Blueprint	21856
+Civilian Afterburner Blueprint	21858
+Nova Heavy Assault Missile Blueprint	21868
+Amarr Factory Outpost Platform Blueprint	21943
+Caldari Research Outpost Platform Blueprint	21944
+Gallente Administrative Outpost Platform Blueprint	21945
+Minmatar Service Outpost Platform Blueprint	21946
+Station Construction Parts Blueprint	21948
+Station Hangar Array Blueprint	21950
+Station Storage Bay Blueprint	21952
+Station Laboratory Blueprint	21954
+Station Factory Blueprint	21956
+Station Repair Facility Blueprint	21958
+Station Reprocessing Plant Blueprint	21960
+Station Docking Bay Blueprint	21962
+Station Market Network Blueprint	21964
+Station Medical Center Blueprint	21966
+Station Office Center Blueprint	21968
+Station Mission Network Blueprint	21970
+Data Analyzer I Blueprint	22176
+Relic Analyzer I Blueprint	22178
+Ice Harvester II Blueprint	22230
+Ballistic Control System II Blueprint	22292
+Armored Warfare Link - Damage Control I Blueprint	22299
+Armored Warfare Link - Passive Defense I Blueprint	22300
+Armored Warfare Link - Rapid Repair I Blueprint	22301
+Command Processor I Blueprint	22302
+Information Warfare Link - Electronic Superiority I Blueprint	22303
+Information Warfare Link - Recon Operation I Blueprint	22304
+Information Warfare Link - Sensor Integrity I Blueprint	22305
+Siege Warfare Link - Shield Harmonizing I Blueprint	22306
+Siege Warfare Link - Active Shielding I Blueprint	22307
+Siege Warfare Link - Shield Efficiency I Blueprint	22308
+Skirmish Warfare Link - Evasive Maneuvers I Blueprint	22309
+Skirmish Warfare Link - Interdiction Maneuvers I Blueprint	22310
+Skirmish Warfare Link - Rapid Deployment I Blueprint	22311
+'Daemon' Data Analyzer I Blueprint	22326
+'Codex' Data Analyzer I Blueprint	22328
+'Alpha' Data Analyzer I Blueprint	22330
+'Libram' Data Analyzer I Blueprint	22332
+Redeemer Blueprint	22429
+Sin Blueprint	22431
+Widow Blueprint	22437
+Panther Blueprint	22441
+Eos Blueprint	22443
+Sleipnir Blueprint	22445
+Vulture Blueprint	22447
+Absolution Blueprint	22449
+Heretic Blueprint	22453
+Sabre Blueprint	22457
+Eris Blueprint	22461
+Flycatcher Blueprint	22465
+Astarte Blueprint	22467
+Claymore Blueprint	22469
+Nighthawk Blueprint	22471
+Damnation Blueprint	22475
+Warp Prohibitor I Blueprint	22477
+Mining Laser Upgrade I Blueprint	22543
+Hulk Blueprint	22545
+Skiff Blueprint	22547
+Mackinaw Blueprint	22549
+Mining Foreman Link - Harvester Capacitor Efficiency I Blueprint	22554
+Mining Foreman Link - Mining Laser Field Enhancement I Blueprint	22556
+Mining Foreman Link - Laser Optimization I Blueprint	22558
+Praetor EV-900 Blueprint	22573
+Ice Harvester Upgrade I Blueprint	22577
+Heavy Shield Maintenance Bot I Blueprint	22766
+Warp Disrupt Probe Blueprint	22779
+Fighter Uno Blueprint	22781
+Interdiction Sphere Launcher I Blueprint	22783
+Hel Blueprint	22853
+'Aura' Warp Core Stabilizer I Blueprint	22876
+'Natura' Warp Core Stabilizer I Blueprint	22878
+'Pilfer' Energized Adaptive Nano Membrane I Blueprint	22880
+'Moonshine' Energized Thermic Membrane I Blueprint	22882
+'Mafia' Energized Kinetic Membrane I Blueprint	22884
+Stealth System I Blueprint	22886
+'Harmony' Small Armor Repairer I Blueprint	22888
+'Meditation' Medium Armor Repairer I Blueprint	22890
+'Protest' Large Armor Repairer I Blueprint	22892
+'Gonzo' Damage Control I Blueprint	22894
+'Shady' ECCM - Gravimetric I Blueprint	22896
+'Forger' ECCM - Magnetometric I Blueprint	22898
+'Corporate' Light Electron Blaster I Blueprint	22900
+'Dealer' Light Ion Blaster I Blueprint	22902
+'Racket' Light Neutron Blaster I Blueprint	22904
+'Slither' Heavy Electron Blaster I Blueprint	22906
+'Hooligan' Heavy Ion Blaster I Blueprint	22908
+'Hustler' Heavy Neutron Blaster I Blueprint	22910
+'Swindler' Electron Blaster Cannon I Blueprint	22912
+'Felon' Ion Blaster Cannon I Blueprint	22914
+'Underhand' Neutron Blaster Cannon I Blueprint	22916
+'Capitalist' Magnetic Field Stabilizer I Blueprint	22918
+'Monopoly' Magnetic Field Stabilizer I Blueprint	22920
+'Habitat' Miner I Blueprint	22922
+'Wild' Miner I Blueprint	22924
+'Bootleg' ECCM Projector I Blueprint	22926
+'Economist' Tracking Computer I Blueprint	22928
+'Marketeer' Tracking Computer I Blueprint	22930
+'Distributor' Tracking Disruptor I Blueprint	22932
+'Investor' Tracking Disruptor I Blueprint	22934
+'Tycoon' Remote Tracking Computer Blueprint	22936
+'Enterprise' Remote Tracking Computer Blueprint	22938
+'Boss' Remote Sensor Booster I Blueprint	22940
+'Entrepreneur' Remote Sensor Booster I Blueprint	22942
+'Broker' Remote Sensor Dampener I Blueprint	22944
+'Executive' Remote Sensor Dampener I Blueprint	22946
+'Beatnik' Small Remote Armor Repairer Blueprint	22948
+'Love' Medium Remote Armor Repairer Blueprint	22950
+'Pacifier' Large Remote Armor Repairer Blueprint	22952
+'Cartel' Power Diagnostic System I Blueprint	22954
+Templar Blueprint	23056
+Dragonfly Blueprint	23058
+Firbolg Blueprint	23060
+Einherji Blueprint	23062
+Imperial Navy Multifrequency S Blueprint	23072
+'Brotherhood' Small Remote Armor Repairer Blueprint	23415
+'Peace' Large Remote Armor Repairer Blueprint	23417
+'Radical' Damage Control I Blueprint	23419
+Wasp EC-900 Blueprint	23474
+Ogre SD-900 Blueprint	23507
+Praetor TD-900 Blueprint	23511
+Berserker TP-900 Blueprint	23513
+Heavy Armor Maintenance Bot I Blueprint	23524
+Curator I Blueprint	23526
+Drone Link Augmentor I Blueprint	23528
+Omnidirectional Tracking Link I Blueprint	23534
+Berserker SW-900 Blueprint	23537
+Warden I Blueprint	23560
+Garde I Blueprint	23562
+Bouncer I Blueprint	23564
+Acolyte EV-300 Blueprint	23660
+Infiltrator EV-600 Blueprint	23703
+Vespa EC-600 Blueprint	23706
+Hornet EC-300 Blueprint	23708
+Medium Armor Maintenance Bot I Blueprint	23710
+Light Armor Maintenance Bot I Blueprint	23712
+Hammerhead SD-600 Blueprint	23714
+Hobgoblin SD-300 Blueprint	23716
+Medium Shield Maintenance Bot I Blueprint	23718
+Light Shield Maintenance Bot I Blueprint	23720
+Valkyrie TP-600 Blueprint	23722
+Warrior TP-300 Blueprint	23724
+Infiltrator TD-600 Blueprint	23726
+Acolyte TD-300 Blueprint	23728
+Valkyrie SW-600 Blueprint	23730
+Warrior SW-300 Blueprint	23732
+Clone Vat Bay I Blueprint	23736
+Archon Blueprint	23758
+FA-14 Templar Blueprint	23760
+Ragnarok Blueprint	23774
+'Abatis' 100mm Reinforced Steel Plates I Blueprint	23784
+'Bailey' 1600mm Reinforced Steel Plates I Blueprint	23786
+'Chainmail' 200mm Reinforced Steel Plates I Blueprint	23788
+'Bastion' 400mm Reinforced Steel Plates I Blueprint	23790
+'Citadella' 50mm Reinforced Steel Plates I Blueprint	23792
+'Barbican' 800mm Reinforced Steel Plates I Blueprint	23794
+'Gorget' Small Armor Repairer I Blueprint	23796
+'Greaves' Medium Armor Repairer I Blueprint	23798
+'Hauberk' Large Armor Repairer I Blueprint	23800
+'Crucible' Small Capacitor Battery I Blueprint	23802
+'Censer' Medium Capacitor Battery I Blueprint	23804
+'Thurifer' Large Capacitor Battery I Blueprint	23806
+'Saddle' Small Capacitor Booster I Blueprint	23808
+'Harness' Medium Capacitor Booster I Blueprint	23810
+'Plough' Heavy Capacitor Booster I Blueprint	23812
+'Palisade' Cap Recharger I Blueprint	23814
+'Caltrop' Small Energy Neutralizer I Blueprint	23816
+'Ditch' Medium Energy Neutralizer I Blueprint	23818
+'Moat' Heavy Energy Neutralizer I Blueprint	23820
+'Upir' Small Nosferatu I Blueprint	23822
+'Strigoi' Medium Nosferatu I Blueprint	23825
+'Vrykolakas' Heavy Nosferatu I Blueprint	23830
+'Mace' Dual Light Beam Laser I Blueprint	23835
+'Longbow' Small Focused Pulse Laser I Blueprint	23837
+'Gauntlet' Small Focused Beam Laser I Blueprint	23839
+'Crossbow' Focused Medium Beam Laser I Blueprint	23841
+'Joust' Heavy Pulse Laser I Blueprint	23843
+'Arquebus' Heavy Beam Laser I Blueprint	23845
+'Halberd' Mega Pulse Laser I Blueprint	23847
+'Catapult' Mega Beam Laser I Blueprint	23849
+'Ballista' Tachyon Beam Laser I Blueprint	23851
+'Squire' Small Remote Capacitor Transmitter Blueprint	23853
+'Knight' Medium Remote Capacitor Transmitter Blueprint	23855
+'Chivalry' Large Remote Capacitor Transmitter Blueprint	23857
+'Pike' Small EMP Smartbomb I Blueprint	23865
+'Lance' Medium EMP Smartbomb I Blueprint	23867
+'Warhammer' Large EMP Smartbomb I Blueprint	23869
+Methros Enhanced Decoding Device Blueprint	23888
+'Page' Capacitor Flux Coil I Blueprint	23895
+'Motte' Capacitor Power Relay I Blueprint	23897
+'Portcullis' Reactor Control Unit I Blueprint	23899
+'Mangonel' Heat Sink I Blueprint	23901
+'Trebuchet' Heat Sink I Blueprint	23903
+Thanatos Blueprint	23912
+Nyx Blueprint	23914
+Chimera Blueprint	23916
+Wyvern Blueprint	23918
+Aeon Blueprint	23920
+Jump Portal Generator I Blueprint	23954
+Drone Control Unit I Blueprint	24284
+Modulated Deep Core Strip Miner II Blueprint	24306
+Small Tractor Beam I Blueprint	24349
+Drone Navigation Computer I Blueprint	24396
+Drone Navigation Computer II Blueprint	24418
+Drone Link Augmentor II Blueprint	24428
+Omnidirectional Tracking Link II Blueprint	24439
+Shield Boost Amplifier II Blueprint	24444
+R.A.M.- Battlecruiser Tech Blueprint	24469
+Scourge Rage Rocket Blueprint	24472
+Nova Rage Rocket Blueprint	24474
+Inferno Rage Rocket Blueprint	24476
+Nidhoggur Blueprint	24484
+Inferno Rage Heavy Assault Missile Blueprint	24487
+Nova Rage Heavy Assault Missile Blueprint	24489
+Mjolnir Rage Heavy Assault Missile Blueprint	24491
+Scourge Fury Light Missile Blueprint	24496
+Nova Fury Light Missile Blueprint	24498
+Inferno Fury Light Missile Blueprint	24500
+Scourge Precision Light Missile Blueprint	24502
+Nova Precision Light Missile Blueprint	24504
+Mjolnir Precision Light Missile Blueprint	24506
+Nova Fury Heavy Missile Blueprint	24508
+Mjolnir Fury Heavy Missile Blueprint	24510
+Inferno Fury Heavy Missile Blueprint	24512
+Scourge Precision Heavy Missile Blueprint	24514
+Inferno Precision Heavy Missile Blueprint	24516
+Mjolnir Precision Heavy Missile Blueprint	24518
+Nova Rage Torpedo Blueprint	24520
+Scourge Rage Torpedo Blueprint	24522
+Mjolnir Rage Torpedo Blueprint	24524
+Inferno Javelin Torpedo Blueprint	24526
+Mjolnir Javelin Torpedo Blueprint	24528
+Scourge Javelin Torpedo Blueprint	24530
+Nova Fury Cruise Missile Blueprint	24532
+Scourge Fury Cruise Missile Blueprint	24534
+Mjolnir Fury Cruise Missile Blueprint	24536
+Nova Precision Cruise Missile Blueprint	24538
+Mjolnir Precision Cruise Missile Blueprint	24540
+Scourge Precision Cruise Missile Blueprint	24542
+Inferno Javelin Rocket Blueprint	24543
+Mjolnir Javelin Rocket Blueprint	24544
+Capital Jump Bridge Array Blueprint	24546
+Capital Clone Vat Bay Blueprint	24548
+Gjallarhorn Blueprint	24549
+Judgement Blueprint	24551
+Oblivion Blueprint	24553
+Aurora Ominae Blueprint	24555
+Capital Doomsday Weapon Mount Blueprint	24557
+Capital Ship Maintenance Bay Blueprint	24559
+Capital Corporate Hangar Bay Blueprint	24561
+Capital Remote Armor Repairer I Blueprint	24570
+Nova Javelin Rocket Blueprint	24604
+Scourge Javelin Rocket Blueprint	24605
+Scourge Javelin Heavy Assault Missile Blueprint	24614
+Inferno Javelin Heavy Assault Missile Blueprint	24615
+Nova Javelin Heavy Assault Missile Blueprint	24616
+Mjolnir Javelin Heavy Assault Missile Blueprint	24617
+Medium Tractor Beam I Blueprint	24621
+Large Tractor Beam I Blueprint	24623
+Capital Tractor Beam I Blueprint	24645
+Rokh Blueprint	24689
+Hyperion Blueprint	24691
+Abaddon Blueprint	24693
+Maelstrom Blueprint	24695
+Harbinger Blueprint	24697
+Drake Blueprint	24699
+Myrmidon Blueprint	24701
+Hurricane Blueprint	24703
+Gas Cloud Harvester I Blueprint	25267
+Standard Blue Pill Booster Blueprint	25303
+Improved Blue Pill Booster Blueprint	25307
+Strong Blue Pill Booster Blueprint	25308
+Standard Crash Booster Blueprint	25309
+Improved Crash Booster Blueprint	25310
+Strong Crash Booster Blueprint	25311
+Standard Sooth Sayer Booster Blueprint	25314
+Strong Frentix Booster Blueprint	25322
+Standard Mindflood Booster Blueprint	25323
+Standard Drop Booster Blueprint	25327
+Improved Drop Booster Blueprint	25328
+Strong Drop Booster Blueprint	25329
+Improved X-Instinct Booster Blueprint	25503
+Improved Exile Booster Blueprint	25504
+Improved Frentix Booster Blueprint	25505
+Improved Mindflood Booster Blueprint	25506
+Improved Sooth Sayer Booster Blueprint	25507
+Standard Exile Booster Blueprint	25508
+Standard Frentix Booster Blueprint	25509
+Standard X-Instinct Booster Blueprint	25510
+Strong Mindflood Booster Blueprint	25511
+Strong Sooth Sayer Booster Blueprint	25512
+Strong X-Instinct Booster Blueprint	25513
+Strong Exile Booster Blueprint	25539
+'Crop' Gas Cloud Harvester Blueprint	25541
+'Plow' Gas Cloud Harvester Blueprint	25543
+Signal Distortion Amplifier I Blueprint	25562
+Signal Distortion Amplifier II Blueprint	25564
+Esoteric Data Interface Blueprint	25584
+Occult Data Interface Blueprint	25585
+Incognito Data Interface Blueprint	25586
+Cryptic Data Interface Blueprint	25587
+Heavy Assault Missile Launcher II Blueprint	25716
+Large Anti-EM Pump I Blueprint	25737
+Recon Probe Launcher II Blueprint	25772
+Gas Cloud Harvester II Blueprint	25813
+Occult Ship Data Interface Blueprint	25852
+Esoteric Ship Data Interface Blueprint	25854
+Incognito Ship Data Interface Blueprint	25856
+Cryptic Ship Data Interface Blueprint	25858
+Salvager I Blueprint	25862
+Large Anti-Explosive Pump I Blueprint	25889
+Large Anti-Kinetic Pump I Blueprint	25891
+Large Anti-Thermic Pump I Blueprint	25893
+Large Trimark Armor Pump I Blueprint	25895
+Large Auxiliary Nano Pump I Blueprint	25897
+Large Nanobot Accelerator I Blueprint	25899
+Large Remote Repair Augmentor I Blueprint	25901
+Large Salvage Tackle I Blueprint	25903
+Large Core Defense Capacitor Safeguard I Blueprint	25907
+Large Drone Control Range Augmentor I Blueprint	25909
+Large Drone Repair Augmentor I Blueprint	25911
+Large Drone Scope Chip I Blueprint	25913
+Large Drone Speed Augmentor I Blueprint	25915
+Large Drone Durability Enhancer I Blueprint	25917
+Large Drone Mining Augmentor I Blueprint	25919
+Large Sentry Damage Augmentor I Blueprint	25921
+Large EW Drone Range Augmentor I Blueprint	25923
+Large Stasis Drone Augmentor I Blueprint	25925
+Large Signal Disruption Amplifier I Blueprint	25929
+Large Emission Scope Sharpener I Blueprint	25931
+Large Memetic Algorithm Bank I Blueprint	25933
+Large Liquid Cooled Electronics I Blueprint	25935
+Large Gravity Capacitor Upgrade I Blueprint	25937
+Large Capacitor Control Circuit I Blueprint	25949
+Large Egress Port Maximizer I Blueprint	25951
+Large Powergrid Subroutine Maximizer I Blueprint	25953
+Large Semiconductor Memory Cell I Blueprint	25955
+Large Ancillary Current Router I Blueprint	25957
+Large Energy Discharge Elutriation I Blueprint	25969
+Large Energy Ambit Extension I Blueprint	25971
+Large Energy Locus Coordinator I Blueprint	25973
+Large Energy Metastasis Adjuster I Blueprint	25975
+Large Algid Energy Administrations Unit I Blueprint	25977
+Large Energy Burst Aerator I Blueprint	25979
+Large Energy Collision Accelerator I Blueprint	25981
+Large Hybrid Discharge Elutriation I Blueprint	25997
+Large Hybrid Ambit Extension I Blueprint	25999
+Large Hybrid Locus Coordinator I Blueprint	26001
+Large Hybrid Metastasis Adjuster I Blueprint	26003
+Large Algid Hybrid Administrations Unit I Blueprint	26005
+Large Hybrid Burst Aerator I Blueprint	26007
+Large Hybrid Collision Accelerator I Blueprint	26009
+Large Hydraulic Bay Thrusters I Blueprint	26017
+Launcher Processor Rig I Blueprint	26019
+Large Warhead Rigor Catalyst I Blueprint	26021
+Large Rocket Fuel Cache Partition I Blueprint	26023
+Missile Guidance System Rig I Blueprint	26025
+Large Bay Loading Accelerator I Blueprint	26027
+Large Warhead Flare Catalyst I Blueprint	26029
+Large Warhead Calefaction Catalyst I Blueprint	26031
+Large Projectile Ambit Extension I Blueprint	26039
+Large Projectile Locus Coordinator I Blueprint	26041
+Large Projectile Metastasis Adjuster I Blueprint	26043
+Large Projectile Burst Aerator I Blueprint	26047
+Large Projectile Collision Accelerator I Blueprint	26049
+Large Dynamic Fuel Valve I Blueprint	26057
+Large Low Friction Nozzle Joints I Blueprint	26059
+Large Auxiliary Thrusters I Blueprint	26061
+Large Engine Thermal Shielding I Blueprint	26063
+Propellant Injection Vent I Blueprint	26065
+Large Warp Core Optimizer I Blueprint	26067
+Large Hyperspatial Velocity Optimizer I Blueprint	26069
+Large Polycarbon Engine Housing I Blueprint	26071
+Large Cargohold Optimization I Blueprint	26073
+Large Anti-EM Screen Reinforcer I Blueprint	26077
+Large Anti-Explosive Screen Reinforcer I Blueprint	26079
+Large Anti-Kinetic Screen Reinforcer I Blueprint	26081
+Large Anti-Thermal Screen Reinforcer I Blueprint	26083
+Large Core Defense Field Purger I Blueprint	26085
+Large Core Defense Operational Solidifier I Blueprint	26087
+Large Core Defense Field Extender I Blueprint	26089
+Large Core Defense Charge Economizer I Blueprint	26091
+Large Targeting Systems Stabilizer I Blueprint	26097
+Large Targeting System Subcontroller I Blueprint	26101
+Large Ionic Field Projector I Blueprint	26103
+Large Signal Focusing Kit I Blueprint	26105
+Large Particle Dispersion Augmentor I Blueprint	26107
+Large Particle Dispersion Projector I Blueprint	26109
+Large Inverted Signal Field Projector I Blueprint	26111
+Large Tracking Diagnostic Subroutines I Blueprint	26113
+Demo Probe Launcher Blueprint	26174
+Large Anti-EM Pump II Blueprint	26287
+Large Anti-Explosive Pump II Blueprint	26289
+Large Anti-Kinetic Pump II Blueprint	26291
+Large Anti-Thermic Pump II Blueprint	26293
+Large Auxiliary Nano Pump II Blueprint	26295
+Large Nanobot Accelerator II Blueprint	26297
+Large Remote Repair Augmentor II Blueprint	26299
+Large Salvage Tackle II Blueprint	26301
+Large Trimark Armor Pump II Blueprint	26303
+Large Cargohold Optimization II Blueprint	26305
+Large Dynamic Fuel Valve II Blueprint	26307
+Large Engine Thermal Shielding II Blueprint	26309
+Large Low Friction Nozzle Joints II Blueprint	26311
+Large Polycarbon Engine Housing II Blueprint	26313
+Propellant Injection Vent II Blueprint	26315
+Large Auxiliary Thrusters II Blueprint	26319
+Large Warp Core Optimizer II Blueprint	26321
+Large Hyperspatial Velocity Optimizer II Blueprint	26323
+Large Drone Control Range Augmentor II Blueprint	26325
+Large Drone Durability Enhancer II Blueprint	26327
+Large Drone Mining Augmentor II Blueprint	26329
+Large Drone Repair Augmentor II Blueprint	26331
+Large Drone Scope Chip II Blueprint	26333
+Large Drone Speed Augmentor II Blueprint	26335
+Large EW Drone Range Augmentor II Blueprint	26337
+Large Sentry Damage Augmentor II Blueprint	26339
+Large Stasis Drone Augmentor II Blueprint	26341
+Large Emission Scope Sharpener II Blueprint	26343
+Large Signal Disruption Amplifier II Blueprint	26345
+Large Memetic Algorithm Bank II Blueprint	26347
+Large Liquid Cooled Electronics II Blueprint	26349
+Large Gravity Capacitor Upgrade II Blueprint	26351
+Large Particle Dispersion Augmentor II Blueprint	26353
+Large Inverted Signal Field Projector II Blueprint	26355
+Large Tracking Diagnostic Subroutines II Blueprint	26357
+Large Ionic Field Projector II Blueprint	26359
+Large Particle Dispersion Projector II Blueprint	26361
+Large Signal Focusing Kit II Blueprint	26363
+Large Targeting System Subcontroller II Blueprint	26365
+Large Targeting Systems Stabilizer II Blueprint	26367
+Large Egress Port Maximizer II Blueprint	26369
+Large Ancillary Current Router II Blueprint	26371
+Large Powergrid Subroutine Maximizer II Blueprint	26373
+Large Capacitor Control Circuit II Blueprint	26375
+Large Semiconductor Memory Cell II Blueprint	26377
+Large Energy Discharge Elutriation II Blueprint	26379
+Large Energy Burst Aerator II Blueprint	26381
+Large Energy Collision Accelerator II Blueprint	26383
+Large Algid Energy Administrations Unit II Blueprint	26385
+Large Energy Ambit Extension II Blueprint	26387
+Large Energy Locus Coordinator II Blueprint	26389
+Large Energy Metastasis Adjuster II Blueprint	26391
+Large Hybrid Discharge Elutriation II Blueprint	26393
+Large Hybrid Burst Aerator II Blueprint	26395
+Large Hybrid Collision Accelerator II Blueprint	26397
+Large Algid Hybrid Administrations Unit II Blueprint	26399
+Large Hybrid Ambit Extension II Blueprint	26401
+Large Hybrid Locus Coordinator II Blueprint	26403
+Large Hybrid Metastasis Adjuster II Blueprint	26405
+Large Bay Loading Accelerator II Blueprint	26407
+Launcher Processor Rig II Blueprint	26409
+Missile Guidance System Rig II Blueprint	26411
+Large Warhead Flare Catalyst II Blueprint	26413
+Large Warhead Rigor Catalyst II Blueprint	26415
+Large Hydraulic Bay Thrusters II Blueprint	26417
+Large Rocket Fuel Cache Partition II Blueprint	26419
+Large Warhead Calefaction Catalyst II Blueprint	26421
+Projectile Cache Distributor II Blueprint	26423
+Large Projectile Collision Accelerator II Blueprint	26425
+Projectile Consumption Elutriator II Blueprint	26427
+Large Projectile Ambit Extension II Blueprint	26429
+Large Projectile Burst Aerator II Blueprint	26431
+Large Projectile Locus Coordinator II Blueprint	26433
+Large Projectile Metastasis Adjuster II Blueprint	26435
+Large Anti-EM Screen Reinforcer II Blueprint	26437
+Large Anti-Explosive Screen Reinforcer II Blueprint	26439
+Large Anti-Kinetic Screen Reinforcer II Blueprint	26441
+Large Anti-Thermal Screen Reinforcer II Blueprint	26443
+Large Core Defense Capacitor Safeguard II Blueprint	26445
+Large Core Defense Charge Economizer II Blueprint	26447
+Large Core Defense Field Extender II Blueprint	26449
+Large Core Defense Field Purger II Blueprint	26451
+Large Core Defense Operational Solidifier II Blueprint	26453
+Cryptic Tuner Data Interface Blueprint	26598
+Esoteric Tuner Data Interface Blueprint	26600
+Incognito Tuner Data Interface Blueprint	26602
+Occult Tuner Data Interface Blueprint	26604
+Miner II China Blueprint	26607
+Heavy Assault Missile Launcher I Blueprint	26759
+Mjolnir Heavy Assault Missile Blueprint	26760
+Inferno Heavy Assault Missile Blueprint	26761
+Scourge Heavy Assault Missile Blueprint	26762
+Tempest Tournament Issue TEST Blueprint	26843
+Tournament Bubble TEST Blueprint	26850
+Tournament ECM Burst Blueprint	26870
+Mobile Large Warp Disruptor II Blueprint	26889
+Mobile Medium Warp Disruptor II Blueprint	26891
+Mobile Small Warp Disruptor II Blueprint	26893
+Large Remote Armor Repairer II Blueprint	26915
+Medium Remote Armor Repairer II Blueprint	26916
+Small Remote Armor Repairer II Blueprint	26917
+Drone Damage Rig I Blueprint	26926
+Drone Damage Rig II Blueprint	26928
+Small Processor Overclocking Unit I Blueprint	26930
+Small Processor Overclocking Unit II Blueprint	26932
+Sensor Strength Rig I Blueprint	26961
+Sensor Strength Rig II Blueprint	26963
+Shield Transporter Rig I Blueprint	26965
+Shield Transporter Rig II Blueprint	26967
+Civilian Salvager Blueprint	26984
+Civilian Data Analyzer Blueprint	27015
+Civilian Relic Analyzer Blueprint	27020
+Perpetual Motion Unit I Blueprint	27022
+Perpetual Motion Unit II Blueprint	27024
+Civilian Data Interface Blueprint	27027
+Clay Pigeon Blueprint	27039
+Capital Auxiliary Nano Pump I Blueprint	27065
+Capital Nanobot Accelerator II Blueprint	27067
+Small Remote Repair Augmentor I Blueprint	27069
+Civilian Amarr Shuttle Blueprint	27300
+Civilian Caldari Shuttle Blueprint	27302
+Civilian Gallente Shuttle Blueprint	27304
+Civilian Minmatar Shuttle Blueprint	27306
+Station Warehouse Container Blueprint	27309
+Foundation Upgrade Platform Blueprint	27657
+Pedestal Upgrade Platform Blueprint	27659
+Monument Upgrade Platform Blueprint	27661
+Amarr Basic Outpost Factory Platform Blueprint	27663
+Amarr Advanced Outpost Factory Platform Blueprint	27665
+Amarr Outpost Factory Platform Blueprint	27667
+Angel Control Tower Blueprint	27677
+Remote ECM Burst I Blueprint	27679
+Angel Control Tower Medium Blueprint	27680
+Angel Control Tower Small Blueprint	27681
+Blood Control Tower Blueprint	27682
+Blood Control Tower Medium Blueprint	27684
+Blood Control Tower Small Blueprint	27685
+Dark Blood Control Tower Blueprint	27688
+Dark Blood Control Tower Medium Blueprint	27689
+Dark Blood Control Tower Small Blueprint	27690
+Domination Control Tower Medium Blueprint	27694
+Domination Control Tower Blueprint	27695
+Domination Control Tower Small Blueprint	27696
+Guristas Control Tower Small Blueprint	27697
+Guristas Control Tower Medium Blueprint	27698
+Guristas Control Tower Blueprint	27699
+Dread Guristas Control Tower Small Blueprint	27703
+Dread Guristas Control Tower Medium Blueprint	27704
+Dread Guristas Control Tower Blueprint	27705
+Serpentis Control Tower Blueprint	27706
+Serpentis Control Tower Medium Blueprint	27707
+Serpentis Control Tower Small Blueprint	27708
+Shadow Control Tower Medium Blueprint	27712
+Shadow Control Tower Blueprint	27713
+Shadow Control Tower Small Blueprint	27714
+Sansha Control Tower Blueprint	27781
+Sansha Control Tower Medium Blueprint	27783
+Sansha Control Tower Small Blueprint	27785
+True Sansha Control Tower Blueprint	27787
+True Sansha Control Tower Medium Blueprint	27789
+True Sansha Control Tower Small Blueprint	27791
+Sansha Large Pulse Laser Battery Blueprint	27807
+Sansha Large Beam Laser Battery Blueprint	27808
+Sansha Medium Beam Laser Battery Blueprint	27809
+Sansha Medium Pulse Laser Battery Blueprint	27810
+Sansha Small Pulse Laser Battery Blueprint	27811
+Sansha Small Beam Laser Battery Blueprint	27812
+True Sansha Small Beam Laser Battery Blueprint	27813
+True Sansha Small Pulse Laser Battery Blueprint	27814
+True Sansha Medium Pulse Laser Battery Blueprint	27815
+True Sansha Medium Beam Laser Battery Blueprint	27816
+True Sansha Large Pulse Laser Battery Blueprint	27817
+True Sansha Large Beam Laser Battery Blueprint	27818
+Blood Large Beam Laser Battery Blueprint	27819
+Blood Large Pulse Laser Battery Blueprint	27820
+Blood Medium Beam Laser Battery Blueprint	27821
+Blood Medium Pulse Laser Battery Blueprint	27822
+Blood Small Beam Laser Battery Blueprint	27823
+Blood Small Pulse Laser Battery Blueprint	27824
+Dark Blood Large Beam Laser Battery Blueprint	27825
+Dark Blood Large Pulse Laser Battery Blueprint	27826
+Dark Blood Medium Beam Laser Battery Blueprint	27827
+Dark Blood Medium Pulse Laser Battery Blueprint	27828
+Dark Blood Small Beam Laser Battery Blueprint	27829
+Dark Blood Small Pulse Laser Battery Blueprint	27830
+Angel Large Artillery Battery Blueprint	27831
+Angel Large Autocannon Battery Blueprint	27832
+Angel Medium Autocannon Battery Blueprint	27833
+Angel Small Autocannon Battery Blueprint	27834
+Angel Medium Artillery Battery Blueprint	27835
+Angel Small Artillery Battery Blueprint	27836
+Domination Small Artillery Battery Blueprint	27837
+Domination Medium Artillery Battery Blueprint	27838
+Domination Large Artillery Battery Blueprint	27839
+Domination Large Autocannon Battery Blueprint	27840
+Domination Medium Autocannon Battery Blueprint	27841
+Domination Small Autocannon Battery Blueprint	27842
+Serpentis Large Railgun Battery Blueprint	27843
+Serpentis Medium Railgun Battery Blueprint	27844
+Serpentis Small Railgun Battery Blueprint	27845
+Serpentis Small Blaster Battery Blueprint	27846
+Serpentis Medium Blaster Battery Blueprint	27847
+Serpentis Large Blaster Battery Blueprint	27848
+Shadow Large Blaster Battery Blueprint	27849
+Shadow Large Railgun Battery Blueprint	27850
+Shadow Medium Railgun Battery Blueprint	27851
+Shadow Medium Blaster Battery Blueprint	27852
+Shadow Small Blaster Battery Blueprint	27853
+Shadow Small Railgun Battery Blueprint	27854
+Guristas Ion Field Projection Battery Blueprint	27859
+Guristas White Noise Generation Battery Blueprint	27860
+Guristas Spatial Destabilization Battery Blueprint	27861
+Guristas Phase Inversion Battery Blueprint	27862
+Dread Guristas Phase Inversion Battery Blueprint	27863
+Dread Guristas Ion Field Projection Battery Blueprint	27864
+Dread Guristas Spatial Destabilization Battery Blueprint	27865
+Dread Guristas White Noise Generation Battery Blueprint	27866
+Serpentis Warp Scrambling Battery Blueprint	27867
+Serpentis Warp Disruption Battery Blueprint	27868
+Shadow Warp Disruption Battery Blueprint	27869
+Shadow Warp Scrambling Battery Blueprint	27870
+Angel Stasis Webification Battery Blueprint	27871
+Domination Stasis Webification Battery Blueprint	27872
+Serpentis Sensor Dampening Battery Blueprint	27873
+Shadow Sensor Dampening Battery Blueprint	27874
+Blood Energy Neutralizing Battery Blueprint	27875
+Dark Blood Energy Neutralizing Battery Blueprint	27876
+Sansha Energy Neutralizing Battery Blueprint	27877
+True Sansha Energy Neutralizing Battery Blueprint	27878
+Large Remote Hull Repairer I Blueprint	27905
+Concussion Bomb Blueprint	27913
+Bomb Launcher I Blueprint	27915
+Scorch Bomb Blueprint	27917
+Shrapnel Bomb Blueprint	27919
+Electron Bomb Blueprint	27921
+Lockbreaker Bomb Blueprint	27923
+Void Bomb Blueprint	27925
+Medium Remote Hull Repairer I Blueprint	27931
+Small Remote Hull Repairer I Blueprint	27933
+Capital Remote Hull Repairer I Blueprint	27935
+Caldari Basic Outpost Factory Platform Blueprint	27938
+Gallente Basic Outpost Factory Platform Blueprint	27940
+Minmatar Basic Outpost Factory Platform Blueprint	27942
+Guristas Citadel Torpedo Battery Blueprint	27944
+Guristas Torpedo Battery Blueprint	27945
+Guristas Cruise Missile Battery Blueprint	27946
+Dread Guristas Cruise Missile Battery Blueprint	27947
+Dread Guristas Torpedo Battery Blueprint	27948
+Dread Guristas Citadel Torpedo Battery Blueprint	27949
+Triage Module I Blueprint	27952
+Caldari Outpost Factory Platform Blueprint	27958
+Caldari Advanced Outpost Factory Platform Blueprint	27960
+Amarr Basic Outpost Plant Platform Blueprint	27962
+Amarr Outpost Plant Platform Blueprint	27964
+Amarr Advanced Outpost Plant Platform Blueprint	27966
+Gallente Outpost Factory Platform Blueprint	27968
+Gallente Advanced Outpost Factory Platform Blueprint	27970
+Minmatar Outpost Factory Platform Blueprint	27972
+Minmatar Advanced Outpost Factory Platform Blueprint	27974
+Gallente Outpost Plant Platform Blueprint	27976
+Gallente Advanced Outpost Plant Platform Blueprint	27978
+Minmatar Outpost Plant Platform Blueprint	27980
+Minmatar Advanced Outpost Plant Platform Blueprint	27982
+Gallente Basic Outpost Plant Platform Blueprint	27984
+Minmatar Basic Outpost Plant Platform Blueprint	27986
+Amarr Basic Outpost Laboratory Platform Blueprint	27988
+Amarr Outpost Laboratory Platform Blueprint	27990
+Amarr Advanced Outpost Laboratory Platform Blueprint	27992
+Caldari Basic Outpost Laboratory Platform Blueprint	27994
+Caldari Outpost Laboratory Platform Blueprint	27996
+Caldari Advanced Outpost Laboratory Platform Blueprint	27998
+Caldari Basic Outpost Research Facility Platform Blueprint	28000
+Caldari Outpost Research Facility Platform Blueprint	28002
+Caldari Advanced Outpost Research Facility Platform Blueprint	28004
+Gallente Basic Outpost Laboratory Platform Blueprint	28006
+Gallente Outpost Laboratory Platform Blueprint	28008
+Gallente Advanced Outpost Laboratory Platform Blueprint	28010
+Minmatar Basic Outpost Laboratory Platform Blueprint	28012
+Minmatar Outpost Laboratory Platform Blueprint	28014
+Minmatar Advanced Outpost Laboratory Platform Blueprint	28016
+Amarr Basic Outpost Refinery Platform Blueprint	28018
+Amarr Outpost Refinery Platform Blueprint	28020
+Amarr Advanced Outpost Refinery Platform Blueprint	28022
+Caldari Basic Outpost Refinery Platform Blueprint	28024
+Caldari Outpost Refinery Platform Blueprint	28026
+Caldari Advanced Outpost Refinery Platform Blueprint	28028
+Gallente Basic Outpost Refinery Platform Blueprint	28030
+Gallente Outpost Refinery Platform Blueprint	28032
+Gallente Advanced Outpost Refinery Platform Blueprint	28034
+Minmatar Basic Outpost Refinery Platform Blueprint	28036
+Minmatar Outpost Refinery Platform Blueprint	28038
+Minmatar Advanced Outpost Refinery Platform Blueprint	28040
+Amarr Basic Outpost Office Platform Blueprint	28042
+Amarr Outpost Office Platform Blueprint	28044
+Amarr Advanced Outpost Office Platform Blueprint	28046
+Caldari Basic Outpost Office Platform Blueprint	28048
+Caldari Outpost Office Platform Blueprint	28050
+Caldari Advanced Outpost Office Platform Blueprint	28052
+Gallente Basic Outpost Office Platform Blueprint	28054
+Gallente Outpost Office Platform Blueprint	28056
+Gallente Advanced Outpost Office Platform Blueprint	28058
+Minmatar Basic Outpost Office Platform Blueprint	28060
+Minmatar Outpost Office Platform Blueprint	28062
+Minmatar Advanced Outpost Office Platform Blueprint	28064
+Heavy Armor Maintenance Bot II Blueprint	28198
+Heavy Shield Maintenance Bot II Blueprint	28200
+Light Armor Maintenance Bot II Blueprint	28202
+Light Shield Maintenance Bot II Blueprint	28204
+Medium Armor Maintenance Bot II Blueprint	28206
+Medium Shield Maintenance Bot II Blueprint	28208
+Warden II Blueprint	28210
+Garde II Blueprint	28212
+Curator II Blueprint	28214
+Bouncer II Blueprint	28216
+'Integrated' Acolyte Blueprint	28263
+'Augmented' Acolyte Blueprint	28265
+'Integrated' Berserker Blueprint	28267
+'Augmented' Berserker Blueprint	28269
+'Integrated' Hammerhead Blueprint	28271
+'Augmented' Hammerhead Blueprint	28273
+'Integrated' Hobgoblin Blueprint	28275
+'Augmented' Hobgoblin Blueprint	28277
+'Integrated' Hornet Blueprint	28279
+'Augmented' Hornet Blueprint	28281
+'Integrated' Infiltrator Blueprint	28283
+'Augmented' Infiltrator Blueprint	28285
+'Integrated' Ogre Blueprint	28287
+'Augmented' Ogre Blueprint	28289
+'Integrated' Praetor Blueprint	28291
+'Augmented' Praetor Blueprint	28293
+'Integrated' Valkyrie Blueprint	28295
+'Augmented' Valkyrie Blueprint	28297
+'Integrated' Vespa Blueprint	28299
+'Augmented' Vespa Blueprint	28301
+'Integrated' Warrior Blueprint	28303
+'Augmented' Warrior Blueprint	28305
+'Integrated' Wasp Blueprint	28307
+'Augmented' Wasp Blueprint	28309
+Republic Fleet Carbonized Lead L Blueprint	28325
+Republic Fleet Carbonized Lead M Blueprint	28327
+Republic Fleet Carbonized Lead S Blueprint	28329
+Republic Fleet Carbonized Lead XL Blueprint	28331
+Republic Fleet Depleted Uranium L Blueprint	28333
+Republic Fleet Depleted Uranium M Blueprint	28335
+Republic Fleet Depleted Uranium S Blueprint	28337
+Republic Fleet Depleted Uranium XL Blueprint	28339
+Rorqual Blueprint	28353
+Compressed Arkonor Blueprint	28368
+Republic Fleet Heavy Assault Missile Launcher Blueprint	28376
+Caldari Navy Heavy Assault Missile Launcher Blueprint	28378
+Domination Heavy Assault Missile Launcher Blueprint	28380
+Dread Guristas Heavy Assault Missile Launcher Blueprint	28382
+True Sansha Heavy Assault Missile Launcher Blueprint	28384
+Compressed Crimson Arkonor Blueprint	28386
+Compressed Prime Arkonor Blueprint	28448
+Compressed Bistot Blueprint	28449
+Compressed Monoclinic Bistot Blueprint	28450
+Compressed Triclinic Bistot Blueprint	28451
+Compressed Crokite Blueprint	28452
+Compressed Crystalline Crokite Blueprint	28453
+Compressed Sharp Crokite Blueprint	28454
+Compressed Dark Ochre Blueprint	28455
+Compressed Obsidian Ochre Blueprint	28456
+Compressed Onyx Ochre Blueprint	28457
+Compressed Gneiss Blueprint	28458
+Compressed Iridescent Gneiss Blueprint	28459
+Compressed Prismatic Gneiss Blueprint	28460
+Compressed Hedbergite Blueprint	28461
+Compressed Glazed Hedbergite Blueprint	28462
+Compressed Vitric Hedbergite Blueprint	28463
+Compressed Hemorphite Blueprint	28464
+Compressed Radiant Hemorphite Blueprint	28465
+Compressed Vivid Hemorphite Blueprint	28466
+Compressed Jaspet Blueprint	28467
+Compressed Pristine Jaspet Blueprint	28468
+Compressed Pure Jaspet Blueprint	28469
+Compressed Kernite Blueprint	28470
+Compressed Fiery Kernite Blueprint	28471
+Compressed Luminous Kernite Blueprint	28472
+Compressed Magma Mercoxit Blueprint	28473
+Compressed Mercoxit Blueprint	28474
+Compressed Vitreous Mercoxit Blueprint	28475
+Compressed Omber Blueprint	28476
+Compressed Golden Omber Blueprint	28477
+Compressed Silvery Omber Blueprint	28478
+Compressed Azure Plagioclase Blueprint	28479
+Compressed Plagioclase Blueprint	28480
+Compressed Rich Plagioclase Blueprint	28481
+Compressed Pyroxeres Blueprint	28482
+Compressed Solid Pyroxeres Blueprint	28483
+Compressed Viscous Pyroxeres Blueprint	28484
+Compressed Condensed Scordite Blueprint	28485
+Compressed Massive Scordite Blueprint	28486
+Compressed Scordite Blueprint	28487
+Compressed Bright Spodumain Blueprint	28488
+Compressed Gleaming Spodumain Blueprint	28489
+Compressed Spodumain Blueprint	28490
+Compressed Concentrated Veldspar Blueprint	28491
+Compressed Dense Veldspar Blueprint	28492
+Compressed Veldspar Blueprint	28493
+Compressed Blue Ice Blueprint	28494
+Compressed Clear Icicle Blueprint	28495
+Compressed Dark Glitter Blueprint	28496
+Compressed Enriched Clear Icicle Blueprint	28497
+Compressed Gelidus Blueprint	28498
+Compressed Glacial Mass Blueprint	28499
+Compressed Glare Crust Blueprint	28500
+Compressed Krystallos Blueprint	28501
+Compressed Pristine White Glaze Blueprint	28502
+Compressed Smooth Glacial Mass Blueprint	28503
+Compressed Thick Blue Ice Blueprint	28504
+Compressed White Glaze Blueprint	28505
+Khanid Navy Rocket Launcher Blueprint	28512
+Khanid Navy Stasis Webifier Blueprint	28515
+Khanid Navy Warp Disruptor Blueprint	28517
+Khanid Navy Warp Scrambler Blueprint	28519
+Khanid Navy Adaptive Nano Plating Blueprint	28521
+Khanid Navy Armor EM Hardener Blueprint	28523
+Khanid Navy Armor Explosive Hardener Blueprint	28525
+Khanid Navy Armor Kinetic Hardener Blueprint	28527
+Khanid Navy Armor Thermic Hardener Blueprint	28529
+Khanid Navy Cap Recharger Blueprint	28531
+Khanid Navy Capacitor Power Relay Blueprint	28533
+Khanid Navy Energized Adaptive Nano Membrane Blueprint	28535
+Khanid Navy Energized Kinetic Membrane Blueprint	28537
+Khanid Navy Energized Explosive Membrane Blueprint	28539
+Khanid Navy Energized EM Membrane Blueprint	28541
+Khanid Navy Energized Thermic Membrane Blueprint	28543
+Khanid Navy Large EMP Smartbomb Blueprint	28546
+Khanid Navy Kinetic Plating Blueprint	28548
+Khanid Navy Medium EMP Smartbomb Blueprint	28551
+Khanid Navy Explosive Plating Blueprint	28553
+Khanid Navy EM Plating Blueprint	28555
+Khanid Navy Small EMP Smartbomb Blueprint	28558
+Khanid Navy Thermic Plating Blueprint	28560
+Khanid Navy Co-Processor Blueprint	28562
+Khanid Navy Ballistic Control System Blueprint	28564
+Khanid Navy Heavy Assault Missile Launcher Blueprint	28566
+Mining Laser Upgrade II Blueprint	28577
+Ice Harvester Upgrade II Blueprint	28579
+Industrial Core I Blueprint	28584
+Design Laboratory Blueprint	28605
+Orca Blueprint	28607
+Planet Satellite Blueprint	28613
+Covert Cynosural Field Generator I Blueprint	28647
+Covert Cynosural Field I Blueprint	28651
+Covert Jump Portal Generator I Blueprint	28653
+Warp Disruption Field Generator I Blueprint	28655
+Paladin Blueprint	28660
+Kronos Blueprint	28662
+Vargur Blueprint	28666
+Synth Blue Pill Booster Blueprint	28671
+Synth Crash Booster Blueprint	28673
+Synth Drop Booster Blueprint	28675
+Synth Exile Booster Blueprint	28677
+Synth Frentix Booster Blueprint	28679
+Synth Mindflood Booster Blueprint	28681
+Synth X-Instinct Booster Blueprint	28683
+Synth Sooth Sayer Booster Blueprint	28685
+Golem Blueprint	28711
+Legion ECM Ion Field Projector Blueprint	28730
+Legion ECM Multispectral Jammer Blueprint	28732
+Legion ECM Phase Inverter Blueprint	28734
+Legion ECM Spatial Destabilizer Blueprint	28736
+Legion ECM White Noise Generator Blueprint	28738
+Thukker Micro Auxiliary Power Core Blueprint	28741
+Thukker Small Shield Extender Blueprint	28743
+Thukker Shield Extender I Blueprint	28745
+Thukker Medium Shield Extender Blueprint	28747
+ORE Deep Core Mining Laser Blueprint	28749
+ORE Miner Blueprint	28751
+ORE Ice Harvester Blueprint	28753
+ORE Strip Miner Blueprint	28755
+Sisters Expanded Probe Launcher Blueprint	28757
+Sisters Core Probe Launcher Blueprint	28759
+Syndicate Mobile Large Warp Disruptor Blueprint	28771
+Syndicate Mobile Medium Warp Disruptor Blueprint	28773
+Syndicate Mobile Small Warp Disruptor Blueprint	28775
+Syndicate Reactor Control Unit Blueprint	28777
+Syndicate 100mm Reinforced Steel Plates Blueprint	28779
+Syndicate 1600mm Reinforced Steel Plates Blueprint	28781
+Syndicate 200mm Reinforced Steel Plates Blueprint	28783
+Syndicate 400mm Reinforced Steel Plates Blueprint	28785
+Syndicate 800mm Reinforced Steel Plates Blueprint	28787
+Syndicate Gas Cloud Harvester Blueprint	28789
+Rhea Blueprint	28845
+Nomad Blueprint	28847
+Anshar Blueprint	28849
+Ark Blueprint	28851
+Mining Laser Optimization I Blueprint	28889
+Mining Laser Optimization II Blueprint	28891
+Mining Laser Range I Blueprint	28893
+Mining Laser Range II Blueprint	28895
+Optimal Range Script Blueprint	29000
+Tracking Speed Script Blueprint	29002
+Focused Warp Disruption Script Blueprint	29004
+Optimal Range Disruption Script Blueprint	29006
+Tracking Speed Disruption Script Blueprint	29008
+Targeting Range Script Blueprint	29010
+Scan Resolution Script Blueprint	29012
+Scan Resolution Dampening Script Blueprint	29014
+Targeting Range Dampening Script Blueprint	29016
+Capital Antimatter Reactor Unit Blueprint	29040
+Capital Crystalline Carbonide Armor Plate Blueprint	29042
+Capital Deflection Shield Emitter Blueprint	29044
+Capital Electrolytic Capacitor Unit Blueprint	29046
+Capital EM Pulse Generator Blueprint	29048
+Capital Fernite Carbide Composite Armor Plate Blueprint	29050
+Capital Fusion Reactor Unit Blueprint	29052
+Capital Fusion Thruster Blueprint	29054
+Capital Gravimetric Sensor Cluster Blueprint	29056
+Capital Graviton Pulse Generator Blueprint	29058
+Capital Graviton Reactor Unit Blueprint	29060
+Capital Ion Thruster Blueprint	29062
+Capital Laser Focusing Crystals Blueprint	29064
+Capital Ladar Sensor Cluster Blueprint	29066
+Capital Linear Shield Emitter Blueprint	29068
+Capital Magnetometric Sensor Cluster Blueprint	29070
+Capital Magpulse Thruster Blueprint	29072
+Capital Nanoelectrical Microprocessor Blueprint	29074
+Capital Nanomechanical Microprocessor Blueprint	29076
+Capital Nuclear Pulse Generator Blueprint	29078
+Capital Nuclear Reactor Unit Blueprint	29080
+Capital Oscillator Capacitor Unit Blueprint	29082
+Capital Particle Accelerator Unit Blueprint	29084
+Capital Photon Microprocessor Blueprint	29086
+Capital Plasma Pulse Generator Blueprint	29088
+Capital Plasma Thruster Blueprint	29090
+Capital Pulse Shield Emitter Blueprint	29092
+Capital Quantum Microprocessor Blueprint	29094
+Capital Radar Sensor Cluster Blueprint	29096
+Capital Scalar Capacitor Unit Blueprint	29098
+Capital Superconductor Rails Blueprint	29100
+Capital Sustained Shield Emitter Blueprint	29102
+Capital Tesseract Capacitor Unit Blueprint	29104
+Capital Thermonuclear Trigger Unit Blueprint	29106
+Capital Titanium Diborite Armor Plate Blueprint	29108
+Capital Tungsten Carbide Armor Plate Blueprint	29110
+Modified Augumene Antidote Blueprint	29204
+Basic Robotics Blueprint	29227
+Magnate Blueprint	29249
+Apotheosis Blueprint	29267
+Amarr Media Shuttle Blueprint	29329
+Caldari Media Shuttle Blueprint	29331
+Gallente Media Shuttle Blueprint	29333
+Minmatar Media Shuttle Blueprint	29335
+Augoror Navy Issue Blueprint	29338
+Scythe Fleet Issue Blueprint	29339
+Osprey Navy Issue Blueprint	29341
+Exequror Navy Issue Blueprint	29345
+Tengu Blueprint	29985
+Legion Blueprint	29987
+Proteus Blueprint	29989
+Loki Blueprint	29991
+Optimized Nano-Engines Blueprint	29993
+Warfare Computation Core Blueprint	29995
+Emergent Neurovisual Interface Blueprint	29997
+Fullerene Intercalated Sheets Blueprint	30003
+Reinforced Metallofullerene Alloys Blueprint	30009
+Core Scanner Probe I Blueprint	30014
+Combat Scanner Probe I Blueprint	30029
+Legion Electronics - Energy Parasitic Complex Blueprint	30037
+Legion Electronics - Tactical Targeting Network Blueprint	30039
+Legion Electronics - Dissolution Sequencer Blueprint	30041
+Legion Electronics - Emergent Locus Analyzer Blueprint	30043
+Tengu Electronics - Obfuscation Manifold Blueprint	30047
+Tengu Electronics - CPU Efficiency Gate Blueprint	30049
+Tengu Electronics - Dissolution Sequencer Blueprint	30051
+Tengu Electronics - Emergent Locus Analyzer Blueprint	30053
+Proteus Electronics - Friction Extension Processor Blueprint	30057
+Proteus Electronics - CPU Efficiency Gate Blueprint	30059
+Proteus Electronics - Dissolution Sequencer Blueprint	30061
+Proteus Electronics - Emergent Locus Analyzer Blueprint	30063
+Loki Electronics - Immobility Drivers Blueprint	30067
+Loki Electronics - Tactical Targeting Network Blueprint	30069
+Loki Electronics - Dissolution Sequencer Blueprint	30071
+Loki Electronics - Emergent Locus Analyzer Blueprint	30073
+Legion Propulsion - Chassis Optimization Blueprint	30077
+Legion Propulsion - Fuel Catalyst Blueprint	30079
+Legion Propulsion - Wake Limiter Blueprint	30081
+Legion Propulsion - Interdiction Nullifier Blueprint	30083
+Tengu Propulsion - Intercalated Nanofibers Blueprint	30087
+Tengu Propulsion - Gravitational Capacitor Blueprint	30089
+Tengu Propulsion - Fuel Catalyst Blueprint	30091
+Tengu Propulsion - Interdiction Nullifier Blueprint	30093
+Proteus Propulsion - Wake Limiter Blueprint	30097
+Proteus Propulsion - Localized Injectors Blueprint	30099
+Proteus Propulsion - Gravitational Capacitor Blueprint	30101
+Proteus Propulsion - Interdiction Nullifier Blueprint	30103
+Loki Propulsion - Chassis Optimization Blueprint	30107
+Loki Propulsion - Intercalated Nanofibers Blueprint	30109
+Loki Propulsion - Fuel Catalyst Blueprint	30111
+Loki Propulsion - Interdiction Nullifier Blueprint	30113
+Tengu Engineering - Power Core Multiplier Blueprint	30140
+Tengu Engineering - Augmented Capacitor Reservoir Blueprint	30142
+Tengu Engineering - Capacitor Regeneration Matrix Blueprint	30144
+Tengu Engineering - Supplemental Coolant Injector Blueprint	30146
+Proteus Engineering - Power Core Multiplier Blueprint	30150
+Proteus Engineering - Augmented Capacitor Reservoir Blueprint	30152
+Proteus Engineering - Capacitor Regeneration Matrix Blueprint	30154
+Proteus Engineering - Supplemental Coolant Injector Blueprint	30156
+Loki Engineering - Power Core Multiplier Blueprint	30160
+Loki Engineering - Augmented Capacitor Reservoir Blueprint	30162
+Loki Engineering - Capacitor Regeneration Matrix Blueprint	30164
+Loki Engineering - Supplemental Coolant Injector Blueprint	30166
+Legion Engineering - Power Core Multiplier Blueprint	30170
+Legion Engineering - Augmented Capacitor Reservoir Blueprint	30172
+Legion Engineering - Capacitor Regeneration Matrix Blueprint	30174
+Legion Engineering - Supplemental Coolant Injector Blueprint	30176
+Intact Thruster Sections	30187
+Legion Defensive - Adaptive Augmenter Blueprint	30227
+Legion Defensive - Nanobot Injector Blueprint	30228
+Legion Defensive - Augmented Plating Blueprint	30229
+Legion Defensive - Warfare Processor Blueprint	30230
+Tengu Defensive - Adaptive Shielding Blueprint	30232
+Tengu Defensive - Amplification Node Blueprint	30233
+Tengu Defensive - Supplemental Screening Blueprint	30234
+Tengu Defensive - Warfare Processor Blueprint	30235
+Proteus Defensive - Adaptive Augmenter Blueprint	30237
+Proteus Defensive - Nanobot Injector Blueprint	30238
+Proteus Defensive - Augmented Plating Blueprint	30239
+Proteus Defensive - Warfare Processor Blueprint	30240
+Loki Defensive - Adaptive Shielding Blueprint	30242
+Loki Defensive - Adaptive Augmenter Blueprint	30243
+Loki Defensive - Amplification Node Blueprint	30244
+Loki Defensive - Warfare Processor Blueprint	30245
+Civilian Stasis Webifier I Blueprint	30329
+Civilian Thermic Dissipation Field Blueprint	30343
+R.A.M.- Hybrid Technology Blueprint	30387
+Legion Offensive - Drone Synthesis Projector Blueprint	30392
+Legion Offensive - Assault Optimization Blueprint	30393
+Legion Offensive - Liquid Crystal Magnifiers Blueprint	30394
+Legion Offensive - Covert Reconfiguration Blueprint	30395
+Tengu Offensive - Accelerated Ejection Bay Blueprint	30397
+Tengu Offensive - Rifling Launcher Pattern Blueprint	30398
+Tengu Offensive - Magnetic Infusion Basin Blueprint	30399
+Tengu Offensive - Covert Reconfiguration Blueprint	30400
+Proteus Offensive - Dissonic Encoding Platform Blueprint	30402
+Proteus Offensive - Hybrid Propulsion Armature Blueprint	30403
+Proteus Offensive - Drone Synthesis Projector Blueprint	30404
+Proteus Offensive - Covert Reconfiguration Blueprint	30405
+Loki Offensive - Turret Concurrence Registry Blueprint	30407
+Loki Offensive - Projectile Scoping Array Blueprint	30408
+Loki Offensive - Hardpoint Efficiency Configuration Blueprint	30409
+Loki Offensive - Covert Reconfiguration Blueprint	30410
+Civilian EM Ward Field Blueprint	30421
+Civilian Explosive Deflection Field Blueprint	30423
+Civilian Kinetic Deflection Field Blueprint	30425
+Metallofullerene Plating Blueprint	30465
+Electromechanical Interface Nexus Blueprint	30467
+Neurovisual Output Analyzer Blueprint	30471
+Nanowire Composites Blueprint	30475
+Fulleroferrocene Power Conduits Blueprint	30477
+Reconfigured Subspace Calibrator Blueprint	30479
+Malfunctioning Thruster Sections	30558
+Wrecked Thruster Sections	30562
+Intact Power Cores	30582
+Malfunctioning Power Cores	30586
+Wrecked Power Cores	30588
+Intact Electromechanical Component	30599
+Malfunctioning Electromechanical Component	30600
+Wrecked Electromechanical Component	30605
+Intact Armor Nanobot	30614
+Malfunctioning Armor Nanobot	30615
+Wrecked Armor Nanobot	30618
+Intact Weapon Subroutines	30628
+Malfunctioning Weapon Subroutines	30632
+Wrecked Weapon Subroutines	30633
+Intact Hull Section	30752
+Malfunctioning Hull Section	30753
+Wrecked Hull Section	30754
+Relic Analyzer II Blueprint	30833
+Data Analyzer II Blueprint	30835
+Salvager II Blueprint	30837
+Civilian Damage Control Blueprint	30840
+Interbus Shuttle Blueprint	30843
+Small Trimark Armor Pump I Blueprint	30988
+Capital Trimark Armor Pump I Blueprint	30994
+Small Anti-EM Pump I Blueprint	30998
+Medium Anti-EM Pump I Blueprint	31000
+Capital Anti-EM Pump I Blueprint	31002
+Small Anti-EM Pump II Blueprint	31004
+Medium Anti-EM Pump II Blueprint	31006
+Capital Anti-EM Pump II Blueprint	31008
+Small Anti-Explosive Pump I Blueprint	31010
+Medium Anti-Explosive Pump I Blueprint	31012
+Capital Anti-Explosive Pump I Blueprint	31014
+Small Anti-Explosive Pump II Blueprint	31016
+Medium Anti-Explosive Pump II Blueprint	31018
+Capital Anti-Explosive Pump II Blueprint	31020
+Small Anti-Kinetic Pump I Blueprint	31022
+Medium Anti-Kinetic Pump I Blueprint	31024
+Capital Anti-Kinetic Pump I Blueprint	31026
+Small Anti-Kinetic Pump II Blueprint	31028
+Medium Anti-Kinetic Pump II Blueprint	31030
+Capital Anti-Kinetic Pump II Blueprint	31032
+Small Anti-Thermic Pump I Blueprint	31034
+Medium Anti-Thermic Pump I Blueprint	31036
+Capital Anti-Thermic Pump I Blueprint	31038
+Small Anti-Thermic Pump II Blueprint	31040
+Medium Anti-Thermic Pump II Blueprint	31042
+Capital Anti-Thermic Pump II Blueprint	31044
+Small Auxiliary Nano Pump I Blueprint	31046
+Medium Auxiliary Nano Pump I Blueprint	31048
+Capital Auxiliary Nano Pump II Blueprint	31050
+Small Auxiliary Nano Pump II Blueprint	31052
+Medium Auxiliary Nano Pump II Blueprint	31054
+Medium Trimark Armor Pump I Blueprint	31056
+Small Trimark Armor Pump II Blueprint	31058
+Medium Trimark Armor Pump II Blueprint	31060
+Capital Trimark Armor Pump II Blueprint	31062
+Small Nanobot Accelerator I Blueprint	31064
+Medium Nanobot Accelerator I Blueprint	31066
+Capital Nanobot Accelerator I Blueprint	31068
+Small Nanobot Accelerator II Blueprint	31070
+Medium Nanobot Accelerator II Blueprint	31072
+Medium Remote Repair Augmentor I Blueprint	31074
+Capital Remote Repair Augmentor I Blueprint	31076
+Small Remote Repair Augmentor II Blueprint	31078
+Medium Remote Repair Augmentor II Blueprint	31080
+Capital Remote Repair Augmentor II Blueprint	31082
+Small Salvage Tackle I Blueprint	31084
+Medium Salvage Tackle I Blueprint	31086
+Capital Salvage Tackle I Blueprint	31088
+Small Salvage Tackle II Blueprint	31090
+Medium Salvage Tackle II Blueprint	31092
+Capital Salvage Tackle II Blueprint	31094
+Small Auxiliary Thrusters I Blueprint	31106
+Medium Auxiliary Thrusters I Blueprint	31108
+Capital Auxiliary Thrusters I Blueprint	31110
+Small Auxiliary Thrusters II Blueprint	31112
+Medium Auxiliary Thrusters II Blueprint	31114
+Capital Auxiliary Thrusters II Blueprint	31116
+Small Cargohold Optimization I Blueprint	31118
+Medium Cargohold Optimization I Blueprint	31120
+Capital Cargohold Optimization I Blueprint	31122
+Small Cargohold Optimization II Blueprint	31124
+Medium Cargohold Optimization II Blueprint	31126
+Capital Cargohold Optimization II Blueprint	31128
+Small Dynamic Fuel Valve I Blueprint	31130
+Medium Dynamic Fuel Valve I Blueprint	31132
+Capital Dynamic Fuel Valve I Blueprint	31134
+Small Dynamic Fuel Valve II Blueprint	31136
+Medium Dynamic Fuel Valve II Blueprint	31138
+Capital Dynamic Fuel Valve II Blueprint	31140
+Small Engine Thermal Shielding I Blueprint	31142
+Medium Engine Thermal Shielding I Blueprint	31144
+Capital Engine Thermal Shielding I Blueprint	31146
+Small Engine Thermal Shielding II Blueprint	31148
+Medium Engine Thermal Shielding II Blueprint	31150
+Capital Engine Thermal Shielding II Blueprint	31152
+Small Low Friction Nozzle Joints I Blueprint	31154
+Medium Low Friction Nozzle Joints I Blueprint	31156
+Capital Low Friction Nozzle Joints I Blueprint	31158
+Small Hyperspatial Velocity Optimizer I Blueprint	31160
+Medium Hyperspatial Velocity Optimizer I Blueprint	31162
+Capital Hyperspatial Velocity Optimizer I Blueprint	31164
+Small Hyperspatial Velocity Optimizer II Blueprint	31166
+Medium Hyperspatial Velocity Optimizer II Blueprint	31168
+Capital Hyperspatial Velocity Optimizer II Blueprint	31170
+Small Low Friction Nozzle Joints II Blueprint	31172
+Medium Low Friction Nozzle Joints II Blueprint	31174
+Capital Low Friction Nozzle Joints II Blueprint	31176
+Small Polycarbon Engine Housing I Blueprint	31178
+Medium Polycarbon Engine Housing I Blueprint	31180
+Capital Polycarbon Engine Housing I Blueprint	31182
+Small Polycarbon Engine Housing II Blueprint	31184
+Medium Polycarbon Engine Housing II Blueprint	31186
+Capital Polycarbon Engine Housing II Blueprint	31188
+Small Warp Core Optimizer I Blueprint	31190
+Medium Warp Core Optimizer I Blueprint	31192
+Capital Warp Core Optimizer I Blueprint	31194
+Small Warp Core Optimizer II Blueprint	31196
+Medium Warp Core Optimizer II Blueprint	31198
+Capital Warp Core Optimizer II Blueprint	31200
+Small Emission Scope Sharpener I Blueprint	31202
+Medium Emission Scope Sharpener I Blueprint	31204
+Capital Emission Scope Sharpener I Blueprint	31206
+Small Emission Scope Sharpener II Blueprint	31208
+Medium Emission Scope Sharpener II Blueprint	31210
+Capital Emission Scope Sharpener II Blueprint	31212
+Small Gravity Capacitor Upgrade I Blueprint	31214
+Medium Gravity Capacitor Upgrade I Blueprint	31216
+Capital Gravity Capacitor Upgrade I Blueprint	31218
+Small Gravity Capacitor Upgrade II Blueprint	31221
+Medium Gravity Capacitor Upgrade II Blueprint	31223
+Capital Gravity Capacitor Upgrade II Blueprint	31225
+Small Liquid Cooled Electronics I Blueprint	31227
+Medium Liquid Cooled Electronics I Blueprint	31229
+Capital Liquid Cooled Electronics I Blueprint	31231
+Small Liquid Cooled Electronics II Blueprint	31233
+Medium Liquid Cooled Electronics II Blueprint	31235
+Capital Liquid Cooled Electronics II Blueprint	31237
+Small Memetic Algorithm Bank I Blueprint	31239
+Medium Memetic Algorithm Bank I Blueprint	31241
+Capital Memetic Algorithm Bank I Blueprint	31243
+Small Memetic Algorithm Bank II Blueprint	31245
+Medium Memetic Algorithm Bank II Blueprint	31247
+Capital Memetic Algorithm Bank II Blueprint	31249
+Small Signal Disruption Amplifier I Blueprint	31251
+Medium Signal Disruption Amplifier I Blueprint	31253
+Capital Signal Disruption Amplifier I Blueprint	31255
+Small Signal Disruption Amplifier II Blueprint	31257
+Medium Signal Disruption Amplifier II Blueprint	31259
+Capital Signal Disruption Amplifier II Blueprint	31261
+Small Inverted Signal Field Projector I Blueprint	31263
+Medium Inverted Signal Field Projector I Blueprint	31265
+Capital Inverted Signal Field Projector I Blueprint	31267
+Small Inverted Signal Field Projector II Blueprint	31269
+Medium Inverted Signal Field Projector II Blueprint	31271
+Capital Inverted Signal Field Projector II Blueprint	31273
+Small Ionic Field Projector I Blueprint	31275
+Medium Ionic Field Projector I Blueprint	31277
+Capital Ionic Field Projector I Blueprint	31279
+Small Ionic Field Projector II Blueprint	31281
+Medium Ionic Field Projector II Blueprint	31283
+Capital Ionic Field Projector II Blueprint	31285
+Small Particle Dispersion Augmentor I Blueprint	31287
+Medium Particle Dispersion Augmentor I Blueprint	31289
+Capital Particle Dispersion Augmentor I Blueprint	31291
+Small Particle Dispersion Augmentor II Blueprint	31293
+Medium Particle Dispersion Augmentor II Blueprint	31295
+Capital Particle Dispersion Augmentor II Blueprint	31297
+Small Particle Dispersion Projector I Blueprint	31299
+Medium Particle Dispersion Projector I Blueprint	31301
+Capital Particle Dispersion Projector I Blueprint	31303
+Small Particle Dispersion Projector II Blueprint	31305
+Medium Particle Dispersion Projector II Blueprint	31307
+Capital Particle Dispersion Projector II Blueprint	31309
+Small Signal Focusing Kit I Blueprint	31311
+Medium Signal Focusing Kit I Blueprint	31313
+Capital Signal Focusing Kit I Blueprint	31315
+Small Signal Focusing Kit II Blueprint	31317
+Medium Signal Focusing Kit II Blueprint	31319
+Capital Signal Focusing Kit II Blueprint	31321
+Small Targeting System Subcontroller I Blueprint	31323
+Medium Targeting System Subcontroller I Blueprint	31325
+Capital Targeting System Subcontroller I Blueprint	31327
+Small Targeting System Subcontroller II Blueprint	31329
+Medium Targeting System Subcontroller II Blueprint	31331
+Capital Targeting System Subcontroller II Blueprint	31333
+Small Targeting Systems Stabilizer I Blueprint	31335
+Medium Targeting Systems Stabilizer I Blueprint	31337
+Capital Targeting Systems Stabilizer I Blueprint	31339
+Small Targeting Systems Stabilizer II Blueprint	31341
+Medium Targeting Systems Stabilizer II Blueprint	31343
+Capital Targeting Systems Stabilizer II Blueprint	31345
+Small Tracking Diagnostic Subroutines I Blueprint	31347
+Medium Tracking Diagnostic Subroutines I Blueprint	31349
+Capital Tracking Diagnostic Subroutines I Blueprint	31351
+Small Tracking Diagnostic Subroutines II Blueprint	31353
+Medium Tracking Diagnostic Subroutines II Blueprint	31355
+Capital Tracking Diagnostic Subroutines II Blueprint	31357
+Small Ancillary Current Router I Blueprint	31359
+Medium Ancillary Current Router I Blueprint	31361
+Capital Ancillary Current Router I Blueprint	31363
+Small Ancillary Current Router II Blueprint	31365
+Medium Ancillary Current Router II Blueprint	31367
+Capital Ancillary Current Router II Blueprint	31369
+Small Capacitor Control Circuit I Blueprint	31371
+Medium Capacitor Control Circuit I Blueprint	31373
+Capital Capacitor Control Circuit I Blueprint	31375
+Small Capacitor Control Circuit II Blueprint	31377
+Medium Capacitor Control Circuit II Blueprint	31379
+Capital Capacitor Control Circuit II Blueprint	31381
+Small Egress Port Maximizer I Blueprint	31383
+Medium Egress Port Maximizer I Blueprint	31385
+Capital Egress Port Maximizer I Blueprint	31387
+Small Egress Port Maximizer II Blueprint	31389
+Medium Egress Port Maximizer II Blueprint	31391
+Capital Egress Port Maximizer II Blueprint	31393
+Small Powergrid Subroutine Maximizer I Blueprint	31395
+Medium Powergrid Subroutine Maximizer I Blueprint	31397
+Capital Powergrid Subroutine Maximizer I Blueprint	31399
+Small Powergrid Subroutine Maximizer II Blueprint	31401
+Medium Powergrid Subroutine Maximizer II Blueprint	31403
+Capital Powergrid Subroutine Maximizer II Blueprint	31405
+Small Semiconductor Memory Cell I Blueprint	31407
+Medium Semiconductor Memory Cell I Blueprint	31409
+Capital Semiconductor Memory Cell I Blueprint	31411
+Small Semiconductor Memory Cell II Blueprint	31413
+Medium Semiconductor Memory Cell II Blueprint	31415
+Capital Semiconductor Memory Cell II Blueprint	31417
+Small Algid Energy Administrations Unit I Blueprint	31419
+Medium Algid Energy Administrations Unit I Blueprint	31421
+Capital Algid Energy Administrations Unit I Blueprint	31423
+Small Algid Energy Administrations Unit II Blueprint	31425
+Medium Algid Energy Administrations Unit II Blueprint	31427
+Capital Algid Energy Administrations Unit II Blueprint	31429
+Small Energy Ambit Extension I Blueprint	31431
+Medium Energy Ambit Extension I Blueprint	31433
+Capital Energy Ambit Extension I Blueprint	31435
+Small Energy Ambit Extension II Blueprint	31437
+Medium Energy Ambit Extension II Blueprint	31439
+Capital Energy Ambit Extension II Blueprint	31441
+Small Energy Burst Aerator I Blueprint	31443
+Medium Energy Burst Aerator I Blueprint	31445
+Capital Energy Burst Aerator I Blueprint	31447
+Small Energy Burst Aerator II Blueprint	31449
+Medium Energy Burst Aerator II Blueprint	31451
+Capital Energy Burst Aerator II Blueprint	31453
+Small Energy Collision Accelerator I Blueprint	31455
+Medium Energy Collision Accelerator I Blueprint	31457
+Capital Energy Collision Accelerator I Blueprint	31459
+Small Energy Collision Accelerator II Blueprint	31461
+Medium Energy Collision Accelerator II Blueprint	31463
+Capital Energy Collision Accelerator II Blueprint	31465
+Small Energy Discharge Elutriation I Blueprint	31467
+Medium Energy Discharge Elutriation I Blueprint	31469
+Capital Energy Discharge Elutriation I Blueprint	31471
+Small Energy Discharge Elutriation II Blueprint	31473
+Medium Energy Discharge Elutriation II Blueprint	31475
+Capital Energy Discharge Elutriation II Blueprint	31477
+Small Energy Locus Coordinator I Blueprint	31479
+Medium Energy Locus Coordinator I Blueprint	31481
+Capital Energy Locus Coordinator I Blueprint	31483
+Small Energy Locus Coordinator II Blueprint	31485
+Medium Energy Locus Coordinator II Blueprint	31487
+Capital Energy Locus Coordinator II Blueprint	31489
+Small Energy Metastasis Adjuster I Blueprint	31491
+Medium Energy Metastasis Adjuster I Blueprint	31493
+Capital Energy Metastasis Adjuster I Blueprint	31495
+Small Energy Metastasis Adjuster II Blueprint	31497
+Medium Energy Metastasis Adjuster II Blueprint	31499
+Capital Energy Metastasis Adjuster II Blueprint	31501
+Small Algid Hybrid Administrations Unit I Blueprint	31503
+Medium Algid Hybrid Administrations Unit I Blueprint	31505
+Capital Algid Hybrid Administrations Unit I Blueprint	31507
+Small Algid Hybrid Administrations Unit II Blueprint	31509
+Medium Algid Hybrid Administrations Unit II Blueprint	31511
+Capital Algid Hybrid Administrations Unit II Blueprint	31513
+Small Hybrid Ambit Extension I Blueprint	31515
+Medium Hybrid Ambit Extension I Blueprint	31517
+Capital Hybrid Ambit Extension I Blueprint	31519
+Small Hybrid Ambit Extension II Blueprint	31521
+Medium Hybrid Ambit Extension II Blueprint	31523
+Capital Hybrid Ambit Extension II Blueprint	31525
+Small Hybrid Burst Aerator I Blueprint	31527
+Medium Hybrid Burst Aerator I Blueprint	31529
+Capital Hybrid Burst Aerator I Blueprint	31531
+Small Hybrid Burst Aerator II Blueprint	31533
+Medium Hybrid Burst Aerator II Blueprint	31535
+Capital Hybrid Burst Aerator II Blueprint	31537
+Small Hybrid Collision Accelerator I Blueprint	31539
+Medium Hybrid Collision Accelerator I Blueprint	31541
+Capital Hybrid Collision Accelerator I Blueprint	31543
+Small Hybrid Collision Accelerator II Blueprint	31545
+Medium Hybrid Collision Accelerator II Blueprint	31547
+Capital Hybrid Collision Accelerator II Blueprint	31549
+Small Hybrid Discharge Elutriation I Blueprint	31551
+Medium Hybrid Discharge Elutriation I Blueprint	31553
+Capital Hybrid Discharge Elutriation I Blueprint	31555
+Small Hybrid Discharge Elutriation II Blueprint	31557
+Medium Hybrid Discharge Elutriation II Blueprint	31559
+Capital Hybrid Discharge Elutriation II Blueprint	31561
+Small Hybrid Locus Coordinator I Blueprint	31563
+Medium Hybrid Locus Coordinator I Blueprint	31565
+Capital Hybrid Locus Coordinator I Blueprint	31567
+Small Hybrid Locus Coordinator II Blueprint	31569
+Medium Hybrid Locus Coordinator II Blueprint	31571
+Capital Hybrid Locus Coordinator II Blueprint	31573
+Small Hybrid Metastasis Adjuster I Blueprint	31575
+Medium Hybrid Metastasis Adjuster I Blueprint	31577
+Capital Hybrid Metastasis Adjuster I Blueprint	31579
+Small Hybrid Metastasis Adjuster II Blueprint	31581
+Medium Hybrid Metastasis Adjuster II Blueprint	31583
+Capital Hybrid Metastasis Adjuster II Blueprint	31585
+Small Bay Loading Accelerator I Blueprint	31587
+Medium Bay Loading Accelerator I Blueprint	31589
+Capital Bay Loading Accelerator I Blueprint	31591
+Small Bay Loading Accelerator II Blueprint	31593
+Medium Bay Loading Accelerator II Blueprint	31595
+Capital Bay Loading Accelerator II Blueprint	31597
+Small Hydraulic Bay Thrusters I Blueprint	31599
+Medium Hydraulic Bay Thrusters I Blueprint	31601
+Capital Hydraulic Bay Thrusters I Blueprint	31603
+Small Hydraulic Bay Thrusters II Blueprint	31605
+Medium Hydraulic Bay Thrusters II Blueprint	31607
+Small Rocket Fuel Cache Partition I Blueprint	31609
+Medium Rocket Fuel Cache Partition I Blueprint	31611
+Capital Rocket Fuel Cache Partition I Blueprint	31613
+Small Rocket Fuel Cache Partition II Blueprint	31615
+Medium Rocket Fuel Cache Partition II Blueprint	31617
+Capital Rocket Fuel Cache Partition II Blueprint	31619
+Small Warhead Calefaction Catalyst I Blueprint	31621
+Medium Warhead Calefaction Catalyst I Blueprint	31623
+Capital Warhead Calefaction Catalyst I Blueprint	31625
+Small Warhead Calefaction Catalyst II Blueprint	31627
+Medium Warhead Calefaction Catalyst II Blueprint	31629
+Capital Warhead Calefaction Catalyst II Blueprint	31631
+Small Warhead Flare Catalyst I Blueprint	31633
+Medium Warhead Flare Catalyst I Blueprint	31635
+Capital Warhead Flare Catalyst I Blueprint	31637
+Small Warhead Flare Catalyst II Blueprint	31639
+Medium Warhead Flare Catalyst II Blueprint	31641
+Capital Warhead Flare Catalyst II Blueprint	31643
+Small Warhead Rigor Catalyst I Blueprint	31645
+Medium Warhead Rigor Catalyst I Blueprint	31647
+Capital Warhead Rigor Catalyst I Blueprint	31649
+Small Warhead Rigor Catalyst II Blueprint	31651
+Medium Warhead Rigor Catalyst II Blueprint	31653
+Capital Warhead Rigor Catalyst II Blueprint	31655
+Small Projectile Ambit Extension I Blueprint	31657
+Medium Projectile Ambit Extension I Blueprint	31659
+Capital Projectile Ambit Extension I Blueprint	31661
+Small Projectile Ambit Extension II Blueprint	31663
+Medium Projectile Ambit Extension II Blueprint	31665
+Capital Projectile Ambit Extension II Blueprint	31667
+Small Projectile Burst Aerator I Blueprint	31669
+Medium Projectile Burst Aerator I Blueprint	31671
+Capital Projectile Burst Aerator I Blueprint	31673
+Small Projectile Burst Aerator II Blueprint	31675
+Medium Projectile Burst Aerator II Blueprint	31677
+Capital Projectile Burst Aerator II Blueprint	31679
+Small Projectile Collision Accelerator I Blueprint	31681
+Medium Projectile Collision Accelerator I Blueprint	31683
+Capital Projectile Collision Accelerator I Blueprint	31685
+Small Projectile Collision Accelerator II Blueprint	31687
+Medium Projectile Collision Accelerator II Blueprint	31689
+Capital Projectile Collision Accelerator II Blueprint	31691
+Small Projectile Locus Coordinator I Blueprint	31693
+Medium Projectile Locus Coordinator I Blueprint	31695
+Capital Projectile Locus Coordinator I Blueprint	31697
+Small Projectile Locus Coordinator II Blueprint	31699
+Medium Projectile Locus Coordinator II Blueprint	31701
+Capital Projectile Locus Coordinator II Blueprint	31703
+Small Projectile Metastasis Adjuster I Blueprint	31705
+Medium Projectile Metastasis Adjuster I Blueprint	31707
+Capital Projectile Metastasis Adjuster I Blueprint	31709
+Small Projectile Metastasis Adjuster II Blueprint	31711
+Medium Projectile Metastasis Adjuster II Blueprint	31713
+Capital Projectile Metastasis Adjuster II Blueprint	31715
+Small Anti-EM Screen Reinforcer I Blueprint	31717
+Medium Anti-EM Screen Reinforcer I Blueprint	31719
+Capital Anti-EM Screen Reinforcer I Blueprint	31721
+Small Anti-EM Screen Reinforcer II Blueprint	31723
+Medium Anti-EM Screen Reinforcer II Blueprint	31725
+Capital Anti-EM Screen Reinforcer II Blueprint	31727
+Small Anti-Explosive Screen Reinforcer I Blueprint	31729
+Medium Anti-Explosive Screen Reinforcer I Blueprint	31731
+Capital Anti-Explosive Screen Reinforcer I Blueprint	31733
+Small Anti-Explosive Screen Reinforcer II Blueprint	31735
+Medium Anti-Explosive Screen Reinforcer II Blueprint	31737
+Capital Anti-Explosive Screen Reinforcer II Blueprint	31739
+Small Anti-Kinetic Screen Reinforcer I Blueprint	31741
+Medium Anti-Kinetic Screen Reinforcer I Blueprint	31743
+Capital Anti-Kinetic Screen Reinforcer I Blueprint	31745
+Small Anti-Kinetic Screen Reinforcer II Blueprint	31747
+Medium Anti-Kinetic Screen Reinforcer II Blueprint	31749
+Capital Anti-Kinetic Screen Reinforcer II Blueprint	31751
+Small Anti-Thermal Screen Reinforcer I Blueprint	31753
+Medium Anti-Thermal Screen Reinforcer I Blueprint	31755
+Capital Anti-Thermal Screen Reinforcer I Blueprint	31757
+Small Anti-Thermal Screen Reinforcer II Blueprint	31759
+Medium Anti-Thermal Screen Reinforcer II Blueprint	31761
+Capital Anti-Thermal Screen Reinforcer II Blueprint	31763
+Small Core Defense Capacitor Safeguard I Blueprint	31765
+Medium Core Defense Capacitor Safeguard I Blueprint	31767
+Capital Core Defense Capacitor Safeguard I Blueprint	31769
+Small Core Defense Capacitor Safeguard II Blueprint	31771
+Medium Core Defense Capacitor Safeguard II Blueprint	31773
+Capital Core Defense Capacitor Safeguard II Blueprint	31775
+Small Core Defense Charge Economizer I Blueprint	31777
+Medium Core Defense Charge Economizer I Blueprint	31779
+Capital Core Defense Charge Economizer I Blueprint	31781
+Small Core Defense Charge Economizer II Blueprint	31783
+Medium Core Defense Charge Economizer II Blueprint	31785
+Capital Core Defense Charge Economizer II Blueprint	31787
+Small Core Defense Field Extender I Blueprint	31789
+Medium Core Defense Field Extender I Blueprint	31791
+Capital Core Defense Field Extender I Blueprint	31793
+Small Core Defense Field Extender II Blueprint	31795
+Medium Core Defense Field Extender II Blueprint	31797
+Capital Core Defense Field Extender II Blueprint	31799
+Small Core Defense Field Purger I Blueprint	31801
+Medium Core Defense Field Purger I Blueprint	31803
+Capital Core Defense Field Purger I Blueprint	31805
+Small Core Defense Field Purger II Blueprint	31811
+Medium Core Defense Field Purger II Blueprint	31813
+Capital Core Defense Field Purger II Blueprint	31815
+Small Core Defense Operational Solidifier I Blueprint	31817
+Medium Core Defense Operational Solidifier I Blueprint	31819
+Capital Core Defense Operational Solidifier I Blueprint	31821
+Small Core Defense Operational Solidifier II Blueprint	31823
+Medium Core Defense Operational Solidifier II Blueprint	31825
+Capital Core Defense Operational Solidifier II Blueprint	31827
+Imperial Navy Acolyte Blueprint	31865
+Imperial Navy Infiltrator Blueprint	31867
+Imperial Navy Curator Blueprint	31869
+Imperial Navy Praetor Blueprint	31871
+Caldari Navy Hornet Blueprint	31873
+Caldari Navy Vespa Blueprint	31875
+Caldari Navy Wasp Blueprint	31877
+Caldari Navy Warden Blueprint	31879
+Federation Navy Hobgoblin Blueprint	31881
+Federation Navy Hammerhead Blueprint	31883
+Federation Navy Ogre Blueprint	31885
+Federation Navy Garde Blueprint	31887
+Republic Fleet Warrior Blueprint	31889
+Republic Fleet Valkyrie Blueprint	31891
+Republic Fleet Berserker Blueprint	31893
+Republic Fleet Bouncer Blueprint	31895
+Imperial Navy 100mm Reinforced Steel Plates 1 Blueprint	31897
+Imperial Navy 100mm Reinforced Steel Plates 2 Blueprint	31899
+Imperial Navy 1600mm Reinforced Steel Plates 1 Blueprint	31901
+Imperial Navy 1600mm Reinforced Steel Plates 2 Blueprint	31903
+Imperial Navy 200mm Reinforced Steel Plates 1 Blueprint	31905
+Imperial Navy 200mm Reinforced Steel Plates 2 Blueprint	31907
+Imperial Navy 400mm Reinforced Steel Plates 1 Blueprint	31909
+Imperial Navy 400mm Reinforced Steel Plates 2 Blueprint	31911
+Imperial Navy 800mm Reinforced Steel Plates 1 Blueprint	31917
+Imperial Navy 800mm Reinforced Steel Plates 2 Blueprint	31919
+Caldari Navy Small Shield Extender 1 Blueprint	31923
+Caldari Navy Small Shield Extender 2 Blueprint	31925
+Caldari Navy Medium Shield Extender 1 Blueprint	31927
+Caldari Navy Medium Shield Extender 2 Blueprint	31929
+Caldari Navy Large Shield Extender 1 Blueprint	31931
+Caldari Navy Large Shield Extender 2 Blueprint	31933
+Federation Navy Omnidirectional Tracking Link Blueprint	31943
+Republic Fleet Target Painter Blueprint	31945
+Imperial Navy Large Remote Capacitor Transmitter Blueprint	31947
+Imperial Navy Medium Remote Capacitor Transmitter Blueprint	31949
+Imperial Navy Small Remote Capacitor Transmitter Blueprint	31951
+Caldari Navy Power Diagnostic System Blueprint	31953
+Small Drone Control Range Augmentor I Blueprint	32026
+Medium Drone Control Range Augmentor I Blueprint	32028
+Small Drone Control Range Augmentor II Blueprint	32030
+Medium Drone Control Range Augmentor II Blueprint	32032
+Small Drone Durability Enhancer I Blueprint	32034
+Medium Drone Durability Enhancer I Blueprint	32036
+Small Drone Durability Enhancer II Blueprint	32038
+Medium Drone Durability Enhancer II Blueprint	32040
+Small Drone Mining Augmentor I Blueprint	32042
+Medium Drone Mining Augmentor I Blueprint	32044
+Small Drone Mining Augmentor II Blueprint	32046
+Medium Drone Mining Augmentor II Blueprint	32048
+Small Drone Repair Augmentor I Blueprint	32050
+Medium Drone Repair Augmentor I Blueprint	32052
+Small Drone Repair Augmentor II Blueprint	32054
+Medium Drone Repair Augmentor II Blueprint	32056
+Small Drone Speed Augmentor I Blueprint	32058
+Medium Drone Speed Augmentor I Blueprint	32060
+Small Drone Speed Augmentor II Blueprint	32062
+Medium Drone Speed Augmentor II Blueprint	32064
+Small EW Drone Range Augmentor I Blueprint	32066
+Medium EW Drone Range Augmentor I Blueprint	32068
+Small Drone Scope Chip I Blueprint	32070
+Medium Drone Scope Chip I Blueprint	32072
+Small Drone Scope Chip II Blueprint	32074
+Medium Drone Scope Chip II Blueprint	32076
+Small EW Drone Range Augmentor II Blueprint	32078
+Medium EW Drone Range Augmentor II Blueprint	32080
+Small Sentry Damage Augmentor I Blueprint	32082
+Medium Sentry Damage Augmentor I Blueprint	32084
+Small Sentry Damage Augmentor II Blueprint	32086
+Medium Sentry Damage Augmentor II Blueprint	32088
+Small Stasis Drone Augmentor I Blueprint	32090
+Medium Stasis Drone Augmentor I Blueprint	32092
+Small Stasis Drone Augmentor II Blueprint	32094
+Medium Stasis Drone Augmentor II Blueprint	32096
+Freki Blueprint	32208
+Mimir Blueprint	32210
+Armageddon Navy Issue Blueprint	32306
+Dominix Navy Issue Blueprint	32308
+Scorpion Navy Issue Blueprint	32310
+Typhoon Fleet Issue Blueprint	32312
+Cyclops Blueprint	32326
+Malleus Blueprint	32341
+Tyrfing Blueprint	32343
+Mantis Blueprint	32345
+Domination Target Painter Blueprint	32415
+Scourge Citadel Cruise Missile Blueprint	32437
+Nova Citadel Cruise Missile Blueprint	32439
+Inferno Citadel Cruise Missile Blueprint	32441
+Mjolnir Citadel Cruise Missile Blueprint	32443
+Citadel Cruise Launcher I Blueprint	32445
+Medium Ancillary Shield Booster Blueprint	32773
+Small Ancillary Shield Booster Blueprint	32775
+X-Large Ancillary Shield Booster Blueprint	32781
+Light Defender Missile I Blueprint	32783
+Cambion Blueprint	32789
+Etana Blueprint	32791
+Tactical Laser S Blueprint	32800
+Tactical EMP S Blueprint	32802
+Tactical Hybrid S Blueprint	32804
+Ammatar Navy Thermic Plating Blueprint	32810
+Miasmos Amastris Edition Blueprint	32812
+Medium Mercoxit Mining Crystal Optimization I Blueprint	32818
+Medium Ice Harvester Accelerator I Blueprint	32820
+Quest Survey Probe I Blueprint	32839
+InterBus Catalyst Blueprint	32841
+Intaki Syndicate Catalyst Blueprint	32843
+Inner Zone Shipping Catalyst Blueprint	32845
+Quafe Catalyst Blueprint	32847
+Aliastra Catalyst Blueprint	32849
+Discovery Survey Probe I Blueprint	32854
+Gaze Survey Probe I Blueprint	32855
+Station Container Blueprint	32858
+Small Standard Container Blueprint	32859
+Medium Standard Container Blueprint	32860
+Large Standard Container Blueprint	32861
+Giant Freight Container Blueprint	32862
+Giant Secure Container Blueprint	32863
+Huge Secure Container Blueprint	32864
+Large Secure Container Blueprint	32865
+Medium Secure Container Blueprint	32866
+Small Secure Container Blueprint	32867
+Small Audit Log Secure Container Blueprint	32868
+Medium Audit Log Secure Container Blueprint	32869
+Large Audit Log Secure Container Blueprint	32870
+Station Vault Container Blueprint	32871
+Algos Blueprint	32873
+Dragoon Blueprint	32875
+Corax Blueprint	32877
+Talwar Blueprint	32879
+Venture Blueprint	32881
+Salvage Drone I Blueprint	32982
+Sukuuvestaa Heron Blueprint	32984
+Inner Zone Shipping Imicus Blueprint	32986
+Sarum Magnate Blueprint	32988
+Vherokior Probe Blueprint	32990
+Enormous Freight Container Blueprint	33004
+Huge Freight Container Blueprint	33006
+Large Freight Container Blueprint	33008
+Medium Freight Container Blueprint	33010
+Small Freight Container Blueprint	33012
+Deactivated Station Key Pass Blueprint	33067
+Small Ancillary Armor Repairer Blueprint	33077
+Hematos Blueprint	33080
+Taipan Blueprint	33082
+Violator Blueprint	33084
+Advanced Cerebral Accelerator Blueprint	33088
+Medium Ancillary Armor Repairer Blueprint	33102
+Large Ancillary Armor Repairer Blueprint	33104
+Prototype Cerebral Accelerator Blueprint	33112
+Personal Hangar Array Blueprint	33150
+Brutix Navy Issue Blueprint	33152
+Drake Navy Issue Blueprint	33154
+Harbinger Navy Issue Blueprint	33156
+Hurricane Fleet Issue Blueprint	33158
+Scan Acquisition Array I Blueprint	33177
+Scan Pinpointing Array I Blueprint	33179
+Scan Rangefinding Array I Blueprint	33181
+Tash-Murkon Magnate Blueprint	33191
+Spatial Attunement Unit Blueprint	33196
+Scan Acquisition Array II Blueprint	33198
+Scan Pinpointing Array II Blueprint	33200
+Scan Rangefinding Array II Blueprint	33202
+Survey Probe Launcher I Blueprint	33271
+Survey Probe Launcher II Blueprint	33273
+Capital Drone Control Range Augmentor I Blueprint	33278
+Capital Drone Control Range Augmentor II Blueprint	33280
+Capital Drone Durability Enhancer I Blueprint	33282
+Capital Drone Durability Enhancer II Blueprint	33284
+Capital Drone Mining Augmentor I Blueprint	33286
+Capital Drone Mining Augmentor II Blueprint	33288
+Capital Drone Repair Augmentor I Blueprint	33290
+Capital Drone Repair Augmentor II Blueprint	33292
+Capital Drone Scope Chip I Blueprint	33294
+Capital Drone Scope Chip II Blueprint	33296
+Capital Drone Speed Augmentor I Blueprint	33299
+Capital Drone Speed Augmentor II Blueprint	33300
+Capital Hydraulic Bay Thrusters II Blueprint	33302
+Capital Processor Overclocking Unit I Blueprint	33304
+Capital Processor Overclocking Unit II Blueprint	33306
+Capital Sentry Damage Augmentor I Blueprint	33308
+Capital Sentry Damage Augmentor II Blueprint	33310
+Capital Stasis Drone Augmentor I Blueprint	33312
+Capital Stasis Drone Augmentor II Blueprint	33314
+Gnosis Blueprint	33327
+Moracha Blueprint	33396
+Chremoas Blueprint	33398
+Bastion Module I Blueprint	33401
+Caldari Navy Rapid Heavy Missile Launcher Blueprint	33447
+Rapid Heavy Missile Launcher I Blueprint	33449
+Rapid Heavy Missile Launcher II Blueprint	33451
+Republic Fleet Rapid Heavy Missile Launcher Blueprint	33460
+Astero Blueprint	33469
+Stratios Blueprint	33471
+Nestor Blueprint	33473
+Republic Justice Shuttle Blueprint	33514
+Small Mobile Siphon Unit Blueprint	33515
+Mobile Depot Blueprint	33517
+Mobile Cynosural Inhibitor Blueprint	33518
+Mobile Tractor Unit Blueprint	33519
+'Wetu' Mobile Depot Blueprint	33521
+'Yurt' Mobile Depot Blueprint	33523
+High-grade Ascendancy Alpha Blueprint	33536
+High-grade Ascendancy Beta Blueprint	33543
+High-grade Ascendancy Gamma Blueprint	33545
+High-grade Ascendancy Epsilon Blueprint	33546
+High-grade Ascendancy Delta Blueprint	33547
+High-grade Ascendancy Omega Blueprint	33548
+Stratios Emergency Responder Blueprint	33554
+Mid-grade Ascendancy Alpha Blueprint	33556
+Mid-grade Ascendancy Beta Blueprint	33558
+Mid-grade Ascendancy Delta Blueprint	33560
+Mid-grade Ascendancy Epsilon Blueprint	33562
+Mid-grade Ascendancy Gamma Blueprint	33564
+Mid-grade Ascendancy Omega Blueprint	33566
+Small Mobile 'Hybrid' Siphon Unit Blueprint	33582
+Small Mobile 'Rote' Siphon Unit Blueprint	33584
+Amarr Encounter Surveillance System Blueprint	33586
+Mobile Decoy Unit Blueprint	33588
+Mobile Scan Inhibitor Blueprint	33590
+Mobile Micro Jump Unit Blueprint	33592
+Caldari Encounter Surveillance System Blueprint	33596
+Gallente Encounter Surveillance System Blueprint	33609
+Minmatar Encounter Surveillance System Blueprint	33611
+Abaddon Tash-Murkon Edition Blueprint	33624
+Abaddon Kador Edition Blueprint	33626
+Rokh Nugoeihuvi Edition Blueprint	33628
+Rokh Wiyrkomi Edition Blueprint	33630
+Maelstrom Nefantar Edition Blueprint	33632
+Maelstrom Krusual Edition Blueprint	33634
+Hyperion Aliastra Edition Blueprint	33636
+Hyperion Innerzone Shipping Edition Blueprint	33638
+Omen Kador Edition Blueprint	33640
+Omen Tash-Murkon Edition Blueprint	33642
+Caracal Nugoeihuvi Edition Blueprint	33644
+Caracal Wiyrkomi Edition Blueprint	33646
+Stabber Nefantar Edition Blueprint	33648
+Stabber Krusual Edition Blueprint	33650
+Thorax Aliastra Edition Blueprint	33652
+Thorax Innerzone Shipping Edition Blueprint	33654
+Punisher Kador Edition Blueprint	33656
+Punisher Tash-Murkon Edition Blueprint	33658
+Merlin Nugoeihuvi Edition Blueprint	33660
+Merlin Wiyrkomi Edition Blueprint	33662
+Rifter Nefantar Edition Blueprint	33664
+Rifter Krusual Edition Blueprint	33666
+Incursus Aliastra Edition Blueprint	33668
+Incursus Innerzone Shipping Edition Blueprint	33670
+Heavy Hull Maintenance Bot I Blueprint	33672
+Whiptail Blueprint	33674
+Chameleon Blueprint	33676
+Police Pursuit Comet Blueprint	33678
+Gecko Blueprint	33682
+Mackinaw ORE Development Edition Blueprint	33684
+Orca ORE Development Edition Blueprint	33686
+Rorqual ORE Development Edition Blueprint	33688
+Iteron Inner Zone Shipping Edition Blueprint	33690
+Tayra Wiyrkomi Edition Blueprint	33692
+Mammoth Nefantar Edition Blueprint	33694
+Bestower Tash-Murkon Edition Blueprint	33696
+Prospect Blueprint	33698
+'Packrat' Mobile Tractor Unit Blueprint	33701
+'Magpie' Mobile Tractor Unit Blueprint	33703
+Medium Hull Maintenance Bot I Blueprint	33705
+Light Hull Maintenance Bot I Blueprint	33707
+Heavy Hull Maintenance Bot II Blueprint	33709
+Medium Hull Maintenance Bot II Blueprint	33711
+Light Hull Maintenance Bot II Blueprint	33713
+Garmur Blueprint	33817
+Orthrus Blueprint	33819
+Barghest Blueprint	33821
+Omnidirectional Tracking Enhancer I Blueprint	33823
+Omnidirectional Tracking Enhancer II Blueprint	33825
+Thukker Component Assembly Array Blueprint	33868
+Brutix Serpentis Edition Blueprint	33870
+Cyclone Thukker Tribe Edition Blueprint	33872
+Ferox Guristas Edition Blueprint	33874
+Prophecy Blood Raiders Edition Blueprint	33876
+Catalyst Serpentis Edition Blueprint	33878
+Coercer Blood Raiders Edition Blueprint	33880
+Cormorant Guristas Edition Blueprint	33882
+Thrasher Thukker Tribe Edition Blueprint	33884
+Small Transverse Bulkhead I Blueprint	33891
+Small Transverse Bulkhead II Blueprint	33893
+Medium Transverse Bulkhead I Blueprint	33895
+Medium Transverse Bulkhead II Blueprint	33897
+Large Transverse Bulkhead I Blueprint	33899
+Large Transverse Bulkhead II Blueprint	33901
+Capital Transverse Bulkhead I Blueprint	33903
+Capital Transverse Bulkhead II Blueprint	33905
+Medium Micro Jump Drive Blueprint	33916
+Limited Hyperspatial Accelerator Blueprint	33982
+Experimental Hyperspatial Accelerator Blueprint	33984
+Prototype Hyperspatial Accelerator Blueprint	33986
+Limited Jump Drive Economizer Blueprint	34123
+Experimental Jump Drive Economizer Blueprint	34125
+Prototype Jump Drive Economizer Blueprint	34127

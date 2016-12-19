@@ -1,0 +1,115 @@
+Energized Thermic Membrane II	1403376546	1	671000.14
+Armor EM Hardener II	1402099158	1	1434973.85
+Energized EM Membrane II	1402604904	1	600100.06
+Neural Boost - Improved	1402540142	1	98551001.01
+Proteus Propulsion - Localized Injectors	1403374926	1	32700001.22
+Proteus Propulsion - Localized Injectors	1403375032	1	32700001.22
+Ogre II	1403155810	18	892000.05
+Micro Auxiliary Power Core II	1403382690	1	683525.01
+Micro Auxiliary Power Core II	1403389736	1	683525.01
+Micro Auxiliary Power Core II	1403400852	1	683525.01
+Tengu Engineering - Capacitor Regeneration Matrix	1403376039	1	12023350.91
+Loki Offensive - Covert Reconfiguration	1403374515	1	42667980.04
+Energized Adaptive Nano Membrane II	1403374454	1	815001.17
+Energized Adaptive Nano Membrane II	1403374458	1	815001.17
+Energized Adaptive Nano Membrane II	1403374880	1	815001.17
+Energized Adaptive Nano Membrane II	1403376442	1	815001.17
+Energized Adaptive Nano Membrane II	1403376555	1	815001.17
+Energized Adaptive Nano Membrane II	1403377435	1	815001.17
+Energized Adaptive Nano Membrane II	1403375086	1	815001.17
+Energized Adaptive Nano Membrane II	1403375572	1	815001.17
+Loki Engineering - Power Core Multiplier	1403463029	3	14899800.67
+lastDateAnalyzed	1481968383	0	0
+Tengu Offensive - Covert Reconfiguration	1404226286	2	42132144.3
+Bomb Launcher II	1403499487	1	1780043.02
+Explosive Deflection Field II	1402417364	1	1210080.64
+Explosive Deflection Field II	1402410497	1	1210080.64
+Proteus Engineering - Capacitor Regeneration Matrix	1403463140	3	11457014.02
+Inertia Stabilizers II	1402267584	1	612014.7
+Inertia Stabilizers II	1401996065	1	552037.52
+Inertia Stabilizers II	1402327118	3	612014.7
+Miner II	1404495226	1	686023.34
+Miner II	1404500474	1	686023.34
+Miner II	1404500481	1	686023.34
+Miner II	1404500485	1	686023.34
+Miner II	1404506478	1	686023.34
+Miner II	1404485379	2	686023.34
+Miner II	1404489280	1	686023.34
+Loki Electronics - Immobility Drivers	1402971804	3	18321501.82
+Kinetic Deflection Field II	1403297312	1	1100000.04
+Kinetic Deflection Field II	1403292698	6	1100000.04
+Kinetic Deflection Field II	1403297675	15	1100000.04
+1MN Microwarpdrive II	1401918857	1	1940107.33
+Proteus Electronics - Emergent Locus Analyzer	1402351486	1	10660693.29
+800mm Repeating Cannon II	1402058575	1	2335091.01
+Tengu Propulsion - Interdiction Nullifier	1404134902	1	12657040.63
+Tengu Electronics - Dissolution Sequencer	1403126198	1	20234129.1
+Tengu Electronics - Dissolution Sequencer	1403143806	1	20234129.1
+Tengu Electronics - Dissolution Sequencer	1403146842	1	20234129.1
+Mobile Tractor Unit	1403946639	2	4407000.14
+Large Trimark Armor Pump I	1403389363	1	11000034.01
+Survey Scanner II	1403428696	2	586615.04
+Tachyon Beam Laser II	1402358286	4	4100300.03
+Tachyon Beam Laser II	1402358373	4	4100300.03
+Large Capacitor Control Circuit I	1404324058	6	7150165.02
+100MN Microwarpdrive II	1402133064	1	6851209.26
+100MN Microwarpdrive II	1402094383	1	6851209.26
+Federation Navy Antimatter Charge L	1401884104	4158	1126.31
+Federation Navy Antimatter Charge L	1401901944	5842	1127.0
+Tracking Computer II	1403274019	1	701296.04
+Tracking Computer II	1403274116	1	701296.04
+Tengu Engineering - Augmented Capacitor Reservoir	1402128984	1	14450694.78
+Tengu Engineering - Augmented Capacitor Reservoir	1403409790	1	18200006.24
+Tengu Engineering - Augmented Capacitor Reservoir	1403431955	1	18200006.24
+Tengu Engineering - Augmented Capacitor Reservoir	1403455512	1	16200006.24
+Legion Electronics - Dissolution Sequencer	1402508694	1	16123601.08
+Legion Electronics - Dissolution Sequencer	1402513140	1	16123601.08
+Legion Electronics - Dissolution Sequencer	1402519274	1	16123601.08
+800mm Heavy 'Scout' Repeating Cannon I	1401954311	1	601811.01
+800mm Heavy 'Scout' Repeating Cannon I	1401914078	1	601811.01
+800mm Heavy 'Scout' Repeating Cannon I	1401954395	2	601811.01
+800mm Heavy 'Scout' Repeating Cannon I	1401827627	2	601809.8
+800mm Heavy 'Scout' Repeating Cannon I	1401789463	2	601501.01
+800mm Heavy 'Scout' Repeating Cannon I	1401923355	2	601811.01
+Medium Shield Extender II	1403368901	1	643292.38
+Capacitor Flux Coil II	1402537083	1	425159.11
+Capacitor Flux Coil II	1402565805	1	425159.11
+Capacitor Flux Coil II	1402590915	1	425159.11
+Capacitor Flux Coil II	1402605120	1	425159.11
+Capacitor Flux Coil II	1402606542	1	425159.11
+Capacitor Flux Coil II	1402607518	1	425159.11
+Capacitor Flux Coil II	1402609029	1	425159.11
+Capacitor Flux Coil II	1402616301	1	425159.11
+Capacitor Flux Coil II	1402623555	1	425159.11
+Capacitor Flux Coil II	1402629859	1	425159.11
+Capacitor Flux Coil II	1402653176	1	425159.11
+Capacitor Flux Coil II	1402858086	1	425159.11
+Capacitor Flux Coil II	1402887146	1	425159.11
+Capacitor Flux Coil II	1402895523	1	425159.11
+Capacitor Flux Coil II	1402542414	2	425159.11
+Capacitor Flux Coil II	1402614055	2	425159.11
+Capacitor Flux Coil II	1402674461	2	425159.11
+Capacitor Flux Coil II	1402868178	2	425159.11
+Capacitor Flux Coil II	1402868394	2	425159.11
+Capacitor Flux Coil II	1402547176	2	425159.11
+Capacitor Flux Coil II	1402862247	3	425159.11
+Capacitor Flux Coil II	1402914073	3	425159.11
+Capacitor Flux Coil II	1402607617	2	425159.11
+Amarr Control Tower Small	1402066170	1	57122123.83
+Amarr Control Tower Small	1402110382	1	57122123.83
+Thermic Dissipation Field II	1402432152	3	1082127.99
+Thermic Dissipation Field II	1402358052	2	1082127.99
+Thermic Dissipation Field II	1404627733	4	1082131.86
+Thermic Dissipation Field II	1404629513	1	1082131.86
+Cap Recharger II	1403374762	1	503930.6
+Legion Propulsion - Interdiction Nullifier	1402510449	1	10123128.03
+Legion Propulsion - Interdiction Nullifier	1402512332	1	10123123.0
+Legion Propulsion - Interdiction Nullifier	1402512725	1	10123128.03
+Legion Propulsion - Interdiction Nullifier	1402196316	1	13500002.42
+Customs Office Gantry	1402574485	1	53100000.01
+Remote Tracking Computer II	1403376932	1	425003.78
+Remote Tracking Computer II	1402271798	1	425003.38
+Overdrive Injector System II	1403374741	1	539993.44
+Overdrive Injector System II	1402050066	1	530150.07
+Overdrive Injector System II	1403374856	2	539993.44
+Prototype Cloaking Device I	1479936013	1	2599999.99

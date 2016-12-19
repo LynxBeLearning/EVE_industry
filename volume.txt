@@ -1,0 +1,74 @@
+Gyrostabilizer II	119
+Armor EM Hardener II	0
+Energized EM Membrane II	3
+Energized Thermic Membrane II	5
+Medium Shield Extender II	57
+Co-Processor II	12
+Memory Augmentation - Standard	5
+1MN Afterburner II	33
+Shield Power Relay II	14
+Ogre II	15
+Drone Navigation Computer II	0
+Modulated Strip Miner II	11
+Warp Scrambler II	71
+Strip Miner I	15
+Energized Explosive Membrane II	0
+Large Shield Extender II	75
+Sensor Booster II	23
+EM Ward Field II	0
+Explosive Deflection Field II	95
+Inertia Stabilizers II	45
+Tracking Enhancer II	163
+Reactor Control Unit II	61
+Garde II	60
+Cargo Scanner II	6
+Shield Flux Coil II	0
+Heat Sink II	95
+Micro Auxiliary Power Core II	101
+Warp Disruptor II	8
+Tracking Disruptor II	109
+Kinetic Deflection Field II	18
+Warp Core Stabilizer II	9
+Small Tractor Beam II	45
+Magnetic Field Stabilizer II	45
+Omnidirectional Tracking Link II	23
+Medium Shield Booster II	6
+Energized Kinetic Membrane II	4
+Alloyed Tritanium Bar	748
+Power Diagnostic System II	44
+400mm Reinforced Rolled Tungsten Plates I	73
+Hammerhead II	199
+1MN Microwarpdrive II	15
+Enriched Uranium	200
+Armor Thermic Hardener II	53
+Mining Laser Upgrade II	88
+100MN Microwarpdrive II	0
+Large Shield Booster II	18
+Survey Scanner II	83
+Tracking Computer II	62
+Energized Adaptive Nano Membrane II	93
+Large Armor Repairer II	3
+Covert Ops Cloaking Device II	4
+Armor Kinetic Hardener II	7
+Miner II	61
+Cybernetic Subprocessor - Standard	5
+ECM - Multispectral Jammer II	1
+Ship Scanner II	48
+Ocular Filter - Standard	18
+Ice Harvester Upgrade II	38
+Hobgoblin II	35
+100MN Afterburner II	3
+Capacitor Flux Coil II	5
+Thermic Dissipation Field II	46
+Ballistic Control System II	2
+Cap Recharger II	65
+Salvager II	50
+Large Micro Jump Drive	71
+Capacitor Power Relay II	33
+Coolant	350
+Remote Tracking Computer II	0
+Improved Cloaking Device II	45
+Ice Harvester II	0
+Armor Explosive Hardener II	121
+Overdrive Injector System II	64
+Prototype Cloaking Device I	12
