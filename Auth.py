@@ -38,6 +38,8 @@ class Settings:
     self.clientID = settingsDict['CLIENTID']
     self.secret = settingsDict['SECRET']
     self.authUrl = settingsDict['AUTHTOKEN']
+    self.keyID = settingsDict['KEYID']
+    self.vCode = settingsDict['VCODE']    
     self.code = ''
     self.esiEndpoints = ''
     self.accessToken = ''
