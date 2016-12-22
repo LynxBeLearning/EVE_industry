@@ -13,7 +13,7 @@ import pubsub
 import locale
 
 ########################################################################
-class Settings:
+class Settings: #TURN THIS INTO STATIC CLASS?
   """read and hold settings variables"""
 
   #----------------------------------------------------------------------
