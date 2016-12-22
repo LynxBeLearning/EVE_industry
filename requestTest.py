@@ -9,6 +9,7 @@ import time
 import cPickle
 import zlib
 import os
+import re
 import datetime
 from os.path import join, exists
 from Auth import Settings,  AuthOperations
@@ -155,8 +156,6 @@ def needCopying(blueprintApiObj):
     location = row[1]
     runs = row[8]
     
-
-
     if bpx == -1 and (location in locations) and ME == 10 and TE == 20:
       if name in bpoList:
         pass
@@ -175,9 +174,6 @@ def needCopying(blueprintApiObj):
     elif runCounter[i][0] < 20:
       print "{} has {} total runs over {} bpc".format(i, runCounter[i][0], runCounter[i][1])
       
-      
-    
-
 
     
   
