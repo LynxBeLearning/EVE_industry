@@ -49,6 +49,18 @@ class Settings: #TURN THIS INTO STATIC CLASS?
       self.refreshToken = settingsDict['REFRESHTOKEN']
     else:
       self.refreshToken = ''
+      
+    #locations, ADD THESE TO A CONFIG FILE
+    self.allowedLocations = {
+      1022771210683 : "zansha mining, bpc container", #zansha mining, bpc container
+      1022832888095 : "zansha neuro, researched bpo container", #zansha neuro, researched bpo container
+      1022946515289 : "dunk's workshop, component bpos",  #zansha mining, components bpos container
+      1022756068998 : "zansha neuro, hangar",  #zansha neuro, hangar
+      #1019684069461 : "amarr container",
+      #60006142 : "amarr station hangar?",
+      1022946509438: "dun's workshop, T2 bpc container"
+    }
+    self.marketStationID = 60008494
     
   #----------------------------------------------------------------------
   def updateCode(self):
@@ -170,5 +182,5 @@ class AuthOperations:
 
 
 
-print "lala"
+#print "lala"
   

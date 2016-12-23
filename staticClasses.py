@@ -57,7 +57,50 @@ class StaticData():
     else:
       return rawBlueprint.typeID
     
-              
+  @classmethod
+  def productID(cls, ID):
+    """return id if name is provided and vice versa"""
+    ID = int(ID)
+    selected = cls.__database.execute('SELECT "productTypeID" FROM "industryActivityProducts" WHERE "typeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    productTuple = selected.fetchone()
+    if productTuple[0]:
+      return str(productTuple[0]) #[0] is required because fetchone returns a tuple
+    else:
+      raise("{} does is not a blueprint".format(StaticData.idName(ID)))
+  
+  @classmethod
+  def producerID(cls, ID):
+    """return id if name is provided and vice versa"""
+    ID = int(ID)
+    selected = cls.__database.execute('SELECT "typeID" FROM "industryActivityProducts" WHERE "productTypeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    producerTuple = selected.fetchone()
+    if producerTuple[0]:
+      return str(producerTuple[0]) #[0] is required because fetchone returns a tuple
+    else:
+      raise("{} is not produced by anything".format(StaticData.idName(ID)))  
+
+  @classmethod
+  def marketSize(cls, ID):
+    """estimate quantity of things to put on the market on the basis of how long the bpo is to copy. trust me, it works. maybe."""
+    ID = int(ID)
+    selected = cls.__database.execute('SELECT "time" FROM "industryActivity" WHERE "TypeID" = ? and "activityID" = 5' , (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    copyTimeTuple = selected.fetchone()
+    if copyTimeTuple[0]:
+      copyTime = copyTimeTuple[0] #[0] is required because fetchone returns a tuple
+      if copyTime <= 240:
+        return [300, 100, 20] #returns 3 things in this order: bpc copy runs, quantity to manufacture when below threshold, minimum market threshold before manufacturing again.
+      elif copyTime <= 720:
+        return [100, 50, 20]
+      elif copyTime <= 1440:
+        return [50, 50, 10]
+      elif copyTime <= 4800:
+        return [10, 5, 2]
+      elif copyTime > 4800:
+        return [5, 1, 0]
+      
+    else:
+      raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(ID)))  
+
 #necessary patch to updata static variables from internal methods
 StaticData.T1toT2, StaticData.T2toT1 = StaticData._inventablesFetcher()
         

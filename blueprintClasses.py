@@ -15,6 +15,7 @@ import eveapi
 from eveapi import MyCacheHandler
 import tempfile
 import cPickle
+import math
 import zlib
 import re
 import datetime
@@ -22,12 +23,7 @@ from os.path import join, exists
 from Auth import Settings,  AuthOperations
 from staticClasses import StaticData
 
-locations = {
-  1022771210683 : "zansha mining, bpc container", #zansha mining, bpc container
-  1022832888095 : "zansha neuro, researched bpo container", #zansha neuro, researched bpo container
-  1022771182111 : "zansha mining, component bpos",  #zansha mining, components bpos container
-  1022756068998 : "zansha neuro, hangar",  #zansha neuro, hangar
-}
+
 
 ########################################################################
 class BlueprintItem:
@@ -79,15 +75,50 @@ class BpContainer:
   """"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprintItemObj, blueprintItemParserObj):
+  def __init__(self, blueprintItemObj, blueprintItemParserObj, marketData):
     """Constructor"""
-    #set variables for the bpo
+    self.CopySize, self.manufSize, self.minMarketSize = StaticData.marketSize(blueprintItemObj.typeID) #the copy time for bp is used as a measure of how difficult it is to manufacture and as a consequence how many should be on the market. i hope to implement real volume data to supplant this
+    #set variables for bpo, bpc and t2
     self.BPO = BPO(blueprintItemObj, blueprintItemParserObj)
-    #set variables for the bpcs
     self.BPC = BPC(self.BPO, blueprintItemParserObj)
-    #set variables for the t2
     self.T2 = T2(self.BPO, blueprintItemParserObj)
     
+    #calculating priority for this bp family, t1 item
+    self.t1MarketOK = 0
+    self.t1Priority = []
+    remainingItems = marketData.remainingItems(self.BPO.typeID)
+    if remainingItems >= self.minMarketSize:
+      self.t1MarketOK = 1
+      if self.BPC.totalRuns >= self.manufSize:
+        self.t1Priority = ['ready', 0]
+    elif self.BPC.totalRuns >= self.manufSize:
+      self.t1Priority = ['manufacture', self.manufSize]
+    else:
+      copyNumber = math.ceil(((self.CopySize * 4) - self.BPC.totalRuns) / self.CopySize)
+      self.t1Priority = ['copy', copyNumber]
+    
+    #calculating priority for this bp family, t2 item if present
+    if self.T2.inventable == 0:
+      self.t2MarketOK = None
+      self.t2Priority = None
+    else:
+      self.t2MarketOK = [0] * len(self.T2.inventedIDs)
+      self.t2Priority = [""] * len(self.T2.inventedIDs)      
+      for index in range(len(self.T2.inventedIDs)):
+        remainingItems = marketData.remainingItems(self.T2.inventedIDs[index])
+        if remainingItems >= self.minMarketSize:
+          self.t2MarketOK = 1
+          if self.T2.totalRuns[index] >= self.manufSize:
+            self.t2Priority[index] = ['ready', 0]
+          else:
+            self.t2Priority[index] = ['invention', 15]
+        elif self.T2.totalRuns[index] >= self.manufSize:
+          self.t2Priority[index] = ["manufacture", self.manufSize]
+        elif self.BPC.totalRuns >= 15:
+          self.t2Priority[index] = ['invention', 15]
+        else:
+          copyNumber = math.ceil(((self.CopySize * 4) - self.BPC.totalRuns) / self.CopySize)
+          self.t2Priority[index] = ['copy', copyNumber]
 
 ########################################################################
 class BPO:
@@ -103,6 +134,10 @@ class BPO:
     self.TE = blueprintItemObj.TE
     self.locationID = blueprintItemObj.locationID
     self.rawItem = [blueprintItemObj]
+    if blueprintItemObj.locationID == 1022946515289:
+      self.component = 1
+    else:
+      self.component = 0
     blueprintItemParserObj.removeItems(blueprintItemObj.itemID)    
     
 ########################################################################
@@ -166,38 +201,128 @@ class Blueprints:
   """"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprintItemParserObj):
+  def __init__(self, blueprintItemParserObj, marketData):
     """Constructor"""
     self.blueprints = {}
-    bpoList = self.listOfBpos(blueprintItemParserObj)
+    bpoList = self._listOfBpos(blueprintItemParserObj)
     for bpo in bpoList:
       typeID = bpo.typeID
-      self.blueprints[typeID] = BpContainer(bpo, blueprintItemParserObj)
+      self.blueprints[typeID] = BpContainer(bpo, blueprintItemParserObj, marketData)
   
   #----------------------------------------------------------------------
-  def listOfBpos(self, blueprintItemParserObj):
+  def _listOfBpos(self, blueprintItemParserObj):
     """"""
     bpos = []
     for key in blueprintItemParserObj.rawBlueprints:
-      if blueprintItemParserObj.rawBlueprints[key].bpo == 1 and blueprintItemParserObj.rawBlueprints[key].locationID in locations:
+      if blueprintItemParserObj.rawBlueprints[key].bpo == 1 and blueprintItemParserObj.rawBlueprints[key].locationID in settings.allowedLocations:
         bpos.append(blueprintItemParserObj.rawBlueprints[key])
     return bpos
 
   #----------------------------------------------------------------------
   def calculatePriority(self):
     """"""
+    #
+    print "T1 PRIORITY FOR MANUFACTURING\n"
+    print "priorities (not on market)\n"
+    print "BP_NAME\tUNITS"
+    for typeID in bp.blueprints:
+      bpContainer = bp.blueprints[typeID]
+      if bpContainer.t1MarketOK == 0 and bpContainer.t1Priority[0] == 'manufacture' and bpContainer.BPO.component == 0:
+        print "{}\t{}".format(StaticData.idName(typeID),  bpContainer.t1Priority[1])
+    
+    print "\n\nT1 PRIORITY FOR COPYING\n"
+    print "BP_NAME\tUNITS"
+    for typeID in bp.blueprints:
+      bpContainer = bp.blueprints[typeID]
+      if bpContainer.t1MarketOK == 0 and bpContainer.t1Priority[0] == 'copy' and bpContainer.BPO.component == 0:
+        print "{}\t{}".format(StaticData.idName(typeID),  int(bpContainer.t1Priority[1]))
+        
+    print "\n\nT1 LOW PRIORITY FOR COPYING\n"
+    print "BP_NAME\tUNITS"
+    for typeID in bp.blueprints:
+      bpContainer = bp.blueprints[typeID]
+      if bpContainer.t1MarketOK == 1 and bpContainer.t1Priority[0] == 'copy' and bpContainer.BPO.component == 0:
+        print "{}\t{}".format(StaticData.idName(typeID),  int(bpContainer.t1Priority[1]))   
+    
+    print "\n\nT2 PRIORITY FOR MANUFACTURING\n"
+    print "BP_NAME\tUNITS"
+    for typeID in bp.blueprints:
+      bpContainer = bp.blueprints[typeID]
+      if bpContainer.T2.inventable == 1:
+        for index in range(len(bpContainer.T2.inventedIDs)):
+          if bpContainer.t2MarketOK[index] == 0 and bpContainer.t2Priority[index][0] == 'manufacture' and bpContainer.BPO.component == 0:
+            print "{}\t{}".format(StaticData.idName(bpContainer.T2.inventedIDs[index]),  int(bpContainer.t2Priority[index][1]))
+            
+            
+    print "\n\nT2 PRIORITY FOR INVENTING\n"
+    print "BP_NAME\tUNITS"
+    for typeID in bp.blueprints:
+      bpContainer = bp.blueprints[typeID]
+      if bpContainer.T2.inventable == 1:
+        for index in range(len(bpContainer.T2.inventedIDs)):
+          if bpContainer.t2MarketOK[index] == 0 and bpContainer.t2Priority[index][0] == 'invention' and bpContainer.BPO.component == 0:
+            print "{}\t{}".format(StaticData.idName(bpContainer.T2.inventedIDs[index]),  int(bpContainer.t2Priority[index][1]))      
+    
+    #print "\n LOW PRIORITY (on market already)"
     
 
+########################################################################
+class MarketOrders:
+  """"""
 
+  #----------------------------------------------------------------------
+  def __init__(self, apiObj):
+    """Constructor"""
+    self.marketOrders = joltanXml.MarketOrders().orders
+    
+    
+  #----------------------------------------------------------------------
+  def remainingItems(self, blueprintTypeID): #blueprint or object typeID? need converter of bp to object
+    """"""
+
+    blueprintTypeID = int(blueprintTypeID)
+    returnValue = 0
+    
+    for row in self.marketOrders._rows:
+      stationID = row[2]
+      typeID = row[7]
+      bid = row[13]
+      remainingItems = row[4]
+      if stationID == settings.marketStationID and typeID == StaticData.productID(blueprintTypeID) and bid == 0:
+        returnValue == remainingItems
+        break
+
+    return returnValue
+    
+      
+      
+    
+    
+  
 
 settings = Settings()
 cachedApi = eveapi.EVEAPIConnection(cacheHandler=MyCacheHandler(debug=True))
 joltanXml = cachedApi.auth(keyID=settings.keyID, vCode=settings.vCode).character(1004487144)
 bps = joltanXml.Blueprints()
 BlueprintItemParserO = BlueprintItemParser(bps)
-bp = Blueprints(BlueprintItemParserO)
+marketData = MarketOrders(joltanXml)
+bp = Blueprints(BlueprintItemParserO, marketData)
+
+
+########################################################################
+class IndustryJobs:
+  """"""
+
+  #----------------------------------------------------------------------
+  def __init__(self):
+    """Constructor"""
+    
+    
+    
+  
 
 
 print "aa"
+
 
 

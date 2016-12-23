@@ -17,8 +17,11 @@ from Auth import Settings,  AuthOperations
 locations = {
              1022771210683 : "zansha mining, bpc container", #zansha mining, bpc container
              1022832888095 : "zansha neuro, researched bpo container", #zansha neuro, researched bpo container
-             1022771182111 : "zansha mining, component bpos",  #zansha mining, components bpos container
+             1022946515289 : "dunk's workshop, component bpos",  #zansha mining, components bpos container
              1022756068998 : "zansha neuro, hangar",  #zansha neuro, hangar
+             #1019684069461 : "amarr container",
+             #60006142 : "amarr station hangar?",
+             1022946509438: "dun's workshop, T2 bpc container"
             }
 
 
@@ -194,3 +197,4 @@ needResearch(transactions)
 needCopying(transactions)
 
 print "kaorlghj"
+
