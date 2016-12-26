@@ -56,11 +56,23 @@ class Settings: #TURN THIS INTO STATIC CLASS?
       1022832888095 : "zansha neuro, researched bpo container", #zansha neuro, researched bpo container
       1022946515289 : "dunk's workshop, component bpos",  #zansha mining, components bpos container
       1022756068998 : "zansha neuro, hangar",  #zansha neuro, hangar
-      #1019684069461 : "amarr container",
-      #60006142 : "amarr station hangar?",
-      1022946509438: "dun's workshop, T2 bpc container"
+      1022946509438: "dunk's workshop, T2 bpc container",
+      1022946637486: "dunk's workshop, t1 bpc container",
+      1022975749725: "zansha neuro, BPO container",
+      
     }
-    self.marketStationID = 60008494
+    
+    self.knownLocations = {
+      1019684069461: "amarr, manufacturing container",
+      60006142 : "yehnifi station hangar",
+      1022975868749L: "DO6 fortizar, low priority blueprint container",
+      1022975750208L: "zansha neuro, unreaserched BPOs",
+      1022946551363L: "fortizar misc container",
+      1019684069479L: "amarr misc container",
+      
+     
+    }
+    self.marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
     
   #----------------------------------------------------------------------
   def updateCode(self):

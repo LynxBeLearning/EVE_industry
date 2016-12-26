@@ -64,7 +64,7 @@ class StaticData():
     selected = cls.__database.execute('SELECT "productTypeID" FROM "industryActivityProducts" WHERE "typeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     productTuple = selected.fetchone()
     if productTuple[0]:
-      return str(productTuple[0]) #[0] is required because fetchone returns a tuple
+      return int(productTuple[0]) #[0] is required because fetchone returns a tuple
     else:
       raise("{} does is not a blueprint".format(StaticData.idName(ID)))
   

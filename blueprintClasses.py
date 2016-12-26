@@ -97,6 +97,7 @@ class BpContainer:
       copyNumber = math.ceil(((self.CopySize * 4) - self.BPC.totalRuns) / self.CopySize)
       self.t1Priority = ['copy', copyNumber]
     
+    
     #calculating priority for this bp family, t2 item if present
     if self.T2.inventable == 0:
       self.t2MarketOK = None
@@ -107,16 +108,17 @@ class BpContainer:
       for index in range(len(self.T2.inventedIDs)):
         remainingItems = marketData.remainingItems(self.T2.inventedIDs[index])
         if remainingItems >= self.minMarketSize:
-          self.t2MarketOK = 1
+          self.t2MarketOK[index] = 1
           if self.T2.totalRuns[index] >= self.manufSize:
             self.t2Priority[index] = ['ready', 0]
           else:
+            #TODO: calculate how many things i should invent based on how many t2 bpc i have and how many are needed to get to 5 or more, use fixed probability of 45% for success
             self.t2Priority[index] = ['invention', 15]
         elif self.T2.totalRuns[index] >= self.manufSize:
           self.t2Priority[index] = ["manufacture", self.manufSize]
         elif self.BPC.totalRuns >= 15:
           self.t2Priority[index] = ['invention', 15]
-        else:
+        else: 
           copyNumber = math.ceil(((self.CopySize * 4) - self.BPC.totalRuns) / self.CopySize)
           self.t2Priority[index] = ['copy', copyNumber]
 
@@ -214,6 +216,12 @@ class Blueprints:
     """"""
     bpos = []
     for key in blueprintItemParserObj.rawBlueprints:
+      #check to see if i have unaccounted for bps in unknown containers
+      if blueprintItemParserObj.rawBlueprints[key].locationID not in settings.allowedLocations and blueprintItemParserObj.rawBlueprints[key].locationID not in settings.knownLocations:
+        print "WARNING: NEW BLUEPRINT LOCATION DETECTED: BPO: {}, BPC: {}, LOCATIONID: {}, NAME: {}".format(blueprintItemParserObj.rawBlueprints[key].bpc,
+                                                                                                            blueprintItemParserObj.rawBlueprints[key].bpo,
+                                                                                                            blueprintItemParserObj.rawBlueprints[key].locationID,
+                                                                                                            StaticData.idName(blueprintItemParserObj.rawBlueprints[key].typeID))
       if blueprintItemParserObj.rawBlueprints[key].bpo == 1 and blueprintItemParserObj.rawBlueprints[key].locationID in settings.allowedLocations:
         bpos.append(blueprintItemParserObj.rawBlueprints[key])
     return bpos
@@ -263,8 +271,13 @@ class Blueprints:
           if bpContainer.t2MarketOK[index] == 0 and bpContainer.t2Priority[index][0] == 'invention' and bpContainer.BPO.component == 0:
             print "{}\t{}".format(StaticData.idName(bpContainer.T2.inventedIDs[index]),  int(bpContainer.t2Priority[index][1]))      
     
-    #print "\n LOW PRIORITY (on market already)"
-    
+    print "\n LOW PRIORITY (on market already)"
+    for typeID in bp.blueprints:
+      bpContainer = bp.blueprints[typeID]
+      if bpContainer.T2.inventable == 1:
+        for index in range(len(bpContainer.T2.inventedIDs)):
+          if bpContainer.t2MarketOK[index] == 1 and bpContainer.t2Priority[index][0] == 'invention' and bpContainer.BPO.component == 0:
+            print "{}\t{}".format(StaticData.idName(bpContainer.T2.inventedIDs[index]),  int(bpContainer.t2Priority[index][1]))     
 
 ########################################################################
 class MarketOrders:
@@ -289,7 +302,7 @@ class MarketOrders:
       bid = row[13]
       remainingItems = row[4]
       if stationID == settings.marketStationID and typeID == StaticData.productID(blueprintTypeID) and bid == 0:
-        returnValue == remainingItems
+        returnValue = remainingItems
         break
 
     return returnValue
@@ -307,16 +320,10 @@ bps = joltanXml.Blueprints()
 BlueprintItemParserO = BlueprintItemParser(bps)
 marketData = MarketOrders(joltanXml)
 bp = Blueprints(BlueprintItemParserO, marketData)
+bp.calculatePriority()
 
 
-########################################################################
-class IndustryJobs:
-  """"""
 
-  #----------------------------------------------------------------------
-  def __init__(self):
-    """Constructor"""
-    
     
     
   
