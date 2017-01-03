@@ -59,6 +59,8 @@ class Settings: #TURN THIS INTO STATIC CLASS?
       1022946509438: "dunk's workshop, T2 bpc container",
       1022946637486: "dunk's workshop, t1 bpc container",
       1022975749725: "zansha neuro, BPO container",
+      1022946512073: 'zansha mining, t2 bpc container',
+      1022980573793: 'la fistiniere, bpc container'
       
     }
     
@@ -73,6 +75,7 @@ class Settings: #TURN THIS INTO STATIC CLASS?
      
     }
     self.marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
+    self.componentsBpoContainer = 1022946515289 #all bpos in here will be flagged as components and require no copying or inventing.
     
   #----------------------------------------------------------------------
   def updateCode(self):
