@@ -1,4 +1,5 @@
 import sqlite3
+import pubsub
 
 
 ########################################################################
@@ -63,10 +64,10 @@ class StaticData():
     ID = int(ID)
     selected = cls.__database.execute('SELECT "productTypeID" FROM "industryActivityProducts" WHERE "typeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     productTuple = selected.fetchone()
-    if productTuple[0]:
+    if productTuple is not None:
       return int(productTuple[0]) #[0] is required because fetchone returns a tuple
     else:
-      raise("{} does is not a blueprint".format(StaticData.idName(ID)))
+      return None
   
   @classmethod
   def producerID(cls, ID):
@@ -74,16 +75,16 @@ class StaticData():
     ID = int(ID)
     selected = cls.__database.execute('SELECT "typeID" FROM "industryActivityProducts" WHERE "productTypeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     producerTuple = selected.fetchone()
-    if producerTuple[0]:
+    if producerTuple is not None:
       return str(producerTuple[0]) #[0] is required because fetchone returns a tuple
     else:
-      raise("{} is not produced by anything".format(StaticData.idName(ID)))  
+      return None 
 
   @classmethod
-  def marketSize(cls, ID):
+  def marketSize(cls, typeID):
     """estimate quantity of things to put on the market on the basis of how long the bpo is to copy. trust me, it works. maybe."""
-    ID = int(ID)
-    selected = cls.__database.execute('SELECT "time" FROM "industryActivity" WHERE "TypeID" = ? and "activityID" = 5' , (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    typeID = int(typeID)
+    selected = cls.__database.execute('SELECT "time" FROM "industryActivity" WHERE "TypeID" = ? and "activityID" = 5' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     copyTimeTuple = selected.fetchone()
     if copyTimeTuple[0]:
       copyTime = copyTimeTuple[0] #[0] is required because fetchone returns a tuple
@@ -99,11 +100,110 @@ class StaticData():
         return [5, 1, 0]
       
     else:
-      raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(ID)))  
+      raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(typeID)))
+    
+  #----------------------------------------------------------------------
+  @classmethod
+  def manufacturingCost(cls, typeID):
+    """calculate the manufacturing cost of an item"""
+    typeID = int(typeID)
+    returnList = []
+    selected = cls.__database.execute('SELECT "materialTypeID", "quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 1' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    resultsList = selected.fetchall()
+    
+    if len(resultsList) > 0:
+      for resultTuple in resultsList:
+        #print "{} {}".format(cls.idName(tup[0]), tup[1]) #print material name and cost
+        returnList.append([resultTuple[0], resultTuple[1]])
+    else:
+      return None
+      
+    return returnList
+      
+    
 
 #necessary patch to updata static variables from internal methods
 StaticData.T1toT2, StaticData.T2toT1 = StaticData._inventablesFetcher()
         
-      
+
+
+########################################################################
+class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTINGS
+  """read and hold settings variables"""
+
+  blueprintLocations = {
+    1022771210683 : "zansha mining, bpc container", #zansha mining, bpc container
+    1022832888095 : "zansha neuro, researched bpo container", #zansha neuro, researched bpo container
+    1022946515289 : "dunk's workshop, component bpos",  #zansha mining, components bpos container
+    1022756068998 : "zansha neuro, hangar",  #zansha neuro, hangar
+    1022946509438: "dunk's workshop, T2 bpc container",
+    1022946637486: "dunk's workshop, t1 bpc container",
+    1022975749725: "zansha neuro, BPO container",
+    1022946512073: 'zansha mining, t2 bpc container',
+    1022980573793: 'la fistiniere, bpc container'
     
-print "vorij"
+  }
+  
+  materialsLocations = {
+    1022771185137: "invention, zansha mining",
+    1022946657877: 'dunks raw mats',
+    1022840070781: 'dunks components',
+  }
+  
+  knownLocations = {
+    1019684069461: "amarr, manufacturing container",
+    60006142 : "yehnifi station hangar",
+    1022975868749L: "DO6 fortizar, low priority blueprint container",
+    1022975750208L: "zansha neuro, unreaserched BPOs",
+    1022946551363L: "fortizar misc container",
+    1019684069479L: "amarr misc container",
+  }  
+
+
+
+  settingsDict = {}
+  settingsFile = open("config.ini")
+  for line in settingsFile:
+    tempList = line.strip().split(" = ")
+    settingsDict[tempList[0]] = tempList[1]
+  settingsFile.close()
+  
+  #code listener
+  _listener = pubsub.subscribe("code")
+  
+  #variables
+  crestUrl = settingsDict['CRESTURL']
+  esiUrl = settingsDict['ESIURL']
+  esiEndpointsUrl = settingsDict['ESIENDPOINTS']
+  userAgent = settingsDict['USERAGENT']
+  port = settingsDict['PORT']
+  clientID = settingsDict['CLIENTID']
+  secret = settingsDict['SECRET']
+  authUrl = settingsDict['AUTHTOKEN']
+  keyID = settingsDict['KEYID']
+  vCode = settingsDict['VCODE']    
+  code = ''
+  esiEndpoints = ''
+  accessToken = ''
+  
+  expires = ''
+  if "REFRESHTOKEN" in settingsDict:
+    refreshToken = settingsDict['REFRESHTOKEN']
+  else:
+    refreshToken = ''
+    
+
+  marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
+  componentsBpoContainer = 1022946515289 #all bpos in here will be flagged as components and require no copying or inventing.
+    
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateCode(cls):
+    """listen for code broadcasts and set the variable."""
+    cls.code = cls._listener.listen().next()['data']
+      
+
+
+
+
+    

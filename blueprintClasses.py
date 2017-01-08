@@ -21,8 +21,8 @@ import zlib
 import re
 import datetime
 from os.path import join, exists
-from Auth import Settings,  AuthOperations
-from staticClasses import StaticData
+from Auth import Settings,  ESI
+from staticClasses import StaticData,  Settings
 from scipy.stats import binom as binomial
 
 
@@ -91,12 +91,15 @@ class BpContainer:
     remainingItems = marketData.remainingItems(self.BPO.typeID)
     if remainingItems >= self.minMarketSize:
       self.t1MarketOK = 1
-      if self.BPC.totalRuns >= self.manufSize:
+      if self.BPC.totalRuns <= self.manufSize:
+        copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
+        self.t1Priority = ['copy', copyNumber]        
+      elif self.BPC.totalRuns >= self.manufSize:
         self.t1Priority = ['ready', 0]
     elif self.BPC.totalRuns >= self.manufSize:
       self.t1Priority = ['manufacture', self.manufSize]
     else:
-      copyNumber = math.ceil(((self.CopySize * 4) - self.BPC.totalRuns) / self.CopySize)
+      copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
       self.t1Priority = ['copy', copyNumber]
     
     
@@ -126,7 +129,7 @@ class BpContainer:
                                             0.95)
           self.t2Priority[index] = ['invention', runs]          
         else: 
-          copyNumber = math.ceil(((self.CopySize * 4) - self.BPC.totalRuns) / self.CopySize)
+          copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
           self.t2Priority[index] = ['copy', copyNumber]
           
   #----------------------------------------------------------------------
@@ -152,7 +155,7 @@ class BPO:
     self.TE = blueprintItemObj.TE
     self.locationID = blueprintItemObj.locationID
     self.rawItem = [blueprintItemObj]
-    if blueprintItemObj.locationID == settings.componentsBpoContainer:
+    if blueprintItemObj.locationID == Settings.componentsBpoContainer:
       self.component = 1
     else:
       self.component = 0
@@ -174,7 +177,7 @@ class BPC:
     
 
     for ItemID in itemIDs:
-      if blueprintItemParserObj.rawBlueprints[ItemID].typeID == parentID and blueprintItemParserObj.rawBlueprints[ItemID].bpc == 1 and blueprintItemParserObj.rawBlueprints[ItemID].locationID in settings.allowedLocations:
+      if blueprintItemParserObj.rawBlueprints[ItemID].typeID == parentID and blueprintItemParserObj.rawBlueprints[ItemID].bpc == 1 and blueprintItemParserObj.rawBlueprints[ItemID].locationID in Settings.blueprintLocations:
         self.totalBPCs += 1
         self.totalRuns += blueprintItemParserObj.rawBlueprints[ItemID].runs
         self.rawItems.append(blueprintItemParserObj.rawBlueprints[ItemID])
@@ -203,7 +206,7 @@ class T2:
       
       for inventedCounter, inventedID in enumerate(self.inventedIDs):
         for itemID in itemIDs:
-          if blueprintItemParserObj.rawBlueprints[itemID].typeID == inventedID and blueprintItemParserObj.rawBlueprints[itemID].locationID in settings.allowedLocations:
+          if blueprintItemParserObj.rawBlueprints[itemID].typeID == inventedID and blueprintItemParserObj.rawBlueprints[itemID].locationID in Settings.blueprintLocations:
             self.totalBPCs[inventedCounter] += 1
             self.totalRuns[inventedCounter] += blueprintItemParserObj.rawBlueprints[itemID].runs
             self.items[inventedCounter].append(blueprintItemParserObj.rawBlueprints[itemID])
@@ -233,49 +236,48 @@ class Blueprints:
     bpos = []
     for key in blueprintItemParserObj.rawBlueprints:
       #check to see if i have unaccounted for bps in unknown containers
-      if blueprintItemParserObj.rawBlueprints[key].locationID not in settings.allowedLocations and blueprintItemParserObj.rawBlueprints[key].locationID not in settings.knownLocations:
+      if blueprintItemParserObj.rawBlueprints[key].locationID not in Settings.blueprintLocations and blueprintItemParserObj.rawBlueprints[key].locationID not in Settings.knownLocations:
         print "WARNING: NEW BLUEPRINT LOCATION DETECTED: BPO: {}, BPC: {}, LOCATIONID: {}, NAME: {}".format(blueprintItemParserObj.rawBlueprints[key].bpo,
                                                                                                             blueprintItemParserObj.rawBlueprints[key].bpc,
                                                                                                             blueprintItemParserObj.rawBlueprints[key].locationID,
                                                                                                             StaticData.idName(blueprintItemParserObj.rawBlueprints[key].typeID))
-      if blueprintItemParserObj.rawBlueprints[key].bpo == 1 and blueprintItemParserObj.rawBlueprints[key].locationID in settings.allowedLocations:
+      if blueprintItemParserObj.rawBlueprints[key].bpo == 1 and blueprintItemParserObj.rawBlueprints[key].locationID in Settings.blueprintLocations:
         bpos.append(blueprintItemParserObj.rawBlueprints[key])
     return bpos
 
   #----------------------------------------------------------------------
-  def calculatePriority(self):
+  def printPriority(self):
     """"""
-    sortedTypeIDs = [x[0] for x in sorted(bp.blueprints.items(), key= lambda x: StaticData.idName(x[0]))] #sort the itemIDs by corresponding names
+    sortedTypeIDs = [x[0] for x in sorted(self.blueprints.items(), key= lambda x: StaticData.idName(x[0]))] #sort the itemIDs by corresponding names
     
     print "T1 MANUFACTURING\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.t1MarketOK == 0 and bpContainer.t1Priority[0] == 'manufacture' and bpContainer.BPO.component == 0:
         print "{}\t{}".format(StaticData.idName(typeID),  bpContainer.t1Priority[1])
     
     print "\n\nT1 COPYING\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.t1MarketOK == 0 and bpContainer.t1Priority[0] == 'copy' and bpContainer.BPO.component == 0:
         print "{}\t{}".format(StaticData.idName(typeID),  int(bpContainer.t1Priority[1]))
         
     print "\n\nT1 COPYING (low priority)\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.t1MarketOK == 1 and bpContainer.t1Priority[0] == 'copy' and bpContainer.BPO.component == 0:
         print "{}\t{}".format(StaticData.idName(typeID),  int(bpContainer.t1Priority[1])) 
         
     print "\n\nT1 DONE\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.t1MarketOK == 1 and bpContainer.t1Priority[0] == 'ready' and bpContainer.BPO.component == 0:
         print "{}".format(StaticData.idName(typeID)) 
-        
         
     
     print "\n\nT2 MANUFACTURING\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.T2.inventable == 1:
         for index in range(len(bpContainer.T2.inventedIDs)):
           if bpContainer.t2MarketOK[index] == 0 and bpContainer.t2Priority[index][0] == 'manufacture' and bpContainer.BPO.component == 0:
@@ -284,7 +286,7 @@ class Blueprints:
             
     print "\n\nT2 INVENTING\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.T2.inventable == 1:
         for index in range(len(bpContainer.T2.inventedIDs)):
           if bpContainer.t2MarketOK[index] == 0 and bpContainer.t2Priority[index][0] == 'invention' and bpContainer.BPO.component == 0:
@@ -292,7 +294,7 @@ class Blueprints:
     
     print "\n\nT2 INVENTING (low priority)\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.T2.inventable == 1:
         for index in range(len(bpContainer.T2.inventedIDs)):
           if bpContainer.t2MarketOK[index] == 1 and bpContainer.t2Priority[index][0] == 'invention' and bpContainer.BPO.component == 0:
@@ -301,11 +303,23 @@ class Blueprints:
            
     print "\n\nT2 DONE\n"
     for typeID in sortedTypeIDs:
-      bpContainer = bp.blueprints[typeID]
+      bpContainer = self.blueprints[typeID]
       if bpContainer.T2.inventable == 1:
         for index in range(len(bpContainer.T2.inventedIDs)):
           if bpContainer.t2MarketOK[index] == 1 and bpContainer.t2Priority[index][0] == 'ready' and bpContainer.BPO.component == 0:
             print "{}".format(StaticData.idName(bpContainer.T2.inventedIDs[index]))
+            
+            
+  #----------------------------------------------------------------------
+  def printBPCRuns(self):
+    """print a list of BP sorted by available runs"""
+    sortedTypeIDs = [x[0] for x in sorted(self.blueprints.items(), key= lambda x: self.blueprints[x[0]].BPC.totalRuns)] #sort the itemIDs by BPC runs
+    for i in sortedTypeIDs:
+      if self.blueprints[i].BPO.component == 0:
+        print "{}\t{}".format(StaticData.idName(i), self.blueprints[i].BPC.totalRuns)
+
+
+  
 
 ########################################################################
 class MarketOrders:
@@ -314,7 +328,7 @@ class MarketOrders:
   #----------------------------------------------------------------------
   def __init__(self, apiObj):
     """Constructor"""
-    self.marketOrders = joltanXml.MarketOrders().orders
+    self.marketOrders = apiObj.MarketOrders().orders
     
     
   #----------------------------------------------------------------------
@@ -330,7 +344,7 @@ class MarketOrders:
       bid = row[13]
       remainingItems = row[4]
       orderState = row[6]
-      if stationID == settings.marketStationID and typeID == StaticData.productID(blueprintTypeID) and bid == 0 and orderState == 0:
+      if stationID == Settings.marketStationID and typeID == StaticData.productID(blueprintTypeID) and bid == 0 and orderState == 0:
         returnValue = remainingItems
         break
 
@@ -347,20 +361,11 @@ class MarketOrders:
       volEntered=row[3]
       remainingItems = row[4]
     
-      if stationID == settings.marketStationID and bid == 0 and remainingItems != 0:
+      if stationID == Settings.marketStationID and bid == 0 and remainingItems != 0:
         print "{}\t{}/{}".format(StaticData.idName(typeID), remainingItems, volEntered)
   
 
-settings = Settings()
-cachedApi = eveapi.EVEAPIConnection(cacheHandler=MyCacheHandler(debug=True))
-joltanXml = cachedApi.auth(keyID=settings.keyID, vCode=settings.vCode).character(1004487144)
-BlueprintItemParserO = BlueprintItemParser(joltanXml.Blueprints())
-marketData = MarketOrders(joltanXml)
-bp = Blueprints(BlueprintItemParserO, marketData)
-bp.calculatePriority()
 
-
-#marketData.ordersList()
 
 
     
@@ -369,7 +374,7 @@ bp.calculatePriority()
 
 
 
-print "aa"
+
 
 
 

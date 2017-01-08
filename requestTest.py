@@ -14,15 +14,6 @@ import datetime
 from os.path import join, exists
 from Auth import Settings,  AuthOperations
 
-locations = {
-             1022771210683 : "zansha mining, bpc container", #zansha mining, bpc container
-             1022832888095 : "zansha neuro, researched bpo container", #zansha neuro, researched bpo container
-             1022946515289 : "dunk's workshop, component bpos",  #zansha mining, components bpos container
-             1022756068998 : "zansha neuro, hangar",  #zansha neuro, hangar
-             #1019684069461 : "amarr container",
-             #60006142 : "amarr station hangar?",
-             1022946509438: "dun's workshop, T2 bpc container"
-            }
 
 
 class MyCacheHandler(object):
@@ -99,29 +90,10 @@ class MyCacheHandler(object):
       f.close()
 
 ########################################################################
-class requestUrls:
-  """return correct urls to submit requests"""
 
-  #----------------------------------------------------------------------
-  def __init__(self, characterID):
-    """Constructor"""
-    
-    self.assetsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/assets/'.format(characterID)
-    
 
-########################################################################
-class getAssets:
-  """get asset data from ESI"""
 
-  #----------------------------------------------------------------------
-  def __init__(self,  assetUrl, authHeader):
-    """Constructor"""
-    
-    r = requests.get(assetUrl, headers=authHeader)
-    self.assets = r.json()
-    
-    
-  
+
 
 
 
@@ -190,11 +162,14 @@ joltanUrls = requestUrls(joltan.chrID)
 joltanAssets = getAssets(joltanUrls.assetsUrl, joltan.authHeader)
 
 
-cachedApi = eveapi.EVEAPIConnection(cacheHandler=MyCacheHandler(debug=True))
-joltanXml = cachedApi.auth(keyID=settings.keyID, vCode=settings.vCode).character(1004487144)
-transactions = joltanXml.Blueprints()
-needResearch(transactions)
-needCopying(transactions)
+
+
+
+#cachedApi = eveapi.EVEAPIConnection(cacheHandler=MyCacheHandler(debug=True))
+#joltanXml = cachedApi.auth(keyID=settings.keyID, vCode=settings.vCode).character(1004487144)
+#transactions = joltanXml.Blueprints()
+#needResearch(transactions)
+#needCopying(transactions)
 
 print "kaorlghj"
 
