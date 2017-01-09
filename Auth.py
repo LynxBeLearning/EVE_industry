@@ -13,7 +13,7 @@ import pubsub
 import locale
 #from ESIRequests import Assets
 from staticClasses import StaticData, Settings
-from materialsClasses import * 
+from ESIClasses import * 
 
 
   
@@ -61,11 +61,13 @@ class ESI:
   #----------------------------------------------------------------------
   def _credentials(self):
     """"""
+    scopes = "esi-assets.read_assets.v1%20esi-planets.manage_planets.v1%20publicData%20esi-wallet.read_character_wallet.v1%20esi-skills.read_skillqueue.v1%20esi-skills.read_skills.v1 %20"
+
     server = HTTPServer(('', int(Settings.port)), CodeHandler)
     serverThread = threading.Thread(target=server.serve_forever)
     serverThread.daemon = True
     serverThread.start()  
-    webbrowser.open('https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=http://localhost:'+Settings.port+'/&client_id='+Settings.clientID+'&scope=esi-assets.read_assets.v1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20esi-planets.manage_planets.v1%20%20%20%20%20&state=')
+    webbrowser.open('https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=http://localhost:'+Settings.port+'/&client_id='+Settings.clientID+'&scope='+scopes+'&state=') #%20%20%20%20%20%20%20%20%20%20%20%20%20%20  %20%20%20%20
     Settings.updateCode()         
       
   #----------------------------------------------------------------------
@@ -132,17 +134,21 @@ class ESI:
     r = requests.get(assetUrl, headers=self.authHeader)
     assets = Materials(r.json())
     return assets
+  
+  #----------------------------------------------------------------------
+  def getSkills(self):
+    """query esi for skill data"""
+    skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/'.format(self.chrID)
+    r = requests.get(skillsUrl, headers=self.authHeader)
+    skills = Skills(r.json())
+    return skills    
       
+
+        
+
+
+
+
+
  
-########################################################################
-
-        
-        
-        
-        
-
-
-
-
-
   

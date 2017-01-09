@@ -1,29 +1,8 @@
-from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
-import threading
-import urlparse
-import base64
-import os
-import webbrowser
-import json
-import csv
-import requests
-import operator
-import grequests
-import time
-import pubsub
-import locale
-import eveapi
-from eveapi import MyCacheHandler
-import tempfile
-import cPickle
-import math
-import zlib
-import re
-import datetime
 from os.path import join, exists
 from Auth import Settings,  ESI
 from staticClasses import StaticData,  Settings
 from scipy.stats import binom as binomial
+import math
 
 
 
@@ -77,7 +56,7 @@ class BpContainer:
   """"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprintItemObj, blueprintItemParserObj, marketData):
+  def __init__(self, blueprintItemObj, blueprintItemParserObj, marketData, charSkills):
     """Constructor"""
     self.CopySize, self.manufSize, self.minMarketSize = StaticData.marketSize(blueprintItemObj.typeID) #the copy time for bp is used as a measure of how difficult it is to manufacture and as a consequence how many should be on the market. i hope to implement real volume data to supplant this
     #set variables for bpo, bpc and t2
@@ -96,7 +75,7 @@ class BpContainer:
         self.t1Priority = ['copy', copyNumber]        
       elif self.BPC.totalRuns >= self.manufSize:
         self.t1Priority = ['ready', 0]
-    elif self.BPC.totalRuns >= self.manufSize:
+    elif self.BPC.totalRuns >= self.manufSize * 3:
       self.t1Priority = ['manufacture', self.manufSize]
     else:
       copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
@@ -118,18 +97,18 @@ class BpContainer:
             self.t2Priority[index] = ['ready', 0]
           else:
             runs = self._inventionCalculator( 5 - self.T2.totalBPCs[index], 
-                                            0.465, 
+                                            StaticData.inventionProb(charSkills, StaticData.producerID(self.T2.inventedIDs[index])), 
                                             0.95)
             self.t2Priority[index] = ['invention', runs]
         elif self.T2.totalRuns[index] >= self.manufSize:
           self.t2Priority[index] = ["manufacture", self.manufSize]
-        elif self.BPC.totalRuns >= 20:
+        elif self.BPC.totalRuns >= 25:
           runs = self._inventionCalculator( 5 - self.T2.totalBPCs[index], 
-                                            0.465, 
+                                            StaticData.inventionProb(charSkills, StaticData.producerID(self.T2.inventedIDs[index])), 
                                             0.95)
           self.t2Priority[index] = ['invention', runs]          
         else: 
-          copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
+          copyNumber = math.ceil(((self.CopySize * 10) - self.BPC.totalRuns) / self.CopySize)
           self.t2Priority[index] = ['copy', copyNumber]
           
   #----------------------------------------------------------------------
@@ -222,13 +201,13 @@ class Blueprints:
   """"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprintItemParserObj, marketData):
+  def __init__(self, blueprintItemParserObj, marketData, charSkills):
     """Constructor"""
     self.blueprints = {}
     bpoList = self._listOfBpos(blueprintItemParserObj)
     for bpo in bpoList:
       typeID = bpo.typeID
-      self.blueprints[typeID] = BpContainer(bpo, blueprintItemParserObj, marketData)
+      self.blueprints[typeID] = BpContainer(bpo, blueprintItemParserObj, marketData, charSkills)
   
   #----------------------------------------------------------------------
   def _listOfBpos(self, blueprintItemParserObj):
@@ -313,10 +292,10 @@ class Blueprints:
   #----------------------------------------------------------------------
   def printBPCRuns(self):
     """print a list of BP sorted by available runs"""
-    sortedTypeIDs = [x[0] for x in sorted(self.blueprints.items(), key= lambda x: self.blueprints[x[0]].BPC.totalRuns)] #sort the itemIDs by BPC runs
+    sortedTypeIDs = [x[0] for x in sorted(self.blueprints.items(), key= lambda x: self.blueprints[x[0]].BPC.totalRuns/self.blueprints[x[0]].manufSize)] #sort the itemIDs by BPC runs
     for i in sortedTypeIDs:
       if self.blueprints[i].BPO.component == 0:
-        print "{}\t{}".format(StaticData.idName(i), self.blueprints[i].BPC.totalRuns)
+        print "{}\t{}".format(StaticData.idName(i), self.blueprints[i].BPC.totalRuns/self.blueprints[i].manufSize)
 
 
   

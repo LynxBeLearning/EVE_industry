@@ -8,28 +8,28 @@ class StaticData():
 
   __database = sqlite3.connect('static_ascension.sqlite')  
   T1toT2, T2toT1 = {}, {}
-  
+
   #----------------------------------------------------------------------
   @classmethod
   def _inventablesFetcher(cls):
     """create dictionaries of inventables"""
     T1toT2 = {} 
     T2toT1 = {}
-    
+
     T1T2 = cls.__database.execute('SELECT "typeID","productTypeID" FROM "industryActivityProducts" where "activityID" = 8')
     for row in T1T2:
       if row[0] in T1toT2:
         T1toT2[row[0]].append(row[1])
       else:
         T1toT2[row[0]] = [row[1]]
-        
+
       if row[1] in T2toT1:
         T2toT1[row[1]].append(row[0])
       else:
         T2toT1[row[1]] = [row[0]]      
 
     return (T1toT2, T2toT1) #dictionary values are LISTS of INTEGERS
-  
+
   #----------------------------------------------------------------------
   @classmethod
   def idName(cls, idOrName):
@@ -43,21 +43,21 @@ class StaticData():
       selected = cls.__database.execute('SELECT "typeID" FROM "invTypes" WHERE "typeName" = ?', (idOrName, ))
       nameTuple = selected.fetchone()
       return str(nameTuple[0]) 
-   
 
-    
+
+
   #----------------------------------------------------------------------
   @classmethod
   def originatorBp(cls, rawBlueprint):
     """return the id of the bpo that is used to derive the blueprint (copy or invent)"""
-    
+
     if rawBlueprint.bpo == 1:
       return rawBlueprint.typeID
     elif rawBlueprint.typeID in cls.T2toT1:
       return T2toT1[rawBlueprint.typeID]
     else:
       return rawBlueprint.typeID
-    
+
   @classmethod
   def productID(cls, ID):
     """return id if name is provided and vice versa"""
@@ -68,7 +68,7 @@ class StaticData():
       return int(productTuple[0]) #[0] is required because fetchone returns a tuple
     else:
       return None
-  
+
   @classmethod
   def producerID(cls, ID):
     """return id if name is provided and vice versa"""
@@ -82,7 +82,7 @@ class StaticData():
 
   @classmethod
   def marketSize(cls, typeID):
-    """estimate quantity of things to put on the market on the basis of how long the bpo is to copy. trust me, it works. maybe."""
+    """estimate quantity of things to put on the market on the basis of how long the bpo takes to copy. trust me, it works. maybe."""
     typeID = int(typeID)
     selected = cls.__database.execute('SELECT "time" FROM "industryActivity" WHERE "TypeID" = ? and "activityID" = 5' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     copyTimeTuple = selected.fetchone()
@@ -98,33 +98,55 @@ class StaticData():
         return [10, 5, 2]
       elif copyTime > 4800:
         return [5, 1, 0]
-      
+
     else:
       raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(typeID)))
-    
+
   #----------------------------------------------------------------------
   @classmethod
-  def manufacturingCost(cls, typeID):
+  def baseManufacturingCost(cls, typeID):
     """calculate the manufacturing cost of an item"""
     typeID = int(typeID)
     returnList = []
     selected = cls.__database.execute('SELECT "materialTypeID", "quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 1' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     resultsList = selected.fetchall()
-    
+
     if len(resultsList) > 0:
       for resultTuple in resultsList:
         #print "{} {}".format(cls.idName(tup[0]), tup[1]) #print material name and cost
         returnList.append([resultTuple[0], resultTuple[1]])
     else:
       return None
-      
+
     return returnList
-      
-    
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def inventionProb(cls, charSkills, bpID): 
+    """calculate invention probability based on skill levels"""
+    encryptionSkillsID = [21791,23087,21790,23121]
+    baseProb = cls.__database.execute('SELECT "probability" FROM "industryActivityProbabilities" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    reqSkills = cls.__database.execute('SELECT "skillID" FROM "industryActivitySkills" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+  
+    baseProb = float(baseProb.fetchone()[0])
+    reqSkills = reqSkills.fetchall()
+  
+    encryptionSkill = ''
+    scienceSkills = []
+
+    if len(reqSkills) > 0:
+      for resultTuple in reqSkills:
+        if resultTuple[0] in encryptionSkillsID:
+          encryptionSkill = float(charSkills.skillLevel(resultTuple[0]))
+        else:
+          scienceSkills.append(float(charSkills.skillLevel(resultTuple[0])))
+
+    modifiedProb = round(baseProb * (1.0 + ( (scienceSkills[0] + scienceSkills[1] ) / 30 + (encryptionSkill / 40) ) ), 3)
+    return modifiedProb
 
 #necessary patch to updata static variables from internal methods
 StaticData.T1toT2, StaticData.T2toT1 = StaticData._inventablesFetcher()
-        
+
 
 
 ########################################################################
@@ -141,15 +163,15 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     1022975749725: "zansha neuro, BPO container",
     1022946512073: 'zansha mining, t2 bpc container',
     1022980573793: 'la fistiniere, bpc container'
-    
+
   }
-  
+
   materialsLocations = {
     1022771185137: "invention, zansha mining",
     1022946657877: 'dunks raw mats',
     1022840070781: 'dunks components',
   }
-  
+
   knownLocations = {
     1019684069461: "amarr, manufacturing container",
     60006142 : "yehnifi station hangar",
@@ -167,10 +189,10 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     tempList = line.strip().split(" = ")
     settingsDict[tempList[0]] = tempList[1]
   settingsFile.close()
-  
+
   #code listener
   _listener = pubsub.subscribe("code")
-  
+
   #variables
   crestUrl = settingsDict['CRESTURL']
   esiUrl = settingsDict['ESIURL']
@@ -185,25 +207,25 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
   code = ''
   esiEndpoints = ''
   accessToken = ''
-  
+
   expires = ''
   if "REFRESHTOKEN" in settingsDict:
     refreshToken = settingsDict['REFRESHTOKEN']
   else:
     refreshToken = ''
-    
+
 
   marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
   componentsBpoContainer = 1022946515289 #all bpos in here will be flagged as components and require no copying or inventing.
-    
+  joltanID = 1004487144
+
   #----------------------------------------------------------------------
   @classmethod
   def updateCode(cls):
     """listen for code broadcasts and set the variable."""
     cls.code = cls._listener.listen().next()['data']
-      
 
 
 
 
-    
+
