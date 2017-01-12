@@ -107,18 +107,19 @@ class StaticData():
   def baseManufacturingCost(cls, typeID):
     """calculate the manufacturing cost of an item"""
     typeID = int(typeID)
-    returnList = []
+    returnDict = {}
     selected = cls.__database.execute('SELECT "materialTypeID", "quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 1' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     resultsList = selected.fetchall()
 
     if len(resultsList) > 0:
       for resultTuple in resultsList:
         #print "{} {}".format(cls.idName(tup[0]), tup[1]) #print material name and cost
-        returnList.append([resultTuple[0], resultTuple[1]])
+        returnDict[resultTuple[0]] = resultTuple[1]
+        
     else:
       return None
 
-    return returnList
+    return returnDict
 
   #----------------------------------------------------------------------
   @classmethod
@@ -143,6 +144,21 @@ class StaticData():
 
     modifiedProb = round(baseProb * (1.0 + ( (scienceSkills[0] + scienceSkills[1] ) / 30 + (encryptionSkill / 40) ) ), 3)
     return modifiedProb
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def categoryID(cls, typeID):
+    """return the category to which an item belongs"""
+    itemGroup = cls.__database.execute('SELECT "groupID" FROM "invTypes" WHERE "TypeID" = ?' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    itemGroup = itemGroup.fetchone()[0]
+    itemCategory = cls.__database.execute('SELECT "categoryID" FROM "invGroups" WHERE "groupID" = ?' , (itemGroup, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    itemCategory = int(itemCategory.fetchone()[0])
+    return itemCategory
+
+
+
+
+
 
 #necessary patch to updata static variables from internal methods
 StaticData.T1toT2, StaticData.T2toT1 = StaticData._inventablesFetcher()

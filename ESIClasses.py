@@ -1,7 +1,7 @@
 from staticClasses import StaticData, Settings
 
 
-class Materials:
+class Assets:
   """Parse json ESI output for character assets"""
 
   #----------------------------------------------------------------------
@@ -22,6 +22,7 @@ class Materials:
           self.materials[itemTypeID] =  item['quantity']
         else:
           self.materials[itemTypeID] += item['quantity']
+        
           
           
 ########################################################################
@@ -40,6 +41,10 @@ class Skills:
   def skillLevel(self, skillID):
     """return the level of the supplied skill"""
     return self.skills[skillID]
+    
+    
+
+    
     
     
   

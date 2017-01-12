@@ -128,11 +128,11 @@ class ESI:
   
   
   #----------------------------------------------------------------------
-  def getMaterials(self): 
+  def getAssets(self): 
     """query esi for asset data"""
     assetUrl = 'https://esi.tech.ccp.is/latest/characters/{}/assets/'.format(self.chrID)
     r = requests.get(assetUrl, headers=self.authHeader)
-    assets = Materials(r.json())
+    assets = Assets(r.json())
     return assets
   
   #----------------------------------------------------------------------

@@ -6,7 +6,7 @@ import eveapi
 
 #connect to esi, the ESI class contains methods to obtain data (e.g. getMaterials). 
 joltanESI = ESI()
-joltanMaterials = joltanESI.getMaterials()
+joltanAssets = joltanESI.getAssets()
 joltanSkills = joltanESI.getSkills()
 
 #connecting and caching the xml api for joltan (only supported character for now)
