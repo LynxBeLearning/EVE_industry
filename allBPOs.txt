@@ -1,0 +1,104 @@
+10MN Afterburner I Blueprint
+1MN Afterburner I Blueprint
+50MN Microwarpdrive I Blueprint
+5MN Microwarpdrive I Blueprint
+Acolyte I Blueprint
+Adaptive Invulnerability Field I Blueprint
+Antimatter Charge L Blueprint
+Arkonor Mining Crystal I Blueprint
+Atron Blueprint	
+Ballistic Control System I Blueprint
+Bistot Mining Crystal I Blueprint
+Burst Blueprint	
+Crokite Mining Crystal I Blueprint
+Crucifier Blueprint
+Damage Control I Blueprint
+Dark Ochre Mining Crystal I Blueprint
+Drone Damage Amplifier I Blueprint
+Drone Link Augmentor I Blueprint
+Enormous Freight Container Blueprint
+Executioner Blueprint
+Gneiss Mining Crystal I Blueprint
+Gravimetric ECM I Blueprint
+Griffin Blueprint
+Guidance Disruptor I Blueprint
+Gyrostabilizer I Blueprint
+Hammerhead I Blueprint
+Hedbergite Mining Crystal I Blueprint
+Hemorphite Mining Crystal I Blueprint
+Ice Harvester I Blueprint
+Ice Harvester Upgrade I Blueprint
+Imicus Blueprint
+Incursus Blueprint
+Inertial Stabilizers I Blueprint
+Jaspet Mining Crystal I Blueprint
+Kernite Mining Crystal I Blueprint
+Ladar ECM I Blueprint
+Large Remote Shield Booster I Blueprint	
+Large Shield Extender I Blueprint
+Magnetometric ECM I Blueprint
+Maulus Blueprint
+Medium Remote Shield Booster I Blueprint
+Medium Shield Extender I Blueprint
+Micro Auxiliary Power Core I Blueprint
+Miner I Blueprint
+Mining Laser Upgrade I Blueprint
+Multispectral ECM I Blueprint
+Omber Mining Crystal I Blueprint
+Optimal Range Disruption Script Blueprint
+Overdrive Injector System I Blueprint
+Plagioclase Mining Crystal I Blueprint
+Pyroxeres Mining Crystal I Blueprint
+Radar ECM I Blueprint
+Salvager I Blueprint
+Scan Resolution Dampening Script Blueprint
+Scan Resolution Script Blueprint	
+Scordite Mining Crystal I Blueprint
+Signal Amplifier I Blueprint	
+Signal Distortion Amplifier I Blueprint
+Small Energy Neutralizer I Blueprint
+Small Remote Capacitor Transmitter I Blueprint	
+Small Remote Shield Booster I Blueprint	
+Small Shield Extender I Blueprint	
+Spodumain Mining Crystal I Blueprint	
+Stasis Webifier I Blueprint
+Remote Sensor Dampener I Blueprint
+Strip Miner I Blueprint	
+Target Painter I Blueprint
+Targeting Range Dampening Script Blueprint
+Targeting Range Script Blueprint
+Tracking Speed Disruption Script Blueprint
+Tristan Blueprint
+Veldspar Mining Crystal I Blueprint
+Venture Blueprint
+Vigil Blueprint	
+Warp Disruptor I Blueprint
+Warp Scrambler I Blueprint
+Deep Core Mining Laser I Blueprint
+Breacher Blueprint
+Tracking Disruptor I Blueprint
+Medium Energy Nosferatu I Blueprint
+Light Missile Launcher I Blueprint
+Nanofiber Internal Structure I Blueprint
+Reinforced Bulkheads I Blueprint
+Rocket Launcher I Blueprint
+Scythe Blueprint
+Phased Plasma L Blueprint
+Small Armor Repairer I Blueprint
+Slasher Blueprint
+Armor Command Burst I Blueprint
+Skirmish Command Burst I Blueprint
+Small Tractor Beam I Blueprint
+Warp Core Stabilizer I Blueprint
+Small Ionic Field Projector I Blueprint
+Small Signal Disruption Amplifier I Blueprint
+Small Particle Dispersion Augmentor I Blueprint
+Small Particle Dispersion Projector I Blueprint
+Antimatter Charge M Blueprint
+Large Armor Repairer I Blueprint
+Antimatter Charge S Blueprint
+Thorium Charge S Blueprint
+Thorium Charge M Blueprint
+Medium Armor Repairer I Blueprint
+Expanded Cargohold I Blueprint
+Heat Sink I Blueprint

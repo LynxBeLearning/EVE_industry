@@ -1,5 +1,6 @@
 from staticClasses import StaticData,  Settings
 import math
+import Auth
 
 ########################################################################
 class ModifiedManufacturingCost:
@@ -81,25 +82,67 @@ class ModifiedManufacturingCost:
   #----------------------------------------------------------------------
   def requiredBaseMaterials(self):
     """"""
-    
+    pass
 
 
 
 
-
-  
 ########################################################################
-class BaseModifiedManufacturingCost:
-  """"""
+class TotalMaterialCost:
+  """calculate total material cost for a group of items"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprint):
+  def __init__(self, marketHistory, ESI):
     """Constructor"""
-    self.MMC = ModifiedManufacturingCost(blueprint)
-    self.finalBaseMats = {}
+    
+    self.marketHistory = marketHistory
+    self.esi = ESI
     
     
+  #----------------------------------------------------------------------
+  def calculate(self):
+    """"""
+    totMats = {}
+    ratios = self.calcVolumeRatio()
+    BPOList = open("allBPOs.txt")
     
-    
-    
+    for i in BPOList:
+      i = i.strip()
+      CopySize, manufSize, minMarketSize = StaticData.marketSize(StaticData.idName(i))
+      a = StaticData.baseManufacturingCost(StaticData.idName(i))
+      
+      for mat in a:
+        if mat in totMats:
+          totMats[mat] += a[mat] * manufSize * ratios[StaticData.idName(i)]
+        else:
+          totMats[mat] = a[mat] * manufSize * ratios[StaticData.idName(i)]
+          
+          
+    return totMats
+      
+  #----------------------------------------------------------------------
+  def calcVolumeRatio(self):
+    """"""
+    returnDict = {}
+    BPOList = open("allBPOs.txt")
+    for i in BPOList:
+      i = i.strip()
+      CopySize, manufSize, minMarketSize = StaticData.marketSize(StaticData.idName(i))
+      
+      a = self.esi.getMarketHistory(StaticData.productID(StaticData.idName(i)))
+      daysPerManuf = manufSize / a.medianVolume(90)
+      
+      returnDict[StaticData.idName(i)] =  10 / daysPerManuf #/ 
+      
+      
+
+      
+    return returnDict
   
+  
+    
+    
+    
+    
+ # for i in returnDict:
+ #   print "{}\t{}".format(StaticData.idName(i), returnDict[i])

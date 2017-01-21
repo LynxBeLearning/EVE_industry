@@ -2,13 +2,14 @@ from Auth import ESI
 from staticClasses import StaticData,  Settings
 from blueprintClasses import * 
 import eveapi
-
+import LPClasses
 
 #connect to esi, the ESI class contains methods to obtain data (e.g. getMaterials). 
 joltanESI = ESI()
 joltanAssets = joltanESI.getAssets()
 joltanSkills = joltanESI.getSkills()
 marketHistory = joltanESI.getMarketHistory(34)
+a = LPClasses.TotalMaterialCost(marketHistory, joltanESI).calculate()
 
 #connecting and caching the xml api for joltan (only supported character for now)
 cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))
