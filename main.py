@@ -8,6 +8,7 @@ import eveapi
 joltanESI = ESI()
 joltanAssets = joltanESI.getAssets()
 joltanSkills = joltanESI.getSkills()
+marketHistory = joltanESI.getMarketHistory(34)
 
 #connecting and caching the xml api for joltan (only supported character for now)
 cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))

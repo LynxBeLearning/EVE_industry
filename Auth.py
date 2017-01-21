@@ -58,6 +58,7 @@ class ESI:
     
     self.authHeader = {'Authorization':'Bearer '+ Settings.accessToken,'User-Agent': Settings.userAgent}
     self.chrID = self._getCharID()
+    self.fadeID = 10000046 
   #----------------------------------------------------------------------
   def _credentials(self):
     """"""
@@ -141,7 +142,15 @@ class ESI:
     skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/'.format(self.chrID)
     r = requests.get(skillsUrl, headers=self.authHeader)
     skills = Skills(r.json())
-    return skills    
+    return skills
+  
+  #----------------------------------------------------------------------
+  def getMarketHistory(self, typeID): 
+    """query esi for market history data"""
+    marketHistoryUrl = 'https://esi.tech.ccp.is/latest/markets/{}/history/?type_id={}'.format(self.fadeID, typeID)
+    r = requests.get(marketHistoryUrl, headers=self.authHeader)
+    marketHistory = MarketHistory(r.json())
+    return marketHistory    
       
 
         

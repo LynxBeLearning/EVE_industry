@@ -6,44 +6,17 @@ class ModifiedManufacturingCost:
   """calculate manufacturing cost considering ME and other modifiers to material efficiency"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprint):
+  def __init__(self, blueprintObject):
     """Constructor"""
+    self.BPC = blueprint
     self.riggedCategories = [7] #categories for which a rig is present on the raitaru, provides 4.2% cost reduction
     self.manufSize = blueprint.manufSize
-    self.totalMaterialCost = {}
-        
-    #logic that decides which bpc to use given the amount of things to produce
-    sortedBPCs = sorted(blueprint.BPC.rawItems, key=lambda x: x.TE)
     
-    for BPC in sortedBPCs:
-      if self.manufSize - BPC.runs > 0:
-        modMaterialCost = self.materialsCalculator(BPC.runs, BPC)
-        for matID in modMaterialCost:
-          if matID in self.totalMaterialCost:
-            self.totalMaterialCost[matID] += modMaterialCost[matID]
-          else:
-            self.totalMaterialCost[matID] = modMaterialCost[matID]
-        self.manufSize = self.manufSize - BPC.runs
-      elif self.manufSize - BPC.runs == 0:
-        modMaterialCost = self.materialsCalculator(BPC.runs, BPC)
-        for matID in modMaterialCost:
-          if matID in self.totalMaterialCost:
-            self.totalMaterialCost[matID] += modMaterialCost[matID]
-          else:
-            self.totalMaterialCost[matID] = modMaterialCost[matID]
-        break
-      elif self.manufSize - BPC.runs < 0:
-        modMaterialCost = self.materialsCalculator(BPC.runs - self.manufSize, BPC)
-        for matID in modMaterialCost:
-          if matID in self.totalMaterialCost:
-            self.totalMaterialCost[matID] += modMaterialCost[matID]
-          else:
-            self.totalMaterialCost[matID] = modMaterialCost[matID]
-        break
-   
+        
+
     
   #----------------------------------------------------------------------
-  def materialModifier(self, BPC):
+  def _materialModifier(self, BPC):
     """calculate the overall material modifier for a set of bpcs"""
     #calculate ME modifier
     TEModifier = 1 - (BPC.TE / 100.0)
@@ -56,11 +29,11 @@ class ModifiedManufacturingCost:
     return TEModifier * raitaruModifier * rigModifier
   
   #----------------------------------------------------------------------
-  def materialsCalculator(self, runs, BPC):
+  def _materialsCalculator(self, runs, BPC):
     """determine modified manufacturing cost for one blueprint witn N runs"""
     baseCost = StaticData.baseManufacturingCost(BPC.typeID)
     modMats = {}
-    materialModifier = self.materialModifier(BPC)
+    materialModifier = self._materialModifier(BPC)
     
     for matID in baseMats:
       modmat = max(runs, math.ceil( round(baseMats[matID] * runs * materialModifier, 2) + 0.01 ))
@@ -68,14 +41,65 @@ class ModifiedManufacturingCost:
     
     return modMats
   
+  #----------------------------------------------------------------------
+  def requiredComponents(self, ):
+    """"""
+    totalMaterialCost = {}
+    #logic that decides which bpc to use given the amount of things to produce
+    sortedBPCs = sorted(self.blueprint.BPC.rawItems, key=lambda x: x.TE)
+    
+    for BPC in sortedBPCs:
+      if self.manufSize - BPC.runs > 0:
+        modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
+        for matID in modMaterialCost:
+          if matID in totalMaterialCost:
+            totalMaterialCost[matID] += modMaterialCost[matID]
+          else:
+            totalMaterialCost[matID] = modMaterialCost[matID]
+        self.manufSize = self.manufSize - BPC.runs
+      elif self.manufSize - BPC.runs == 0:
+        modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
+        for matID in modMaterialCost:
+          if matID in totalMaterialCost:
+            totalMaterialCost[matID] += modMaterialCost[matID]
+          else:
+            totalMaterialCost[matID] = modMaterialCost[matID]
+        break
+      elif self.manufSize - BPC.runs < 0:
+        modMaterialCost = self._materialsCalculator(BPC.runs - self.manufSize, BPC)
+        for matID in modMaterialCost:
+          if matID in totalMaterialCost:
+            totalMaterialCost[matID] += modMaterialCost[matID]
+          else:
+            totalMaterialCost[matID] = modMaterialCost[matID]
+        break
+      
+      return totalMaterialCost
+    
+  
+  
+  #----------------------------------------------------------------------
+  def requiredBaseMaterials(self):
+    """"""
+    
+
+
+
+
+
+  
 ########################################################################
 class BaseModifiedManufacturingCost:
   """"""
 
   #----------------------------------------------------------------------
-  def __init__(self, modifiedManufacturingCostObject):
+  def __init__(self, blueprint):
     """Constructor"""
-    a = 1
+    self.MMC = ModifiedManufacturingCost(blueprint)
+    self.finalBaseMats = {}
+    
+    
+    
     
     
   

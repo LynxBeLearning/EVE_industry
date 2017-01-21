@@ -1,4 +1,6 @@
 from staticClasses import StaticData, Settings
+import datetime
+import scipy
 
 
 class Assets:
@@ -45,6 +47,29 @@ class Skills:
     
 
     
+########################################################################
+class MarketHistory:
+  """store market order history information"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, jsonList):
+    """Constructor"""
+    self.history = jsonList
     
+  #----------------------------------------------------------------------
+  def medianVolume(self, daysBack):
+    """calculate """
+    volumeList = []
+    for dayItems in self.history:
+      year, month, day = [int(x) for x in dayItems['date'].split("-")]
+      dayDate = datetime.date(year, month, day)
+      delta = datetime.date.today() - dayDate
+      if delta.days <= daysBack:
+        volumeList.append(dayItems['volume'])
+        
+    return scipy.median(volumeList)    
+    
+    
+  
     
   
