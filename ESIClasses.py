@@ -9,9 +9,21 @@ class Assets:
   #----------------------------------------------------------------------
   def __init__(self, jsonList):
     """Constructor"""
-    self.materials = {}
+    self.assets = []
     for idx in range(len(jsonList)):
-      item = jsonList[idx]
+      self.assets.append(jsonList[idx])
+      
+    #this conditional prints asset name and location that are not in the known locations, useful when you need to know which containers to allow.
+    #for item in self.assets:
+    #  if item["location_id"] not in Settings.materialsLocations:
+    #    print "{}\t{}".format(StaticData.idName(item["type_id"]), item['location_id'])    
+    
+  #----------------------------------------------------------------------
+  def materials(self):
+    """"""
+    
+    mats = {}
+    for item in self.assets:
       itemLocationID = item["location_id"]
       itemTypeID = item['type_id']
       
@@ -20,11 +32,12 @@ class Assets:
         #print "{}\t{}".format(StaticData.idName(item["type_id"]), item['location_id'])
         
       if itemLocationID in Settings.materialsLocations:
-        if itemTypeID not in self.materials:
-          self.materials[itemTypeID] =  item['quantity']
+        if itemTypeID not in mats:
+          mats[itemTypeID] =  item['quantity']
         else:
-          self.materials[itemTypeID] += item['quantity']
-        
+          mats[itemTypeID] += item['quantity']
+          
+    return mats
           
           
 ########################################################################

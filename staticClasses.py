@@ -97,7 +97,7 @@ class StaticData():
       elif copyTime <= 4800:
         return [10, 5, 2]
       elif copyTime > 4800:
-        return [5, 1, 0]
+        return [5, 1, 1]
 
     else:
       raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(typeID)))
@@ -154,7 +154,27 @@ class StaticData():
     itemCategory = cls.__database.execute('SELECT "categoryID" FROM "invGroups" WHERE "groupID" = ?' , (itemGroup, )) #note that parameters of execute must be a tuple, even if only contains only one element
     itemCategory = int(itemCategory.fetchone()[0])
     return itemCategory
-
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def datacoreRequirements(cls, typeID):
+    """return the number of datacores required to invent a particular bpc"""
+    returnDict = {}
+    datacoresQuantities = cls.__database.execute('SELECT "materialTypeID","quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 8' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    datacoresQuantities = datacoresQuantities.fetchall()
+    
+    for tup in datacoresQuantities:
+      returnDict[tup[0]] = tup[1]
+    
+    return returnDict
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def printDict(cls, dictionary):
+    """print a readable version of the dictionaries containing the typeid:value structure"""
+    
+    for item in dictionary:
+      print "{}\t{}".format(StaticData.idName(item), dictionary[item])
 
 
 
@@ -178,14 +198,18 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     1022946637486: "dunk's workshop, t1 bpc container",
     1022975749725: "zansha neuro, BPO container",
     1022946512073: 'zansha mining, t2 bpc container',
-    1022980573793: 'la fistiniere, bpc container'
+    1022980573793: 'la fistiniere, bpc container', 
+    60014922: 'TEMP 9-4 STATION',
+    1023280033569: 'temp 9-4 bps',
+    1023317227936: 'temp 9-4 components bpo',
+    1023321130373: 'temp 9-4 bps2',
 
   }
 
   materialsLocations = {
-    1022771185137: "invention, zansha mining",
-    1022946657877: 'dunks raw mats',
-    1022840070781: 'dunks components',
+    1023317227953: "invention, temp station",
+    1023278941823: 'temp materials',
+    1023278941823: 'temp materials',
   }
 
   knownLocations = {
@@ -232,7 +256,7 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
 
 
   marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
-  componentsBpoContainer = 1022946515289 #all bpos in here will be flagged as components and require no copying or inventing.
+  componentsBpoContainer = 1023317227936 #all bpos in here will be flagged as components and require no copying or inventing.
   joltanID = 1004487144
 
   #----------------------------------------------------------------------

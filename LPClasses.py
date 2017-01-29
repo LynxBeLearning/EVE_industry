@@ -7,20 +7,17 @@ class ModifiedManufacturingCost:
   """calculate manufacturing cost considering ME and other modifiers to material efficiency"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprintObject):
+  def __init__(self, blueprint):
     """Constructor"""
-    self.BPC = blueprint
+    self.blueprint = blueprint
     self.riggedCategories = [7] #categories for which a rig is present on the raitaru, provides 4.2% cost reduction
     self.manufSize = blueprint.manufSize
-    
-        
-
     
   #----------------------------------------------------------------------
   def _materialModifier(self, BPC):
     """calculate the overall material modifier for a set of bpcs"""
     #calculate ME modifier
-    TEModifier = 1 - (BPC.TE / 100.0)
+    TEModifier = 1 - (BPC.ME / 100.0)
     raitaruModifier = 0.99
     if StaticData.categoryID(StaticData.productID(BPC.typeID)) in self.riggedCategories:
       rigModifier = 0.958
@@ -36,8 +33,8 @@ class ModifiedManufacturingCost:
     modMats = {}
     materialModifier = self._materialModifier(BPC)
     
-    for matID in baseMats:
-      modmat = max(runs, math.ceil( round(baseMats[matID] * runs * materialModifier, 2) + 0.01 ))
+    for matID in baseCost:
+      modmat = max(runs, math.ceil( round(baseCost[matID] * runs * materialModifier, 2) + 0.01 ))
       modMats[matID] = modmat
     
     return modMats
@@ -67,7 +64,7 @@ class ModifiedManufacturingCost:
             totalMaterialCost[matID] = modMaterialCost[matID]
         break
       elif self.manufSize - BPC.runs < 0:
-        modMaterialCost = self._materialsCalculator(BPC.runs - self.manufSize, BPC)
+        modMaterialCost = self._materialsCalculator(self.manufSize, BPC)
         for matID in modMaterialCost:
           if matID in totalMaterialCost:
             totalMaterialCost[matID] += modMaterialCost[matID]
@@ -75,7 +72,7 @@ class ModifiedManufacturingCost:
             totalMaterialCost[matID] = modMaterialCost[matID]
         break
       
-      return totalMaterialCost
+    return totalMaterialCost
     
   
   
@@ -89,13 +86,12 @@ class ModifiedManufacturingCost:
 
 ########################################################################
 class TotalMaterialCost:
-  """calculate total material cost for a group of items"""
+  """calculate total material cost for a group of items."""
 
   #----------------------------------------------------------------------
-  def __init__(self, marketHistory, ESI):
+  def __init__(self, ESI):
     """Constructor"""
     
-    self.marketHistory = marketHistory
     self.esi = ESI
     
     
@@ -140,7 +136,49 @@ class TotalMaterialCost:
     return returnDict
   
   
+########################################################################
+class datacoresReq:
+  """determines the required datacores to run all remaining invention jobs"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, blueprints):
+    """Constructor"""
+    typeIDs = blueprints.blueprints.keys() #sort the itemIDs by corresponding names
+    self.datacoresDict = {}
     
+    for typeID in typeIDs:
+      bpContainer = blueprints.blueprints[typeID]
+      if bpContainer.T2.inventable == 1:
+        for index in range(len(bpContainer.T2.inventedIDs)):
+          if  bpContainer.t2Priority[index][0] == 'invention' and bpContainer.BPO.component == 0:
+            tempDict = StaticData.datacoreRequirements(typeID)
+            for datacore in tempDict:
+              if datacore in self.datacoresDict:
+                self.datacoresDict[datacore] += tempDict[datacore] * bpContainer.t2Priority[index][1]
+              else:
+                self.datacoresDict[datacore] = tempDict[datacore] * bpContainer.t2Priority[index][1]
+                
+                
+  #----------------------------------------------------------------------
+  def notInAssets(self, assets):
+    """subtract owned datacores from the total required"""
+    materialStore = assets.materials()
+    notInAssetsDict = {}
+    for typeID in self.datacoresDict:
+      if typeID in materialStore:
+        remaining = int(self.datacoresDict[typeID]) - int(materialStore[typeID])
+        if remaining <= 0:
+          continue
+        else:
+            notInAssetsDict[typeID] = remaining
+      else:
+        notInAssetsDict[typeID] = int(self.datacoresDict[typeID])
+         
+    return notInAssetsDict
+    
+    
+    
+  
     
     
     

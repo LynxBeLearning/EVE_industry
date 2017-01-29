@@ -68,7 +68,7 @@ class BpContainer:
     self.t1MarketOK = 0
     self.t1Priority = []
     remainingItems = marketData.remainingItems(self.BPO.typeID)
-    if remainingItems >= self.minMarketSize:
+    if remainingItems > self.minMarketSize:
       self.t1MarketOK = 1
       if self.BPC.totalRuns <= self.manufSize:
         copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
@@ -91,7 +91,7 @@ class BpContainer:
       self.t2Priority = [""] * len(self.T2.inventedIDs)      
       for index in range(len(self.T2.inventedIDs)):
         remainingItems = marketData.remainingItems(self.T2.inventedIDs[index])
-        if remainingItems >= self.minMarketSize:
+        if remainingItems > self.minMarketSize:
           self.t2MarketOK[index] = 1
           if self.T2.totalRuns[index] >= self.manufSize:
             self.t2Priority[index] = ['ready', 0]
@@ -221,6 +221,9 @@ class Blueprints:
                                                                                                             blueprintItemParserObj.rawBlueprints[key].locationID,
                                                                                                             StaticData.idName(blueprintItemParserObj.rawBlueprints[key].typeID))
       if blueprintItemParserObj.rawBlueprints[key].bpo == 1 and blueprintItemParserObj.rawBlueprints[key].locationID in Settings.blueprintLocations:
+        if blueprintItemParserObj.rawBlueprints[key].typeID in [x.typeID for x in bpos]:
+          print 'WARNING: DUPLICATE DETECTED, {}'.format(StaticData.idName(blueprintItemParserObj.rawBlueprints[key].typeID))
+          continue
         bpos.append(blueprintItemParserObj.rawBlueprints[key])
     return bpos
 

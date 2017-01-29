@@ -8,8 +8,8 @@ import LPClasses
 joltanESI = ESI()
 joltanAssets = joltanESI.getAssets()
 joltanSkills = joltanESI.getSkills()
-marketHistory = joltanESI.getMarketHistory(34)
-a = LPClasses.TotalMaterialCost(marketHistory, joltanESI).calculate()
+#marketHistory = joltanESI.getMarketHistory(34)
+#a = LPClasses.TotalMaterialCost(joltanESI).calculate()
 
 #connecting and caching the xml api for joltan (only supported character for now)
 cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))
@@ -21,8 +21,11 @@ marketData = MarketOrders(joltanXml)
 # represent blueprint data in the Blueprint class, market data are used to calculate priorities
 bp = Blueprints(BlueprintItemParserO, marketData, joltanSkills)
 
+n = joltanAssets.materials()
+x = LPClasses.datacoresReq(bp)
 
-
+h = LPClasses.ModifiedManufacturingCost(bp.blueprints[976])
+z = h.requiredComponents()
 
 #after the setup above, we can calculate useful stuff:
 #outputs priority list, bpc run list or market order lists
