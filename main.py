@@ -27,6 +27,10 @@ x = LPClasses.datacoresReq(bp)
 #h = LPClasses.ModifiedManufacturingCost(bp.blueprints[976])
 #z = h.requiredComponents()
 
+a = LPClasses.ModifiedManufacturingCost(bp)
+g = a.requiredComponents(StaticData.idName("Deflection Shield Emitter Blueprint"))
+StaticData.printDict(g)
+
 #after the setup above, we can calculate useful stuff:
 #outputs priority list, bpc run list or market order lists
 bp.printPriority()

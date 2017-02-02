@@ -48,15 +48,13 @@ class StaticData():
 
   #----------------------------------------------------------------------
   @classmethod
-  def originatorBp(cls, rawBlueprint):
+  def originatorBp(cls, typeID):
     """return the id of the bpo that is used to derive the blueprint (copy or invent)"""
 
-    if rawBlueprint.bpo == 1:
-      return rawBlueprint.typeID
-    elif rawBlueprint.typeID in cls.T2toT1:
-      return T2toT1[rawBlueprint.typeID]
+    if typeID in cls.T2toT1:
+      return cls.T2toT1[typeID][0]
     else:
-      return rawBlueprint.typeID
+      return None
 
   @classmethod
   def productID(cls, ID):
@@ -215,6 +213,7 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     1023380525468: '',
     1023380525606: '',
     1023380486846: 'components',
+    1023398451362: 't2 bps',
 
   }
 

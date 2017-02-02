@@ -7,11 +7,11 @@ class ModifiedManufacturingCost:
   """calculate manufacturing cost considering ME and other modifiers to material efficiency"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprint):
+  def __init__(self, blueprints):
     """Constructor"""
-    self.blueprint = blueprint
-    self.riggedCategories = [7] #categories for which a rig is present on the raitaru, provides 4.2% cost reduction
-    self.manufSize = blueprint.manufSize
+    self.blueprints = blueprints
+    self.riggedCategories = [] #categories for which a rig is present on the raitaru, provides 4.2% cost reduction
+    
     
   #----------------------------------------------------------------------
   def _materialModifier(self, BPC):
@@ -34,45 +34,90 @@ class ModifiedManufacturingCost:
     materialModifier = self._materialModifier(BPC)
     
     for matID in baseCost:
-      modmat = max(runs, math.ceil( round(baseCost[matID] * runs * materialModifier, 2) + 0.01 ))
+      modmat = int(max(runs, math.ceil( round(baseCost[matID] * runs * materialModifier, 2) + 0.01 )))
       modMats[matID] = modmat
     
     return modMats
   
   #----------------------------------------------------------------------
-  def requiredComponents(self, ):
+  def requiredComponents(self, typeID):
     """"""
-    totalMaterialCost = {}
-    #logic that decides which bpc to use given the amount of things to produce
-    sortedBPCs = sorted(self.blueprint.BPC.rawItems, key=lambda x: x.TE)
-    
-    for BPC in sortedBPCs:
-      if self.manufSize - BPC.runs > 0:
-        modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
-        for matID in modMaterialCost:
-          if matID in totalMaterialCost:
-            totalMaterialCost[matID] += modMaterialCost[matID]
-          else:
-            totalMaterialCost[matID] = modMaterialCost[matID]
-        self.manufSize = self.manufSize - BPC.runs
-      elif self.manufSize - BPC.runs == 0:
-        modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
-        for matID in modMaterialCost:
-          if matID in totalMaterialCost:
-            totalMaterialCost[matID] += modMaterialCost[matID]
-          else:
-            totalMaterialCost[matID] = modMaterialCost[matID]
-        break
-      elif self.manufSize - BPC.runs < 0:
-        modMaterialCost = self._materialsCalculator(self.manufSize, BPC)
-        for matID in modMaterialCost:
-          if matID in totalMaterialCost:
-            totalMaterialCost[matID] += modMaterialCost[matID]
-          else:
-            totalMaterialCost[matID] = modMaterialCost[matID]
-        break
+    typeID = int(typeID)
+    if typeID in self.blueprints.blueprints and self.blueprints.blueprints[typeID].t1Priority[0] == 'manufacture':
+      blueprint = self.blueprints.blueprints[typeID]
+      manufSize = blueprint.manufSize
+      totalMaterialCost = {}
+      #logic that decides which bpc to use given the amount of things to produce
+      sortedBPCs = sorted(blueprint.BPC.rawItems, key=lambda x: x.TE)
       
-    return totalMaterialCost
+      for BPC in sortedBPCs:
+        if manufSize - BPC.runs > 0:
+          modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
+          for matID in modMaterialCost:
+            if matID in totalMaterialCost:
+              totalMaterialCost[matID] += modMaterialCost[matID]
+            else:
+              totalMaterialCost[matID] = modMaterialCost[matID]
+          manufSize = manufSize - BPC.runs
+        elif manufSize - BPC.runs == 0:
+          modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
+          for matID in modMaterialCost:
+            if matID in totalMaterialCost:
+              totalMaterialCost[matID] += modMaterialCost[matID]
+            else:
+              totalMaterialCost[matID] = modMaterialCost[matID]
+          break
+        elif manufSize - BPC.runs < 0:
+          modMaterialCost = self._materialsCalculator(manufSize, BPC)
+          for matID in modMaterialCost:
+            if matID in totalMaterialCost:
+              totalMaterialCost[matID] += modMaterialCost[matID]
+            else:
+              totalMaterialCost[matID] = modMaterialCost[matID]
+          break
+        
+      return totalMaterialCost
+    elif StaticData.originatorBp(typeID) in self.blueprints.blueprints: 
+      blueprint = self.blueprints.blueprints[StaticData.originatorBp(typeID)]
+      inventedIndex = ''
+      for idx, i in enumerate(blueprint.T2.inventedIDs):
+        if typeID == i:
+          inventedIndex = int(idx)
+      if blueprint.t2Priority[inventedIndex][0] == 'manufacture':
+        totalMaterialCost = {}
+        manufSize = blueprint.manufSize
+        
+        #logic that decides which bpc to use given the amount of things to produce
+        sortedBPCs = sorted(blueprint.T2.items[inventedIndex], key=lambda x: x.TE)
+        
+        for BPC in sortedBPCs:
+          if manufSize - BPC.runs > 0:
+            modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
+            for matID in modMaterialCost:
+              if matID in totalMaterialCost:
+                totalMaterialCost[matID] += modMaterialCost[matID]
+              else:
+                totalMaterialCost[matID] = modMaterialCost[matID]
+            manufSize = manufSize - BPC.runs
+          elif manufSize - BPC.runs == 0:
+            modMaterialCost = self._materialsCalculator(BPC.runs, BPC)
+            for matID in modMaterialCost:
+              if matID in totalMaterialCost:
+                totalMaterialCost[matID] += modMaterialCost[matID]
+              else:
+                totalMaterialCost[matID] = modMaterialCost[matID]
+            break
+          elif manufSize - BPC.runs < 0:
+            modMaterialCost = self._materialsCalculator(manufSize, BPC)
+            for matID in modMaterialCost:
+              if matID in totalMaterialCost:
+                totalMaterialCost[matID] += modMaterialCost[matID]
+              else:
+                totalMaterialCost[matID] = modMaterialCost[matID]
+            break        
+        return totalMaterialCost
+      else:
+        raise TypeError("wrong. {}".format(StaticData.idName(typeID)))
     
   
   
