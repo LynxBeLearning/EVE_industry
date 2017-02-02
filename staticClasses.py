@@ -88,16 +88,12 @@ class StaticData():
     copyTimeTuple = selected.fetchone()
     if copyTimeTuple[0]:
       copyTime = copyTimeTuple[0] #[0] is required because fetchone returns a tuple
-      if copyTime <= 240:
-        return [300, 100, 20] #returns 3 things in this order: bpc copy runs, quantity to manufacture when below threshold, minimum market threshold before manufacturing again.
-      elif copyTime <= 720:
-        return [100, 50, 20]
-      elif copyTime <= 1440:
-        return [50, 50, 10]
+      if copyTime <= 1440:
+        return [50, 50, 20] #returns 3 things in this order: bpc copy runs, quantity to manufacture when below thresDelfthold, minimum market threshold before manufacturing again.
       elif copyTime <= 4800:
         return [10, 5, 2]
       elif copyTime > 4800:
-        return [5, 1, 1]
+        return [5, 3, 1]
 
     else:
       raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(typeID)))
@@ -175,6 +171,19 @@ class StaticData():
     
     for item in dictionary:
       print "{}\t{}".format(StaticData.idName(item), dictionary[item])
+      
+      
+  #----------------------------------------------------------------------
+  @classmethod
+  def productAmount(cls, typeID):
+    """return the amount of items produced by one run"""
+    quantity = ""
+    dbQuantity = cls.__database.execute('SELECT "quantity" FROM "industryActivityProducts" WHERE "TypeID" = ? and "activityID" = 1' , (str(typeID), )) #note that parameters of execute must be a tuple, even if only contains only one element
+    dbQuantity = dbQuantity.fetchone()
+    
+    quantity = int(dbQuantity[0])
+    
+    return quantity
 
 
 
@@ -203,13 +212,16 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     1023280033569: 'temp 9-4 bps',
     1023317227936: 'temp 9-4 components bpo',
     1023321130373: 'temp 9-4 bps2',
+    1023380525468: '',
+    1023380525606: '',
+    1023380486846: 'components',
 
   }
 
   materialsLocations = {
     1023317227953: "invention, temp station",
-    1023278941823: 'temp materials',
-    1023278941823: 'temp materials',
+    1023380525089: 'temp invention',
+    1023380524776: 'temp materials',
   }
 
   knownLocations = {
@@ -256,7 +268,7 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
 
 
   marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
-  componentsBpoContainer = 1023317227936 #all bpos in here will be flagged as components and require no copying or inventing.
+  componentsBpoContainer = 1023380486846 #all bpos in here will be flagged as components and require no copying or inventing.
   joltanID = 1004487144
 
   #----------------------------------------------------------------------

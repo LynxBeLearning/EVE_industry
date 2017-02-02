@@ -21,11 +21,11 @@ marketData = MarketOrders(joltanXml)
 # represent blueprint data in the Blueprint class, market data are used to calculate priorities
 bp = Blueprints(BlueprintItemParserO, marketData, joltanSkills)
 
-n = joltanAssets.materials()
+#n = joltanAssets.materials()
 x = LPClasses.datacoresReq(bp)
 
-h = LPClasses.ModifiedManufacturingCost(bp.blueprints[976])
-z = h.requiredComponents()
+#h = LPClasses.ModifiedManufacturingCost(bp.blueprints[976])
+#z = h.requiredComponents()
 
 #after the setup above, we can calculate useful stuff:
 #outputs priority list, bpc run list or market order lists

@@ -59,6 +59,7 @@ class BpContainer:
   def __init__(self, blueprintItemObj, blueprintItemParserObj, marketData, charSkills):
     """Constructor"""
     self.CopySize, self.manufSize, self.minMarketSize = StaticData.marketSize(blueprintItemObj.typeID) #the copy time for bp is used as a measure of how difficult it is to manufacture and as a consequence how many should be on the market. i hope to implement real volume data to supplant this
+    self.t1ProductionSize = StaticData.productAmount(blueprintItemObj.typeID)
     #set variables for bpo, bpc and t2
     self.BPO = BPO(blueprintItemObj, blueprintItemParserObj)
     self.BPC = BPC(self.BPO, blueprintItemParserObj)
@@ -68,15 +69,15 @@ class BpContainer:
     self.t1MarketOK = 0
     self.t1Priority = []
     remainingItems = marketData.remainingItems(self.BPO.typeID)
-    if remainingItems > self.minMarketSize:
+    if remainingItems >= self.minMarketSize:
       self.t1MarketOK = 1
       if self.BPC.totalRuns <= self.manufSize:
         copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
         self.t1Priority = ['copy', copyNumber]        
-      elif self.BPC.totalRuns >= self.manufSize:
+      elif self.BPC.totalRuns  >= self.manufSize:
         self.t1Priority = ['ready', 0]
-    elif self.BPC.totalRuns >= self.manufSize * 3:
-      self.t1Priority = ['manufacture', self.manufSize]
+    elif self.BPC.totalRuns  >= self.manufSize:
+      self.t1Priority = ['manufacture', self.manufSize] 
     else:
       copyNumber = math.ceil(((self.CopySize * 8) - self.BPC.totalRuns) / self.CopySize)
       self.t1Priority = ['copy', copyNumber]
@@ -93,14 +94,14 @@ class BpContainer:
         remainingItems = marketData.remainingItems(self.T2.inventedIDs[index])
         if remainingItems > self.minMarketSize:
           self.t2MarketOK[index] = 1
-          if self.T2.totalRuns[index] >= self.manufSize:
+          if self.T2.totalRuns[index]  >= self.manufSize:
             self.t2Priority[index] = ['ready', 0]
           else:
             runs = self._inventionCalculator( 5 - self.T2.totalBPCs[index], 
                                             StaticData.inventionProb(charSkills, StaticData.producerID(self.T2.inventedIDs[index])), 
                                             0.95)
             self.t2Priority[index] = ['invention', runs]
-        elif self.T2.totalRuns[index] >= self.manufSize:
+        elif self.T2.totalRuns[index]  >= self.manufSize:
           self.t2Priority[index] = ["manufacture", self.manufSize]
         elif self.BPC.totalRuns >= 25:
           runs = self._inventionCalculator( 5 - self.T2.totalBPCs[index], 
@@ -180,6 +181,7 @@ class T2:
       self.totalBPCs = [0] * len(self.inventedIDs)
       self.totalRuns = [0] * len(self.inventedIDs)
       self.items = [[] for x in range(len(self.inventedIDs))]
+      self.t2ProductionSize = [StaticData.productAmount(x) for x in self.inventedIDs]
       
       itemIDs = blueprintItemParserObj.rawBlueprints.keys()
       
