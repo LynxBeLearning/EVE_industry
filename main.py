@@ -24,12 +24,17 @@ bp = Blueprints(BlueprintItemParserO, marketData, joltanSkills)
 #n = joltanAssets.materials()
 x = LPClasses.datacoresReq(bp)
 
-#h = LPClasses.ModifiedManufacturingCost(bp.blueprints[976])
-#z = h.requiredComponents()
+h = LPClasses.ModifiedManufacturingCost(bp)
+a = h.requiredBaseMaterials(StaticData.idName("Scimitar Blueprint"))
+a.printBreakDown()
+a.printTotalMats()
 
-a = LPClasses.ModifiedManufacturingCost(bp)
-g = a.requiredComponents(StaticData.idName("Deflection Shield Emitter Blueprint"))
-StaticData.printDict(g)
+produceableItems = LPClasses.ProduceableItems(bp, joltanAssets.materials(), h)
+produceableItems.T2Produceables()
+
+#a = LPClasses.ModifiedManufacturingCost(bp)
+#g = a.requiredComponents(StaticData.idName("Deflection Shield Emitter Blueprint"))
+#StaticData.printDict(g)
 
 #after the setup above, we can calculate useful stuff:
 #outputs priority list, bpc run list or market order lists

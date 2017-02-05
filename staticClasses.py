@@ -50,7 +50,8 @@ class StaticData():
   @classmethod
   def originatorBp(cls, typeID):
     """return the id of the bpo that is used to derive the blueprint (copy or invent)"""
-
+    typeID = int(typeID)
+    
     if typeID in cls.T2toT1:
       return cls.T2toT1[typeID][0]
     else:
@@ -221,6 +222,7 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     1023317227953: "invention, temp station",
     1023380525089: 'temp invention',
     1023380524776: 'temp materials',
+    1023404049020: 'minerals azbel', 
   }
 
   knownLocations = {

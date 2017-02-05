@@ -62,7 +62,7 @@ class ESI:
   #----------------------------------------------------------------------
   def _credentials(self):
     """"""
-    scopes = "esi-assets.read_assets.v1%20esi-planets.manage_planets.v1%20publicData%20esi-wallet.read_character_wallet.v1%20esi-skills.read_skillqueue.v1%20esi-skills.read_skills.v1 %20"
+    scopes = "esi-assets.read_assets.v1%20esi-planets.manage_planets.v1%20publicData%20esi-wallet.read_character_wallet.v1%20esi-skills.read_skillqueue.v1%20esi-skills.read_skills.v1"
 
     server = HTTPServer(('', int(Settings.port)), CodeHandler)
     serverThread = threading.Thread(target=server.serve_forever)
@@ -139,7 +139,7 @@ class ESI:
   #----------------------------------------------------------------------
   def getSkills(self):
     """query esi for skill data"""
-    skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/'.format(self.chrID)
+    skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/?datasource=tranquility'.format(self.chrID)
     r = requests.get(skillsUrl, headers=self.authHeader)
     skills = Skills(r.json())
     return skills

@@ -55,7 +55,12 @@ class Skills:
   #----------------------------------------------------------------------
   def skillLevel(self, skillID):
     """return the level of the supplied skill"""
-    return self.skills[skillID]
+    default = 4
+    if skillID in self.skills:
+      return self.skills[skillID]
+    else:
+      print "WARNING: ESI seems to be having problems? skill\"{}\" was not found. returning default (4)".format(StaticData.idName(skillID))
+      return default
     
     
 
