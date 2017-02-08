@@ -22,15 +22,16 @@ marketData = MarketOrders(joltanXml)
 bp = Blueprints(BlueprintItemParserO, marketData, joltanSkills)
 
 #n = joltanAssets.materials()
-x = LPClasses.datacoresReq(bp)
+#x = LPClasses.datacoresReq(bp)
 
-h = LPClasses.ModifiedManufacturingCost(bp)
-a = h.requiredBaseMaterials(StaticData.idName("Scimitar Blueprint"))
-a.printBreakDown()
-a.printTotalMats()
+h  = LPClasses.ModifiedManufacturingCost(bp)
+#a = h.requiredBaseMaterials(StaticData.idName("Scimitar Blueprint"))
+#a.printBreakDown()
+#a.printTotalMats()
 
 produceableItems = LPClasses.ProduceableItems(bp, joltanAssets.materials(), h)
-produceableItems.T2Produceables()
+agg = produceableItems.T2Produceables()
+agg.printTotMats()
 
 #a = LPClasses.ModifiedManufacturingCost(bp)
 #g = a.requiredComponents(StaticData.idName("Deflection Shield Emitter Blueprint"))

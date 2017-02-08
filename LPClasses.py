@@ -392,22 +392,49 @@ class ProduceableItems:
       
     prob.solve()
   
-    for v in prob.variables():
-      print(v.name, "=", v.varValue)    
+    #for v in prob.variables():
+    #  print(v.name, "=", v.varValue)
     
-    return optimizedAggregator(prob.variablesDict, self.modmanCosts)
+    
+    
+    return OptimizedAggregator(prob.variables(), self.modmanCosts)
+
   
 ########################################################################
 class OptimizedAggregator:
   """aggregates needed components of buildable items, takes results of simplex optimization as arguments"""
 
   #----------------------------------------------------------------------
-  def __init__(self, optimizedResults, modmanCosts):
+  def __init__(self, optimizedResults, modManCosts):
     """Constructor"""
-    finalDict = {}
+    self.finalDict = {}
+    self.itemList = []
+    self.optimizedResults = optimizedResults
+    self.modManCosts = modManCosts
+    
     for item in optimizedResults:
-      if optimizedResults[item] == 1:
-        pass
+      if item.varValue == 1:
+        bpTypeID = int(item.name[6:])
+        self.itemList.append(bpTypeID)
+        matsRequired = self.modManCosts.requiredComponents(bpTypeID)
+        
+        for i in matsRequired:
+          if i in self.finalDict:
+            self.finalDict[i] += matsRequired[i]
+          else:
+            self.finalDict[i] = matsRequired[i]
+            
+            
+  #----------------------------------------------------------------------
+  def printTotMats(self):
+    """print the total mats required for the optimized items"""
+    print "ITEMS BUILDABLE WITH CURRENT RESOURCES:"
+    for i in self.itemList:
+      print "{}".format(StaticData.idName(StaticData.productID(i)))
+    print "\n"
+    print "TOTAL REQUIRED COMPONENTS:"
+    StaticData.printDict(self.finalDict)
+    
     
     
   
