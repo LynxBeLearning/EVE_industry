@@ -13,7 +13,9 @@ import pubsub
 import locale
 #from ESIRequests import Assets
 from staticClasses import StaticData, Settings
-from ESIClasses import * 
+from ESIClasses import *
+import pickle
+
 
 
   
@@ -43,22 +45,22 @@ class CodeHandler(BaseHTTPRequestHandler):
 
 ########################################################################
 class ESI:
-  """take care of login and authentication operations"""
+  """take care of login and authentication operations for the ESI interface"""
 
   #----------------------------------------------------------------------
-  def __init__(self):
+  def __init__(self, charID):
     """Constructor, perform credentials operations and handles the code returned by the api"""
-
-    
-    if Settings.refreshToken:
+    self.charID = charID
+    if Settings.config.has_option(charID, 'ACCESSTOKEN'):
+      self.authHeader = {'Authorization':'Bearer '+ Settings.charConfig[charID]['ACCESSTOKEN'],'User-Agent': Settings.userAgent}
+    elif Settings.charConfig[charID]['REFRESHTOKEN']:
       self._refresh()
+      self.authHeader = {'Authorization':'Bearer '+ Settings.charConfig[charID]['ACCESSTOKEN'],'User-Agent': Settings.userAgent}
     else:
       self._credentials()
       self._login()
+      self.authHeader = {'Authorization':'Bearer '+ Settings.charConfig[charID]['ACCESSTOKEN'],'User-Agent': Settings.userAgent}
     
-    self.authHeader = {'Authorization':'Bearer '+ Settings.accessToken,'User-Agent': Settings.userAgent}
-    self.chrID = self._getCharID()
-    self.fadeID = 10000046 
   #----------------------------------------------------------------------
   def _credentials(self):
     """"""
@@ -69,39 +71,30 @@ class ESI:
     serverThread.daemon = True
     serverThread.start()  
     webbrowser.open('https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=http://localhost:'+Settings.port+'/&client_id='+Settings.clientID+'&scope='+scopes+'&state=') #%20%20%20%20%20%20%20%20%20%20%20%20%20%20  %20%20%20%20
-    Settings.updateCode()         
+    Settings.updateCode(self.charID)         
       
   #----------------------------------------------------------------------
   def _login(self):
     """"""
     headers = {'User-Agent':Settings.userAgent}
-    query = {'grant_type':'authorization_code','code': Settings.code}
-    r = requests.get(Settings.esiEndpointsUrl, headers=headers) 
-    Settings.esiEndpoints=r.json() 
+    query = {'grant_type':'authorization_code','code': Settings.charConfig[self.charID]['CODE']}
     headers = {'Authorization':'Basic '+ base64.b64encode(Settings.clientID+':'+Settings.secret),'User-Agent':Settings.userAgent}
     r = requests.post(Settings.authUrl,params=query,headers=headers) 
     response = r.json()
-    Settings.accessToken=response['access_token']
-    Settings.refreshToken=response['refresh_token']
-    Settings.expires=time.time()+float(response['expires_in'])-20
+    Settings.charConfig[self.charID]['ACCESSTOKEN'] = response['access_token']
+    Settings.charConfig[self.charID]['REFRESHTOKEN'] = response['refresh_token']  
     self._saveRefreshToken()
- 
-    
-    #self.load_base_data()
     
   #----------------------------------------------------------------------
   def _refresh(self):
     """handle token refresh requests"""
+    refreshToken = Settings.charConfig[self.charID]['REFRESHTOKEN']
     headers = {'Authorization':'Basic '+ base64.b64encode(Settings.clientID+':'+Settings.secret),'User-Agent':Settings.userAgent}
-    query = {'grant_type':'refresh_token','refresh_token':Settings.refreshToken}
+    query = {'grant_type':'refresh_token','refresh_token':refreshToken}
     r = requests.post(Settings.authUrl,params=query,headers=headers)
     response = r.json()
-    Settings.accessToken=response['access_token']
-    Settings.refreshToken=response['refresh_token']
-    Settings.expires=time.time()+float(response['expires_in'])-20
-    #get endpoints
-    r = requests.get(Settings.esiEndpointsUrl, headers=headers) 
-    Settings.esiEndpoints=r.json()
+    Settings.charConfig[self.charID]['ACCESSTOKEN'] = response['access_token']
+    Settings.charConfig[self.charID]['REFRESHTOKEN'] = response['refresh_token']  
     #save refresh token
     self._saveRefreshToken()
   
@@ -109,48 +102,117 @@ class ESI:
   def _saveRefreshToken(self):
     """save the refresh token to config.ini"""
     #save refresh token
-    if Settings.refreshToken:
-      settingsFile = open("config.ini")
-      lines = settingsFile.readlines()
-      settingsFile.close()
+    refreshToken = Settings.charConfig[self.charID]['REFRESHTOKEN']
+    Settings.config.set(str(self.charID), 'REFRESHTOKEN', refreshToken)
+    fileHandle = open(Settings.iniPath, 'w')
+    Settings.config.write(fileHandle)
+    fileHandle.close()
       
-      settingsFileWrite = open("config.ini", 'w')
-      for line in lines:
-        if line.startswith("REFRESHTOKEN"):
-          pass
-        else:
-          settingsFileWrite.write(line)
-      settingsFileWrite.write("REFRESHTOKEN = {}".format(Settings.refreshToken))
       
-  def _getCharID(self):
-    """queries server for char ID"""
-    r = requests.get("https://login.eveonline.com/oauth/verify/", headers=self.authHeader)
-    return r.json()["CharacterID"]
-  
+      
+      
+########################################################################
+class DataRequest:
+  """request data to APIs, either ESI or XML"""
   
   #----------------------------------------------------------------------
-  def getAssets(self): 
+  @classmethod
+  def getAssets(cls, charID): 
     """query esi for asset data"""
-    assetUrl = 'https://esi.tech.ccp.is/latest/characters/{}/assets/'.format(self.chrID)
-    r = requests.get(assetUrl, headers=self.authHeader)
-    assets = Assets(r.json())
-    return assets
+    cacheName = str(charID) + "Assets.cache"
+    
+    #checking existance and age
+    try:
+      lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
+    except:
+      lastModified = 999999999999
+      
+    #obtaining data                      
+    if lastModified < 3600:
+      #loading cache
+      pickleIn = open("cache/"+cacheName, 'rb')
+      assets = pickle.load(pickleIn)
+      pickleIn.close()
+      return assets
+    else:
+      #getting data from api
+      esi = ESI(charID)
+      assetUrl = 'https://esi.tech.ccp.is/latest/characters/{}/assets/'.format(charID)
+      r = requests.get(assetUrl, headers=esi.authHeader)
+      assets = Assets(r.json())
+      
+      #saving cache
+      if not os.path.isdir('cache'):
+        os.mkdir('cache')
+      pickleOut = open("cache/"+cacheName, 'wb')
+      pickle.dump(assets, pickleOut) 
+  
+      return assets
   
   #----------------------------------------------------------------------
-  def getSkills(self):
+  @classmethod
+  def getSkills(cls, charID):
     """query esi for skill data"""
-    skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/?datasource=tranquility'.format(self.chrID)
-    r = requests.get(skillsUrl, headers=self.authHeader)
-    skills = Skills(r.json())
-    return skills
+    cacheName = str(charID) + "Skill.cache"
+
+    #checking existance and age
+    try:
+      lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
+    except:
+      lastModified = 999999999999
+      
+    #obtaining data
+    if lastModified < 3600:
+      pickleIn = open("cache/"+cacheName, 'rb')
+      skills = pickle.load(pickleIn)
+      return skills
+    else:
+      #getting data from api    
+      esi = ESI(charID)
+      skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/?datasource=tranquility'.format(charID)
+      r = requests.get(skillsUrl, headers=esi.authHeader)
+      skills = Skills(r.json())
+      
+      #saving cache
+      if not os.path.isdir('cache'):
+        os.mkdir('cache')
+      pickleOut = open("cache/"+cacheName, 'wb')
+      pickle.dump(skills, pickleOut)       
+      
+      return skills
   
   #----------------------------------------------------------------------
-  def getMarketHistory(self, typeID): 
+  @classmethod
+  def getMarketHistory(cls, charID, typeID): 
     """query esi for market history data"""
-    marketHistoryUrl = 'https://esi.tech.ccp.is/latest/markets/{}/history/?type_id={}'.format(self.fadeID, typeID)
-    r = requests.get(marketHistoryUrl, headers=self.authHeader)
-    marketHistory = MarketHistory(r.json())
-    return marketHistory    
+    cacheName = str(charID) + "marketHistory" + str(typeID)+ ".cache"
+    
+    #checking existance and age
+    try:
+      lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
+    except:
+      lastModified = 999999999999
+      
+    #obtaining data    
+    if lastModified < 3600:
+      #lastModified = os.path.getmtime("cache/"+cacheName)
+      pickleIn = open("cache/"+cacheName, 'rb')
+      marketHistory = pickle.load(pickleIn)
+      return marketHistory
+    else:
+      #getting data from api        
+      esi = ESI(charID)
+      marketHistoryUrl = 'https://esi.tech.ccp.is/latest/markets/{}/history/?type_id={}'.format(Settings.fadeID, typeID)
+      r = requests.get(marketHistoryUrl, headers=esi.authHeader)
+      marketHistory = MarketHistory(r.json())
+      
+      #saving cache
+      if not os.path.isdir('cache'):
+        os.mkdir('cache')
+      pickleOut = open("cache/"+cacheName, 'wb')
+      pickle.dump(marketHistory, pickleOut)            
+      
+      return marketHistory    
       
 
         

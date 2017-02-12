@@ -1,5 +1,6 @@
 import sqlite3
 import pubsub
+import ConfigParser
 
 
 ########################################################################
@@ -234,49 +235,46 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     1019684069479L: "amarr misc container",
   }  
 
-
-
-  settingsDict = {}
-  settingsFile = open("config.ini")
-  for line in settingsFile:
-    tempList = line.strip().split(" = ")
-    settingsDict[tempList[0]] = tempList[1]
-  settingsFile.close()
-
+  
   #code listener
   _listener = pubsub.subscribe("code")
 
-  #variables
-  crestUrl = settingsDict['CRESTURL']
-  esiUrl = settingsDict['ESIURL']
-  esiEndpointsUrl = settingsDict['ESIENDPOINTS']
-  userAgent = settingsDict['USERAGENT']
-  port = settingsDict['PORT']
-  clientID = settingsDict['CLIENTID']
-  secret = settingsDict['SECRET']
-  authUrl = settingsDict['AUTHTOKEN']
-  keyID = settingsDict['KEYID']
-  vCode = settingsDict['VCODE']    
-  code = ''
-  esiEndpoints = ''
-  accessToken = ''
+  #config variables
+  iniPath = 'config.ini'
+  config = ConfigParser.RawConfigParser()
+  config.read(iniPath)
+  #general variables
+  crestUrl = config.get('GENERAL', 'CRESTURL')
+  esiUrl = config.get('GENERAL', 'ESIURL')
+  esiEndpointsUrl = config.get('GENERAL', 'ESIURL')
+  userAgent = config.get('GENERAL', 'USERAGENT')
+  port = config.get('GENERAL', 'PORT')
+  clientID = config.get('GENERAL', 'CLIENTID')
+  secret = config.get('GENERAL', 'SECRET')
+  authUrl = config.get('GENERAL', 'AUTHTOKEN')
+  esiEndpoints = config.get('GENERAL', 'ESIENDPOINTS')
+  #char specific variables
+  charIDList = []
+  charConfig = {}
+  for section in config.sections():
+    if not section.isdigit():
+      continue
+    charID = config.getint(section, 'CHARID')
+    charIDList.append(charID)
+    charConfig[charID] = {}
+    for option in config.options(section):
+      charConfig[charID][option.upper()] = config.get(section, option)
 
-  expires = ''
-  if "REFRESHTOKEN" in settingsDict:
-    refreshToken = settingsDict['REFRESHTOKEN']
-  else:
-    refreshToken = ''
-
-
+    
   marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
   componentsBpoContainer = 1023380486846 #all bpos in here will be flagged as components and require no copying or inventing.
-  joltanID = 1004487144
+  fadeID = 10000046
 
   #----------------------------------------------------------------------
   @classmethod
-  def updateCode(cls):
+  def updateCode(cls, charID):
     """listen for code broadcasts and set the variable."""
-    cls.code = cls._listener.listen().next()['data']
+    Settings.charConfig[charID]['CODE'] = cls._listener.listen().next()['data']
 
 
 

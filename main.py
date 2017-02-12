@@ -1,13 +1,12 @@
-from Auth import ESI
+from Auth import DataRequest
 from staticClasses import StaticData,  Settings
 from blueprintClasses import * 
 import eveapi
 import LPClasses
 
 #connect to esi, the ESI class contains methods to obtain data (e.g. getMaterials). 
-joltanESI = ESI()
-joltanAssets = joltanESI.getAssets()
-joltanSkills = joltanESI.getSkills()
+joltanAssets = DataRequest.getAssets(1004487144)
+joltanSkills = DataRequest.getSkills(718731811)
 #marketHistory = joltanESI.getMarketHistory(34)
 #a = LPClasses.TotalMaterialCost(joltanESI).calculate()
 
