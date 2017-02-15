@@ -184,7 +184,30 @@ class StaticData():
     quantity = int(dbQuantity[0])
     
     return quantity
-
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def materialSubtraction(cls, minuhend, subtrahend):
+    """subtract elements of two dictionaries from one another"""
+    minuhendCopy = dict(minuhend)
+    subtrahendCopy = dict(subtrahend)
+    result = {}
+    remainder = {}
+    
+    for key in subtrahend:
+      if key in minuhendCopy:
+        sub = int(minuhendCopy[key]) - int(subtrahendCopy[key])
+        if sub == 0:
+          del minuhendCopy[key]
+          del subtrahendCopy[key]
+        elif sub > 0:
+          minuhendCopy[key] = sub
+          del subtrahendCopy[key]
+        elif sub < 0:
+          del minuhendCopy[key]
+          subtrahendCopy[key] = sub * -1
+          
+    return (minuhendCopy, subtrahendCopy)
 
 
 
@@ -264,7 +287,8 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     charConfig[charID] = {}
     for option in config.options(section):
       charConfig[charID][option.upper()] = config.get(section, option)
-
+  #object Storer
+  DataObjectStorage = {}
     
   marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
   componentsBpoContainer = 1023380486846 #all bpos in here will be flagged as components and require no copying or inventing.

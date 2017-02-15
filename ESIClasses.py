@@ -88,6 +88,94 @@ class MarketHistory:
     return scipy.median(volumeList)    
     
     
+########################################################################
+class MarketOrders:
+  """"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, marketOrders):
+    """Constructor"""
+    self.marketOrders = marketOrders
+    
+    
+  #----------------------------------------------------------------------
+  def remainingItems(self, blueprintTypeID): #blueprint or object typeID? need converter of bp to object
+    """"""
+
+    blueprintTypeID = int(blueprintTypeID)
+    returnValue = 0
+    
+    for row in self.marketOrders._rows:
+      stationID = row[2]
+      typeID = row[7]
+      bid = row[13]
+      remainingItems = row[4]
+      orderState = row[6]
+      if stationID == Settings.marketStationID and typeID == StaticData.productID(blueprintTypeID) and bid == 0 and orderState == 0:
+        returnValue = remainingItems
+        break
+
+    return returnValue
   
+  
+  #----------------------------------------------------------------------
+  def ordersList(self): 
+    """"""  
+    for row in self.marketOrders._rows:
+      stationID = row[2]
+      typeID = row[7]
+      bid = row[13] 
+      volEntered=row[3]
+      remainingItems = row[4]
+    
+      if stationID == Settings.marketStationID and bid == 0 and remainingItems != 0:
+        print "{}\t{}/{}".format(StaticData.idName(typeID), remainingItems, volEntered)
+
+
+########################################################################
+class BlueprintItem:
+  """"""
+  #----------------------------------------------------------------------
+  def __init__(self, apiRow):
+    """Constructor"""
+    self.itemID = apiRow[0] #unique id of the item, changes if item changes location
+    self.locationID = apiRow[1] #id of the place where the item is, containers count as different locations and have ids that depend on the station or citadel
+    self.typeID = apiRow[2] #id of the item type
+    self.name = apiRow[3] #actual name of the item
+    self.flag = apiRow[4] #
+    if apiRow[5] == -1: #not really a quantity, -1 for bpo, -2 for bpc
+      self.bpo = 1
+      self.bpc = 0
+    elif apiRow[5] == -2:
+      self.bpo = 0
+      self.bpc = 1
+    else:
+      self.bpo = 0
+      self.bpc = 0
+    self.TE = apiRow[6]
+    self.ME = apiRow[7]
+    self.runs = apiRow[8] #-1 for infinite
+    
+########################################################################
+class BlueprintItemParser:
+  """parse raw api blueprint output into data structures."""
+
+  #----------------------------------------------------------------------
+  def __init__(self, blueprintApiObj):
+    """Constructor"""
+    self.rawBlueprints = {}
+    for row in blueprintApiObj.blueprints._rows:
+      itemID = row[0]
+      self.rawBlueprints[itemID] = BlueprintItem(row)
+      
+  #----------------------------------------------------------------------
+  def removeItems(self, keys):
+    """remove items from the dictionary as they are incorporated in the BlueprintOriginal class"""
+    try:
+      for key in keys:
+        del self.rawBlueprints[key]
+    except TypeError:    
+      del self.rawBlueprints[keys]
+
     
   

@@ -1,6 +1,7 @@
 from staticClasses import StaticData,  Settings
 import math
-import Auth
+from Auth import DataRequest
+from blueprintClasses import * 
 from pulp import *
 
 ########################################################################
@@ -8,9 +9,9 @@ class ModifiedManufacturingCost:
   """calculate manufacturing cost considering ME and other modifiers to material efficiency"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprints):
+  def __init__(self, charID):
     """Constructor"""
-    self.blueprints = blueprints
+    self.blueprints = Blueprints(charID)
     self.riggedCategories = [] #categories for which a rig is present on the raitaru, provides 4.2% cost reduction
     
     
@@ -328,11 +329,11 @@ class ProduceableItems:
   """calculate the maximum amount of items that can be produced with current materials"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprints, materials, modManCostsObject):
+  def __init__(self, charID):
     """Constructor"""
-    self.blueprints = blueprints
-    self.materials = materials
-    self.modmanCosts = modManCostsObject
+    self.blueprints = Blueprints(charID)
+    self.materials = DataRequest.getAssets(charID).materials()
+    self.modmanCosts = ModifiedManufacturingCost(charID)
     self.results = {}
     
     
@@ -340,7 +341,7 @@ class ProduceableItems:
   def T2Produceables(self):
     """determine produceable T2 items"""
     #vars
-    items = [] #list of all ships    
+    items = [] #list of all items    
     objectiveFunction = {} #names of items, this is the objective function "name": 1
     matsDict = {} #a dict containing another dict for every resource. the latter contains the amount of that resource required for every object    
     
@@ -397,7 +398,7 @@ class ProduceableItems:
     
     
     
-    return OptimizedAggregator(prob.variables(), self.modmanCosts)
+    return OptimizedAggregator(prob.variables(), self.modmanCosts, self.materials)
 
   
 ########################################################################
@@ -405,10 +406,11 @@ class OptimizedAggregator:
   """aggregates needed components of buildable items, takes results of simplex optimization as arguments"""
 
   #----------------------------------------------------------------------
-  def __init__(self, optimizedResults, modManCosts):
+  def __init__(self, optimizedResults, modManCosts,  materials):
     """Constructor"""
     self.finalDict = {}
     self.itemList = []
+    self.materials = materials
     self.optimizedResults = optimizedResults
     self.modManCosts = modManCosts
     
@@ -433,7 +435,14 @@ class OptimizedAggregator:
       print "{}".format(StaticData.idName(StaticData.productID(i)))
     print "\n"
     print "TOTAL REQUIRED COMPONENTS:"
-    StaticData.printDict(self.finalDict)
+    for key in self.finalDict:
+      print "{}\t{}".format(StaticData.idName(key), self.finalDict[key])    
+    print "\n"
+    print "MISSING COMPONENTS:"
+    remainingMinerals, requiredMats = StaticData.materialSubtraction(self.materials, self.finalDict)                                                             
+    for key in requiredMats:
+      if StaticData.producerID(key):
+        print "{}\t{}".format(StaticData.idName(key), self.finalDict[key])
     
     
     

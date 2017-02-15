@@ -11,10 +11,10 @@ import grequests
 import time
 import pubsub
 import locale
-#from ESIRequests import Assets
 from staticClasses import StaticData, Settings
 from ESIClasses import *
 import pickle
+import eveapi
 
 
 
@@ -120,102 +120,153 @@ class DataRequest:
   def getAssets(cls, charID): 
     """query esi for asset data"""
     cacheName = str(charID) + "Assets.cache"
+    objIdentifier = str(charID) + "Assets"
     
-    #checking existance and age
-    try:
-      lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
-    except:
-      lastModified = 999999999999
-      
-    #obtaining data                      
-    if lastModified < 3600:
-      #loading cache
-      pickleIn = open("cache/"+cacheName, 'rb')
-      assets = pickle.load(pickleIn)
-      pickleIn.close()
-      return assets
+    #checking existance of object
+    if objIdentifier in Settings.DataObjectStorage:
+      return Settings.DataObjectStorage[objIdentifier]
     else:
-      #getting data from api
-      esi = ESI(charID)
-      assetUrl = 'https://esi.tech.ccp.is/latest/characters/{}/assets/'.format(charID)
-      r = requests.get(assetUrl, headers=esi.authHeader)
-      assets = Assets(r.json())
-      
-      #saving cache
-      if not os.path.isdir('cache'):
-        os.mkdir('cache')
-      pickleOut = open("cache/"+cacheName, 'wb')
-      pickle.dump(assets, pickleOut) 
-  
-      return assets
+    #checking existance and age
+      try:
+        lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
+      except:
+        lastModified = 999999999999
+        
+      #obtaining data                      
+      if lastModified < 3600:
+        #loading cache
+        pickleIn = open("cache/"+cacheName, 'rb')
+        assets = pickle.load(pickleIn)
+        pickleIn.close()
+        return assets
+      else:
+        #getting data from api
+        esi = ESI(charID)
+        assetUrl = 'https://esi.tech.ccp.is/latest/characters/{}/assets/'.format(charID)
+        r = requests.get(assetUrl, headers=esi.authHeader)
+        assets = Assets(r.json())
+        
+        #saving cache
+        if not os.path.isdir('cache'):
+          os.mkdir('cache')
+        pickleOut = open("cache/"+cacheName, 'wb')
+        pickle.dump(assets, pickleOut) 
+    
+        Settings.DataObjectStorage[objIdentifier] = assets
+        return assets
   
   #----------------------------------------------------------------------
   @classmethod
   def getSkills(cls, charID):
     """query esi for skill data"""
     cacheName = str(charID) + "Skill.cache"
-
-    #checking existance and age
-    try:
-      lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
-    except:
-      lastModified = 999999999999
-      
-    #obtaining data
-    if lastModified < 3600:
-      pickleIn = open("cache/"+cacheName, 'rb')
-      skills = pickle.load(pickleIn)
-      return skills
-    else:
-      #getting data from api    
-      esi = ESI(charID)
-      skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/?datasource=tranquility'.format(charID)
-      r = requests.get(skillsUrl, headers=esi.authHeader)
-      skills = Skills(r.json())
-      
-      #saving cache
-      if not os.path.isdir('cache'):
-        os.mkdir('cache')
-      pickleOut = open("cache/"+cacheName, 'wb')
-      pickle.dump(skills, pickleOut)       
-      
-      return skills
+    objIdentifier = str(charID) + "Skill"
+    
+    #checking existance of object
+    if objIdentifier in Settings.DataObjectStorage:
+      return Settings.DataObjectStorage[objIdentifier]
+    else:    
+      #checking existance and age
+      try:
+        lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
+      except:
+        lastModified = 999999999999
+        
+      #obtaining data
+      if lastModified < 3600:
+        pickleIn = open("cache/"+cacheName, 'rb')
+        skills = pickle.load(pickleIn)
+        return skills
+      else:
+        #getting data from api    
+        esi = ESI(charID)
+        skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/?datasource=tranquility'.format(charID)
+        r = requests.get(skillsUrl, headers=esi.authHeader)
+        skills = Skills(r.json())
+        
+        #saving cache
+        if not os.path.isdir('cache'):
+          os.mkdir('cache')
+        pickleOut = open("cache/"+cacheName, 'wb')
+        pickle.dump(skills, pickleOut)       
+        
+        Settings.DataObjectStorage[objIdentifier] = skills
+        return skills
   
   #----------------------------------------------------------------------
   @classmethod
   def getMarketHistory(cls, charID, typeID): 
     """query esi for market history data"""
     cacheName = str(charID) + "marketHistory" + str(typeID)+ ".cache"
+    objIdentifier = str(charID) + "marketHistory" + str(typeID)
     
-    #checking existance and age
-    try:
-      lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
-    except:
-      lastModified = 999999999999
-      
-    #obtaining data    
-    if lastModified < 3600:
-      #lastModified = os.path.getmtime("cache/"+cacheName)
-      pickleIn = open("cache/"+cacheName, 'rb')
-      marketHistory = pickle.load(pickleIn)
-      return marketHistory
-    else:
-      #getting data from api        
-      esi = ESI(charID)
-      marketHistoryUrl = 'https://esi.tech.ccp.is/latest/markets/{}/history/?type_id={}'.format(Settings.fadeID, typeID)
-      r = requests.get(marketHistoryUrl, headers=esi.authHeader)
-      marketHistory = MarketHistory(r.json())
-      
-      #saving cache
-      if not os.path.isdir('cache'):
-        os.mkdir('cache')
-      pickleOut = open("cache/"+cacheName, 'wb')
-      pickle.dump(marketHistory, pickleOut)            
-      
-      return marketHistory    
-      
-
+    #checking existance of object
+    if objIdentifier in Settings.DataObjectStorage:
+      return Settings.DataObjectStorage[objIdentifier]
+    else:    
+      #checking existance and age
+      try:
+        lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
+      except:
+        lastModified = 999999999999
         
+      #obtaining data    
+      if lastModified < 3600:
+        #lastModified = os.path.getmtime("cache/"+cacheName)
+        pickleIn = open("cache/"+cacheName, 'rb')
+        marketHistory = pickle.load(pickleIn)
+        return marketHistory
+      else:
+        #getting data from api        
+        esi = ESI(charID)
+        marketHistoryUrl = 'https://esi.tech.ccp.is/latest/markets/{}/history/?type_id={}'.format(Settings.fadeID, typeID)
+        r = requests.get(marketHistoryUrl, headers=esi.authHeader)
+        marketHistory = MarketHistory(r.json())
+        
+        #saving cache
+        if not os.path.isdir('cache'):
+          os.mkdir('cache')
+        pickleOut = open("cache/"+cacheName, 'wb')
+        pickle.dump(marketHistory, pickleOut)            
+        
+        Settings.DataObjectStorage[objIdentifier] = marketHistory
+        return marketHistory    
+    
+  #----------------------------------------------------------------------
+  @classmethod
+  def getBlueprints(cls, charID):
+    """"""
+    objIdentifier = str(charID) + "blueprints"
+    if objIdentifier in Settings.DataObjectStorage:
+      return Settings.DataObjectStorage[objIdentifier]
+    else:    
+      keyID = Settings.charConfig[charID]['KEYID']
+      vCode = Settings.charConfig[charID]['VCODE']
+      
+      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))
+      xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
+      blueprints = BlueprintItemParser(xml.Blueprints())
+      
+      Settings.DataObjectStorage[objIdentifier] = blueprints
+      return blueprints
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def getMarketOrders(cls, charID):
+    """obtain data about market orders for given character"""
+    objIdentifier = str(charID) + "marketOrders"
+    if objIdentifier in Settings.DataObjectStorage:
+      return Settings.DataObjectStorage[objIdentifier]
+    else:
+      keyID = Settings.charConfig[charID]['KEYID']
+      vCode = Settings.charConfig[charID]['VCODE']
+      
+      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))
+      xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
+      marketOrders = MarketOrders(xml.MarketOrders().orders)
+      
+      Settings.DataObjectStorage[objIdentifier] = marketOrders
+      return marketOrders
 
 
 
