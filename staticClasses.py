@@ -57,7 +57,8 @@ class StaticData():
       return cls.T2toT1[typeID][0]
     else:
       return None
-
+    
+  #----------------------------------------------------------------------
   @classmethod
   def productID(cls, ID):
     """return id if name is provided and vice versa"""
@@ -68,7 +69,8 @@ class StaticData():
       return int(productTuple[0]) #[0] is required because fetchone returns a tuple
     else:
       return None
-
+    
+  #----------------------------------------------------------------------
   @classmethod
   def producerID(cls, ID):
     """return id if name is provided and vice versa"""
@@ -79,25 +81,60 @@ class StaticData():
       return str(producerTuple[0]) #[0] is required because fetchone returns a tuple
     else:
       return None 
-
+  #----------------------------------------------------------------------
   @classmethod
   def marketSize(cls, typeID):
-    """estimate quantity of things to put on the market on the basis of how long the bpo takes to copy. trust me, it works. maybe."""
-    typeID = int(typeID)
-    selected = cls.__database.execute('SELECT "time" FROM "industryActivity" WHERE "TypeID" = ? and "activityID" = 5' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
-    copyTimeTuple = selected.fetchone()
-    if copyTimeTuple[0]:
-      copyTime = copyTimeTuple[0] #[0] is required because fetchone returns a tuple
-      if copyTime <= 1440:
-        return [50, 50, 20] #returns 3 things in this order: bpc copy runs, quantity to manufacture when below thresDelfthold, minimum market threshold before manufacturing again.
-      elif copyTime <= 4800:
-        return [10, 5, 2]
-      elif copyTime > 4800:
-        return [5, 3, 1]
-
+    """estimate quantity of things to put on the market on the basis of their market category"""
+    typeID = cls.productID(int(typeID)) #need product typeID
+    selected = cls.__database.execute('SELECT "marketGroupID" FROM "invTypes" WHERE "TypeID" = ? ' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    marketGroupID = selected.fetchone()
+    
+    if marketGroupID[0]:
+      return cls.__marketGroupExplorer(marketGroupID[0], typeID)
     else:
       raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(typeID)))
 
+  #----------------------------------------------------------------------
+  @classmethod
+  def __marketGroupExplorer(cls, marketGroupID, typeID):
+    """recursively walk the tree of market groups until it finds one in a known category"""
+    frigsDessiesID = [1361, 1372]
+    cruisersBCsID = [1367, 1374]
+    modulesID = [9]
+    componentsID = [475]
+    ammoScriptsID = [2290, 100, 99, 1094, 114]
+    miningCrystalsID = [593]
+    deployableID = [404]
+    rigsID = [1111]
+    droneID = [157]
+    
+    if marketGroupID in frigsDessiesID:
+      return [30, 10, 2]
+    elif marketGroupID in ammoScriptsID:
+      return [300, 50, 100]
+    elif marketGroupID in miningCrystalsID:
+      return [50, 50, 20]
+    elif marketGroupID in cruisersBCsID:
+      return [5, 3, 1]
+    elif marketGroupID in modulesID:
+      return [50, 50, 20]
+    elif marketGroupID in componentsID:
+      return [1, 1, 1]
+    elif marketGroupID in deployableID:
+      return [10, 10, 5]
+    elif marketGroupID in rigsID:
+      return [50, 20, 5]
+    elif marketGroupID in droneID:
+      return [300, 100, 20]
+    elif marketGroupID is None:
+      raise TypeError('I do not know the market group of this blueprint: {}'.format(cls.idName(typeID)))
+    else:
+      selected = cls.__database.execute('SELECT "parentGroupID" FROM "invMarketGroups" WHERE "marketGroupID" = ?' , (marketGroupID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+      parentGroupTuple = selected.fetchone()      
+      marketGroupID = parentGroupTuple[0]
+      
+      return cls.__marketGroupExplorer(marketGroupID,  typeID)
+      
   #----------------------------------------------------------------------
   @classmethod
   def baseManufacturingCost(cls, typeID):
@@ -184,6 +221,18 @@ class StaticData():
     quantity = int(dbQuantity[0])
     
     return quantity
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def t2BlueprintAmount(cls, typeID):
+    """return the amount of runs that an invented blueprint is born with"""
+    quantity = ""
+    dbQuantity = cls.__database.execute('SELECT "quantity" FROM "industryActivityProducts" WHERE "TypeID" = ? and "activityID" = 8' , (str(typeID), )) #note that parameters of execute must be a tuple, even if only contains only one element
+    dbQuantity = dbQuantity.fetchone()
+    
+    quantity = int(dbQuantity[0])
+    
+    return quantity  
   
   #----------------------------------------------------------------------
   @classmethod

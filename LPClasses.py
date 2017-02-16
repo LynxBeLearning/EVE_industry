@@ -16,12 +16,12 @@ class ModifiedManufacturingCost:
     
     
   #----------------------------------------------------------------------
-  def _materialModifier(self, BP):
+  def _materialModifier(self, blueprintItem):
     """calculate the overall material modifier for a set of bpcs"""
     #calculate ME modifier
-    MEModifier = 1 - (BP.ME / 100.0)
+    MEModifier = 1 - (blueprintItem.ME / 100.0)
     raitaruModifier = 0.99
-    if StaticData.categoryID(StaticData.productID(BP.typeID)) in self.riggedCategories:
+    if StaticData.categoryID(StaticData.productID(blueprintItem.typeID)) in self.riggedCategories:
       rigModifier = 0.958
     else:
       rigModifier = 1
@@ -29,14 +29,14 @@ class ModifiedManufacturingCost:
     return MEModifier * raitaruModifier * rigModifier
   
   #----------------------------------------------------------------------
-  def _BPCmaterialsCalculator(self, runs, BPC):
-    """determine modified manufacturing cost for one BPC witn N runs"""
-    baseCost = StaticData.baseManufacturingCost(BPC.typeID)
+  def _BPCmaterialsCalculator(self, requiredRuns, blueprintItem):
+    """determine modified manufacturing cost for N runs of one BPC"""
+    baseCost = StaticData.baseManufacturingCost(blueprintItem.typeID)
     modMats = {}
-    materialModifier = self._materialModifier(BPC)
+    materialModifier = self._materialModifier(blueprintItem)
     
     for matID in baseCost:
-      modmat = int(max(runs, math.ceil( round(baseCost[matID] * runs * materialModifier, 2) + 0.01 )))
+      modmat = int(max(requiredRuns, math.ceil( round(baseCost[matID] * requiredRuns * materialModifier, 2) + 0.01 )))
       modMats[matID] = modmat
     
     return modMats
@@ -95,14 +95,14 @@ class ModifiedManufacturingCost:
       
     
   #----------------------------------------------------------------------
-  def _componentsMaterialsCalculator(self, runs, BPO):
+  def _componentsMaterialsCalculator(self, requiredRuns, BPO):
     """calculate materials required by components bpo"""
     baseCost = StaticData.baseManufacturingCost(BPO.typeID)
     modMats = {}
     materialModifier = self._materialModifier(BPO)
     
     for matID in baseCost:
-      modmat = int(max(runs, math.ceil( round(baseCost[matID] * runs * materialModifier, 2) + 0.01 )))
+      modmat = int(max(requiredRuns, math.ceil( round(baseCost[matID] * requiredRuns * materialModifier, 2) + 0.01 )))
       modMats[matID] = modmat
     
     return modMats
@@ -227,7 +227,7 @@ class MatsBreakDown:
           
           
 
-
+#DEPRECATED FOR NOW
 ########################################################################
 class TotalMaterialCost:
   """calculate total material cost for a group of items."""
@@ -285,8 +285,10 @@ class datacoresReq:
   """determines the required datacores to run all remaining invention jobs"""
 
   #----------------------------------------------------------------------
-  def __init__(self, blueprints):
+  def __init__(self, charID):
     """Constructor"""
+    self.charID = charID
+    blueprints = Blueprints(self.charID)
     typeIDs = blueprints.blueprints.keys() #sort the itemIDs by corresponding names
     self.datacoresDict = {}
     
@@ -304,9 +306,9 @@ class datacoresReq:
                 
                 
   #----------------------------------------------------------------------
-  def notInAssets(self, assets):
+  def notInAssets(self):
     """subtract owned datacores from the total required"""
-    materialStore = assets.materials()
+    materialStore = DataRequest.getAssets(self.charID).materials()
     notInAssetsDict = {}
     for typeID in self.datacoresDict:
       if typeID in materialStore:
@@ -446,9 +448,9 @@ class OptimizedAggregator:
     
     
     
-  
-    
-    
-    
+
+        
+        
+      
   
   

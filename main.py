@@ -20,6 +20,7 @@ import LPClasses
 # represent blueprint data in the Blueprint class, market data are used to calculate priorities
 bp = Blueprints(1004487144)
 
+StaticData.printDict(LPClasses.datacoresReq(1004487144).notInAssets())
 #n = joltanAssets.materials()
 #x = LPClasses.datacoresReq(bp)
 
@@ -42,8 +43,4 @@ bp.printPriority()
 bp.printBPCRuns()
 
 
-
-#calculate manufacturing cost of any item
-a = StaticData.baseManufacturingCost(StaticData.idName("Ice Harvester II Blueprint"))
-StaticData.inventionProb(joltanSkills, StaticData.idName('Incursus Blueprint'))
 
