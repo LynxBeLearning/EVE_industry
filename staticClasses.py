@@ -257,6 +257,27 @@ class StaticData():
           subtrahendCopy[key] = sub * -1
           
     return (minuhendCopy, subtrahendCopy)
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def materialAddition(cls, addend1, addend2):
+    """subtract elements of two dictionaries from one another"""
+    result = {}
+    addend2Keys = addend2.keys()
+    
+    for key in addend1:
+      if key in addend2:
+        addition = int(addend1[key]) + int(addend2[key])
+        addend2Keys.remove(key)
+        result[key] = addition
+      if key not in addend2:
+        result[key] = addend1[key]
+        
+    for key in addend2Keys:
+      result[key] = addend2[key]
+        
+          
+    return result
 
 
 

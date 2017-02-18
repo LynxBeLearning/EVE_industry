@@ -10,6 +10,8 @@ import LPClasses
 #marketHistory = joltanESI.getMarketHistory(34)
 #a = LPClasses.TotalMaterialCost(joltanESI).calculate()
 
+z = LPClasses.InventableItems(1004487144).T2Inventables()
+z.printTotMats()
 #connecting and caching the xml api for joltan (only supported character for now)
  #cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))
  #joltanXml = cachedApi.auth(keyID=Settings.keyID, vCode=Settings.vCode).character(Settings.joltanID)
@@ -17,10 +19,11 @@ import LPClasses
  #BlueprintItemParserO = BlueprintItemParser(joltanXml.Blueprints())
 #gather market data through the xml api 
  #marketData = MarketOrders(joltanXml)
+LPClasses.TotalMatRequirements(1004487144)
 # represent blueprint data in the Blueprint class, market data are used to calculate priorities
 bp = Blueprints(1004487144)
 
-StaticData.printDict(LPClasses.datacoresReq(1004487144).notInAssets())
+StaticData.printDict(LPClasses.DatacoresReq(1004487144).notInAssets())
 #n = joltanAssets.materials()
 #x = LPClasses.datacoresReq(bp)
 
@@ -41,6 +44,8 @@ agg.printTotMats()
 #outputs priority list, bpc run list or market order lists
 bp.printPriority()
 bp.printBPCRuns()
+
+
 
 
 

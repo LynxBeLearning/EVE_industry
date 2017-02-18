@@ -4,6 +4,7 @@ from Auth import DataRequest
 from blueprintClasses import * 
 from pulp import *
 
+
 ########################################################################
 class ModifiedManufacturingCost:
   """calculate manufacturing cost considering ME and other modifiers to material efficiency"""
@@ -281,7 +282,7 @@ class TotalMaterialCost:
   
   
 ########################################################################
-class datacoresReq:
+class DatacoresReq:
   """determines the required datacores to run all remaining invention jobs"""
 
   #----------------------------------------------------------------------
@@ -447,10 +448,140 @@ class OptimizedAggregator:
         print "{}\t{}".format(StaticData.idName(key), self.finalDict[key])
     
     
-    
+########################################################################
+class TotalMatRequirements:
+  """calculate material requirements for all item with production priority"""
 
+  #----------------------------------------------------------------------
+  def __init__(self, charID):
+    """Constructor"""
+    self.charID = charID
+    self.blueprints = Blueprints(self.charID)
+    self.materials = DataRequest.getAssets(self.charID).materials()
+    self.modMatCost = ModifiedManufacturingCost(self.charID)
+    self.result = {}
+    
+    
+    for blueprintID in self.blueprints.blueprints:
+      blueprint = self.blueprints.blueprints[blueprintID]
+      if not blueprint.T2.inventable:
+        continue
+      for idx in range(len(blueprint.T2.inventedIDs)):
+        if blueprint.t2Priority[idx][0] == "manufacture":
+          matsBreakdown = self.modMatCost.requiredBaseMaterials(blueprint.T2.inventedIDs[idx])
+          totalMats = matsBreakdown.totalMats()
+          self.result = StaticData.materialAddition(self.result, totalMats)
+    
+    print "TOTAL REQUIRED:\n"
+    StaticData.printDict(self.result)
+    print "\n\nNOT OWNED:\n"
+    StaticData.printDict(StaticData.materialSubtraction(self.result, self.materials)[0])
+  
+
+########################################################################
+class InventableItems:
+  """calculate the maximum amount of items that can be produced with current materials"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, charID):
+    """Constructor"""
+    self.blueprints = Blueprints(charID)
+    self.materials = DataRequest.getAssets(charID).materials()
+    self.modmanCosts = ModifiedManufacturingCost(charID)
+    self.results = {}
+    
+    
+  #----------------------------------------------------------------------
+  def T2Inventables(self):
+    """determine inventable T2 items"""
+    #vars
+    items = [] #list of all blueprints    
+    objectiveFunction = {} #names of items, this is the objective function "name": required invention runs
+    datacoresDict = {} #a dict containing another dict for every resource. the latter contains the amount of that resource required for every object    
+    
+    #determine total resources
+    for blueprintID in self.blueprints.blueprints:
+      bpContainer = self.blueprints.blueprints[blueprintID]
+      if not bpContainer.T2.inventable:
+        continue
+      for idx in range(len(bpContainer.T2.inventedIDs)):
+        if not bpContainer.t2Priority[idx][0] == 'invention':
+          continue
         
+        reqDatacores = StaticData.datacoreRequirements(StaticData.originatorBp(bpContainer.T2.inventedIDs[idx]))
+        items.append(bpContainer.T2.inventedIDs[idx])
+        objectiveFunction[bpContainer.T2.inventedIDs[idx]] = 1
+        for datacore in reqDatacores:
+          if datacore not in datacoresDict:
+            datacoresDict[datacore] = {}   
+    
+    
+    for blueprintID in self.blueprints.blueprints:
+      bpContainer = self.blueprints.blueprints[blueprintID]
+      if not bpContainer.T2.inventable:
+        continue
+      for idx in range(len(bpContainer.T2.inventedIDs)):
+        bpTypeID = bpContainer.T2.inventedIDs[idx]
+        if not bpContainer.t2Priority[idx][0] == 'invention':
+          continue
+        reqDatacores = StaticData.datacoreRequirements(StaticData.originatorBp(bpTypeID))
+        
+        for datacore in datacoresDict:
+          if datacore in reqDatacores:
+            datacoresDict[datacore][bpTypeID] = reqDatacores[datacore] * bpContainer.t2Priority[idx][1]
+          else:
+            datacoresDict[datacore][bpTypeID] = 0
+          
+    prob = LpProblem("t2 inventable items",LpMaximize)
+    itemVars = LpVariable.dicts("items",items,0, 1, LpInteger)
+    
+    prob += lpSum([objectiveFunction[i]*itemVars[i] for i in items]), "all items, this represents the objective function"
+
+    for datacore in datacoresDict:
+      if datacore in self.materials:
+        ownedMat = self.materials[datacore]
+      else:
+        ownedMat = 0
+      prob += lpSum([datacoresDict[datacore][x] * itemVars[x] for x in items]) <= ownedMat, StaticData.idName(datacore)
+      
+    prob.solve()
+  
+    #for v in prob.variables():
+    #  print(v.name, "=", v.varValue)
+    
+    
+    
+    return DatacoreOptimizedAggregator(prob.variables(), self.blueprints, self.materials)
         
       
   
-  
+########################################################################
+class DatacoreOptimizedAggregator:
+  """aggregates needed components of inventable items, takes results of simplex optimization as arguments"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, optimizedResults, blueprints, materials):
+    """Constructor"""
+    self.finalDict = {}
+    self.itemList = []
+    self.materials = materials
+    self.optimizedResults = optimizedResults
+    self.blueprints = blueprints
+    
+    for item in optimizedResults:
+      if item.varValue == 1:
+        bpTypeID = int(item.name[6:])
+        self.itemList.append(bpTypeID)
+        
+        
+        
+        
+            
+            
+  #----------------------------------------------------------------------
+  def printTotMats(self):
+    """print the total mats required for the optimized items"""
+    print "ITEMS INVENTABLE WITH CURRENT RESOURCES:"
+    for i in self.itemList:
+      idx = self.blueprints.blueprints[StaticData.originatorBp(i)].T2.inventedIDs.index(i)
+      print "{}\t{}".format(StaticData.idName(i), self.blueprints.blueprints[StaticData.originatorBp(i)].t2Priority[idx][1])
