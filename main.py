@@ -9,7 +9,9 @@ import LPClasses
  #joltanSkills = DataRequest.getSkills(718731811)
 #marketHistory = joltanESI.getMarketHistory(34)
 #a = LPClasses.TotalMaterialCost(joltanESI).calculate()
-
+#bp = Blueprints(1004487144)
+h = IndustryJobs()
+#a = Blueprints(charID=1004487144)
 z = LPClasses.InventableItems(1004487144).T2Inventables()
 z.printTotMats()
 #connecting and caching the xml api for joltan (only supported character for now)
@@ -21,7 +23,7 @@ z.printTotMats()
  #marketData = MarketOrders(joltanXml)
 LPClasses.TotalMatRequirements(1004487144)
 # represent blueprint data in the Blueprint class, market data are used to calculate priorities
-bp = Blueprints(1004487144)
+
 
 StaticData.printDict(LPClasses.DatacoresReq(1004487144).notInAssets())
 #n = joltanAssets.materials()

@@ -485,7 +485,7 @@ class InventableItems:
   #----------------------------------------------------------------------
   def __init__(self, charID):
     """Constructor"""
-    self.blueprints = Blueprints(charID)
+    self.blueprints = Blueprints()
     self.materials = DataRequest.getAssets(charID).materials()
     self.modmanCosts = ModifiedManufacturingCost(charID)
     self.results = {}

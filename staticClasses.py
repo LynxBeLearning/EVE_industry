@@ -288,36 +288,9 @@ StaticData.T1toT2, StaticData.T2toT1 = StaticData._inventablesFetcher()
 
 
 ########################################################################
-class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTINGS
+class Settings:
   """read and hold settings variables"""
-
-  blueprintLocations = {
-    1022771210683 : "zansha mining, bpc container", #zansha mining, bpc container
-    1022832888095 : "zansha neuro, researched bpo container", #zansha neuro, researched bpo container
-    1022946515289 : "dunk's workshop, component bpos",  #zansha mining, components bpos container
-    1022756068998 : "zansha neuro, hangar",  #zansha neuro, hangar
-    1022946509438: "dunk's workshop, T2 bpc container",
-    1022946637486: "dunk's workshop, t1 bpc container",
-    1022975749725: "zansha neuro, BPO container",
-    1022946512073: 'zansha mining, t2 bpc container',
-    1022980573793: 'la fistiniere, bpc container', 
-    60014922: 'TEMP 9-4 STATION',
-    1023280033569: 'temp 9-4 bps',
-    1023317227936: 'temp 9-4 components bpo',
-    1023321130373: 'temp 9-4 bps2',
-    1023380525468: '',
-    1023380525606: '',
-    1023380486846: 'components',
-    1023398451362: 't2 bps',
-
-  }
-
-  materialsLocations = {
-    1023317227953: "invention, temp station",
-    1023380525089: 'temp invention',
-    1023380524776: 'temp materials',
-    1023404049020: 'minerals azbel', 
-  }
+  debug = False
 
   knownLocations = {
     1019684069461: "amarr, manufacturing container",
@@ -326,6 +299,7 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
     1022975750208L: "zansha neuro, unreaserched BPOs",
     1022946551363L: "fortizar misc container",
     1019684069479L: "amarr misc container",
+    61000035 : 'navitas lol',
   }  
 
   
@@ -336,6 +310,7 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
   iniPath = 'config.ini'
   config = ConfigParser.RawConfigParser()
   config.read(iniPath)
+  
   #general variables
   crestUrl = config.get('GENERAL', 'CRESTURL')
   esiUrl = config.get('GENERAL', 'ESIURL')
@@ -346,17 +321,37 @@ class Settings: # NEED TO IMPLEMENT MULTI CHARACTER PARSING AND STORING OF SETTI
   secret = config.get('GENERAL', 'SECRET')
   authUrl = config.get('GENERAL', 'AUTHTOKEN')
   esiEndpoints = config.get('GENERAL', 'ESIENDPOINTS')
+  
   #char specific variables
   charIDList = []
   charConfig = {}
+  blueprintLocations = []
+  materialsLocations = []
+  
   for section in config.sections():
-    if not section.isdigit():
+    if not section.isdigit(): #to ensure i'm grabbing only sections that correspond to charIDs
       continue
     charID = config.getint(section, 'CHARID')
     charIDList.append(charID)
     charConfig[charID] = {}
     for option in config.options(section):
-      charConfig[charID][option.upper()] = config.get(section, option)
+      if option == 'blueprint_containers':
+        tempBpLocations = [int(x) for x in config.get(section, option).split(",") if x]
+        charConfig[charID][option.upper()] = tempBpLocations
+        blueprintLocations.extend(tempBpLocations)               
+      elif option == 'mineral_containers':
+        tempBpLocations = [int(x) for x in config.get(section, option).split(",") if x]
+        charConfig[charID][option.upper()] = tempBpLocations
+        materialsLocations.extend(tempBpLocations)
+      else:
+        charConfig[charID][option.upper()] = config.get(section, option)
+        
+      
+  #blueprint and material containers
+  
+  
+  
+  
   #object Storer
   DataObjectStorage = {}
     

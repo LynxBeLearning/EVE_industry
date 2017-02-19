@@ -3,6 +3,7 @@ from Auth import DataRequest
 from staticClasses import StaticData,  Settings
 from scipy.stats import binom as binomial
 import math
+import time
 
 
 ########################################################################
@@ -10,12 +11,20 @@ class Blueprints:
   """"""
 
   #----------------------------------------------------------------------
-  def __init__(self, charID):
+  def __init__(self, charID = Settings.charIDList):
     """Constructor"""
     #getting required data
-    bpItems = DataRequest.getBlueprints(charID)
-    marketData = DataRequest.getMarketOrders(charID)
-    charSkills = DataRequest.getSkills(charID)      
+    if isinstance(charID, list):
+      for idx, ID in enumerate(charID):
+        if idx: #do not execute on the first iteration
+          bpItems.rawBlueprints.update(DataRequest.getBlueprints(ID).rawBlueprints)
+        else:
+          bpItems = DataRequest.getBlueprints(ID)
+    else:
+      bpItems = DataRequest.getBlueprints(charID)
+    
+    marketData = DataRequest.getMarketOrders(1004487144)
+    charSkills = DataRequest.getSkills(1004487144)      
     
     #processing
     self.blueprints = {}
@@ -25,21 +34,23 @@ class Blueprints:
       self.blueprints[typeID] = BpContainer(bpo, bpItems, marketData, charSkills)
   
   #----------------------------------------------------------------------
-  def _listOfBpos(self, blueprintItemParserObj):
+  def _listOfBpos(self, blueprintItems):
     """"""
     bpos = []
-    for key in blueprintItemParserObj.rawBlueprints:
+    for key in blueprintItems.rawBlueprints:
       #check to see if i have unaccounted for bps in unknown containers
-      if blueprintItemParserObj.rawBlueprints[key].locationID not in Settings.blueprintLocations and blueprintItemParserObj.rawBlueprints[key].locationID not in Settings.knownLocations:
-        print "WARNING: NEW BLUEPRINT LOCATION DETECTED: BPO: {}, BPC: {}, LOCATIONID: {}, NAME: {}".format(blueprintItemParserObj.rawBlueprints[key].bpo,
-                                                                                                            blueprintItemParserObj.rawBlueprints[key].bpc,
-                                                                                                            blueprintItemParserObj.rawBlueprints[key].locationID,
-                                                                                                            StaticData.idName(blueprintItemParserObj.rawBlueprints[key].typeID))
-      if blueprintItemParserObj.rawBlueprints[key].bpo == 1 and blueprintItemParserObj.rawBlueprints[key].locationID in Settings.blueprintLocations:
-        if blueprintItemParserObj.rawBlueprints[key].typeID in [x.typeID for x in bpos]:
-          print 'WARNING: DUPLICATE DETECTED, {}'.format(StaticData.idName(blueprintItemParserObj.rawBlueprints[key].typeID))
+      if blueprintItems.rawBlueprints[key].locationID not in Settings.blueprintLocations and blueprintItems.rawBlueprints[key].locationID not in Settings.knownLocations and Settings.debug:
+        print "WARNING: NEW BLUEPRINT LOCATION DETECTED: ME: {} TE {} BPO: {}, BPC: {}, LOCATIONID: {}, NAME: {}".format(blueprintItems.rawBlueprints[key].ME,
+                                                                                                                         blueprintItems.rawBlueprints[key].TE,
+                                                                                                                         blueprintItems.rawBlueprints[key].bpo,
+                                                                                                                         blueprintItems.rawBlueprints[key].bpc,
+                                                                                                                         blueprintItems.rawBlueprints[key].locationID,
+                                                                                                                         StaticData.idName(blueprintItems.rawBlueprints[key].typeID))
+      if blueprintItems.rawBlueprints[key].bpo == 1 and blueprintItems.rawBlueprints[key].locationID in Settings.blueprintLocations:
+        if blueprintItems.rawBlueprints[key].typeID in [x.typeID for x in bpos]:
+          print 'WARNING: DUPLICATE DETECTED, {}'.format(StaticData.idName(blueprintItems.rawBlueprints[key].typeID))
           continue
-        bpos.append(blueprintItemParserObj.rawBlueprints[key])
+        bpos.append(blueprintItems.rawBlueprints[key])
     return bpos
 
   #----------------------------------------------------------------------
@@ -261,10 +272,82 @@ class T2:
             self.totalRuns[inventedCounter] += blueprintItems.rawBlueprints[itemID].runs
             self.items[inventedCounter].append(blueprintItems.rawBlueprints[itemID])
     
+#INDUSTRY CLASSES
+########################################################################
+class IndustryJobs:
+  """parse raw industry jobs api output into data structures"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, charID=Settings.charIDList):
+    """Constructor"""
+    #getting required data
+    apiRows = {}
+    if isinstance(charID, list):
+      for ID in charID:
+        indyJobs = DataRequest.getIndustryJobs(ID)
+        apiRows[ID] = indyJobs._rows        
+    else:
+      indyJobs = DataRequest.getIndustryJobs(charID)
+      apiRows[charID] = indyJobs._rows     
     
-  
-  
-  
+    
+    self.typeIDJobs = {}
+    self.activityJobs = {}
+    for activity in ["manufacturing", 'inventing', 'researching', 'copying', 'reverse engineering']:
+      self.activityJobs[activity] = {}
+      
+    for ID in charID:
+      for apiRow in apiRows[ID]:
+        if apiRow[7] == 1:
+          activity = "manufacturing"
+        elif apiRow[7] == 8:
+          activity = 'inventing'
+        elif apiRow[7] == 3 or apiRow[7] == 4:
+          activity = 'researching'
+        elif apiRow[7] == 5:
+          activity = 'copying'
+        elif apiRow[7] == 7:
+          activity = 'reverse engineering'
+        bpID = apiRow[9]
+        
+        if bpID not in self.activityJobs[activity]:
+          self.activityJobs[activity][bpID] = [IndustryJobItem(apiRow)]
+        else:
+          self.activityJobs[activity][bpID].append(IndustryJobItem(apiRow))
+          
+        #filling typeIDJobs
+        if bpID not in self.typeIDJobs:
+          self.typeIDJobs[bpID] = [IndustryJobItem(apiRow)]
+        else:
+          self.typeIDJobs[bpID].append(IndustryJobItem(apiRow))
+    
+########################################################################
+class IndustryJobItem:
+  """"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, apiRow):
+    """Constructor"""
+    self.installerID = apiRow[1]
+    self.installerName = apiRow[2]
+    if apiRow[7] == 1:
+      self.activity = "manufacturing"
+    elif apiRow[7] == 8:
+      self.activity = 'inventing'
+    elif apiRow[7] == 3 or apiRow[7] == 4:
+      self.activity = 'researching'
+    elif apiRow[7] == 5:
+      self.activity = 'copying'
+    elif apiRow[7] == 7:
+      self.activity = 'reverse engineering'
+    else:
+      raise TypeError("wtf are you doing with this blueprint? {}".format(StaticData.idName(self.bpID)))
+    self.bpID = apiRow[9]
+    self.bpLocation = apiRow[11]
+    self.runs = apiRow[13]
+    self.productID = apiRow[18]
+    self.timeRemaining = (apiRow[24] - time.time()) / 3600
+
 
 
     

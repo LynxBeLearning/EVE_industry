@@ -1,6 +1,7 @@
 from staticClasses import StaticData, Settings
 import datetime
 import scipy
+import time
 
 
 class Assets:
@@ -168,14 +169,15 @@ class BlueprintItemParser:
       itemID = row[0]
       self.rawBlueprints[itemID] = BlueprintItem(row)
       
-  #----------------------------------------------------------------------
-  def removeItems(self, keys):
-    """remove items from the dictionary as they are incorporated in the BlueprintOriginal class"""
-    try:
-      for key in keys:
-        del self.rawBlueprints[key]
-    except TypeError:    
-      del self.rawBlueprints[keys]
+  
+  
+  
+    
+    
+  
+    
+    
+  
 
     
   

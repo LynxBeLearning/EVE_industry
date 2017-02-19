@@ -243,7 +243,7 @@ class DataRequest:
       keyID = Settings.charConfig[charID]['KEYID']
       vCode = Settings.charConfig[charID]['VCODE']
       
-      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))
+      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=Settings.debug))
       xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
       blueprints = BlueprintItemParser(xml.Blueprints())
       
@@ -261,12 +261,32 @@ class DataRequest:
       keyID = Settings.charConfig[charID]['KEYID']
       vCode = Settings.charConfig[charID]['VCODE']
       
-      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=True))
+      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=Settings.debug))
       xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
       marketOrders = MarketOrders(xml.MarketOrders().orders)
       
       Settings.DataObjectStorage[objIdentifier] = marketOrders
       return marketOrders
+    
+    
+  #----------------------------------------------------------------------
+  @classmethod
+  def getIndustryJobs(cls, charID):
+    """obtain data about market orders for given character"""
+    objIdentifier = str(charID) + "Jobs"
+    if objIdentifier in Settings.DataObjectStorage:
+      return Settings.DataObjectStorage[objIdentifier]
+    else:
+      keyID = Settings.charConfig[charID]['KEYID']
+      vCode = Settings.charConfig[charID]['VCODE']
+      
+      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=Settings.debug))
+      xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
+      ind = xml.IndustryJobs()
+      indyJobs = ind.jobs
+      
+      Settings.DataObjectStorage[objIdentifier] = indyJobs
+      return indyJobs  
 
 
 
