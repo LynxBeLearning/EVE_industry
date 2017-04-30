@@ -1,2 +1,4 @@
 Eve-Market.wpu
 *.pyc
+*.mps
+*.sol

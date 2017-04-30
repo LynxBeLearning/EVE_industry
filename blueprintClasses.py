@@ -24,14 +24,15 @@ class Blueprints:
       bpItems = DataRequest.getBlueprints(charID)
     
     marketData = DataRequest.getMarketOrders(1004487144)
-    charSkills = DataRequest.getSkills(1004487144)      
+    charSkills = DataRequest.getSkills(1004487144)
+    indyJobs = IndustryJobs()
     
     #processing
     self.blueprints = {}
     bpoList = self._listOfBpos(bpItems)
     for bpo in bpoList:
       typeID = bpo.typeID
-      self.blueprints[typeID] = BpContainer(bpo, bpItems, marketData, charSkills)
+      self.blueprints[typeID] = BpContainer(bpo, bpItems, marketData, charSkills, indyJobs)
   
   #----------------------------------------------------------------------
   def _listOfBpos(self, blueprintItems):
@@ -57,6 +58,8 @@ class Blueprints:
   def printPriority(self):
     """"""
     sortedTypeIDs = [x[0] for x in sorted(self.blueprints.items(), key= lambda x: StaticData.idName(x[0]))] #sort the itemIDs by corresponding names
+    
+    
     
     print "T1 MANUFACTURING\n"
     for typeID in sortedTypeIDs:
@@ -133,12 +136,11 @@ class BpContainer:
   """"""
 
   #----------------------------------------------------------------------
-  def __init__(self, BpoItem, blueprintItems, marketData, charSkills):
+  def __init__(self, BpoItem, blueprintItems, marketData, charSkills, industryJobs):
     """Constructor"""
     #getting base parameters
-    self.CopySize, self.manufSize, self.minMarketSize = StaticData.marketSize(BpoItem.typeID) #the copy time for bp is used as a measure of how difficult it is to manufacture and as a consequence how many should be on the market. i hope to implement real volume data to supplant this
-    self.t1ProductionSize = StaticData.productAmount(BpoItem.typeID)
-    
+    self.CopySize, self.manufSize, self.minMarketSize = StaticData.marketSize(BpoItem.typeID) #these sizes are established based on the type of BP, ammo, frigate, module, etc.
+    self.t1ProductionSize = StaticData.productAmount(BpoItem.typeID) #how much of it gets produced every run
     
     #set variables for bpo, bpc and t2
     self.BPO = BPO(BpoItem, blueprintItems)

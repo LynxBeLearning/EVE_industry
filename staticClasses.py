@@ -290,16 +290,15 @@ StaticData.T1toT2, StaticData.T2toT1 = StaticData._inventablesFetcher()
 ########################################################################
 class Settings:
   """read and hold settings variables"""
-  debug = False
+  debug = True
 
   knownLocations = {
     1019684069461: "amarr, manufacturing container",
     60006142 : "yehnifi station hangar",
-    1022975868749L: "DO6 fortizar, low priority blueprint container",
-    1022975750208L: "zansha neuro, unreaserched BPOs",
-    1022946551363L: "fortizar misc container",
     1019684069479L: "amarr misc container",
     61000035 : 'navitas lol',
+    60015108: "asset safety, vexor blueprint",
+    60008071: "shit blueprints from savaal",
   }  
 
   
@@ -355,8 +354,8 @@ class Settings:
   #object Storer
   DataObjectStorage = {}
     
-  marketStationID = 61000990 # DO6 STATION, 60008494 is for amarr station
-  componentsBpoContainer = 1023380486846 #all bpos in here will be flagged as components and require no copying or inventing.
+  marketStationID = 60008494 # DO6 STATION, 60008494 is for amarr station
+  componentsBpoContainer = 1024285489730 #all bpos in here will be flagged as components and require no copying or inventing.
   fadeID = 10000046
 
   #----------------------------------------------------------------------

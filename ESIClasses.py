@@ -169,6 +169,18 @@ class BlueprintItemParser:
       itemID = row[0]
       self.rawBlueprints[itemID] = BlueprintItem(row)
       
+########################################################################
+class IndustryJobs:
+  """stores structured data about industry jobs and who is performing them"""
+
+  #----------------------------------------------------------------------
+  def __init__(self, industryJobsXml):
+    """Constructor"""
+    
+    
+    
+    
+  
   
   
   
