@@ -7,7 +7,7 @@ import ConfigParser
 class StaticData():
   """"""
 
-  __database = sqlite3.connect('static_ascension.sqlite')  
+  __database = sqlite3.connect('data/static_ascension.sqlite')  
   T1toT2, T2toT1 = {}, {}
 
   #----------------------------------------------------------------------
@@ -306,7 +306,7 @@ class Settings:
   _listener = pubsub.subscribe("code")
 
   #config variables
-  iniPath = 'config.ini'
+  iniPath = 'data/config.ini'
   config = ConfigParser.RawConfigParser()
   config.read(iniPath)
   

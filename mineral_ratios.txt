@@ -1,7 +1,0 @@
-Tritanium	6417.221
-nocxium	29.282
-pyerite	1105.903
-mexallon	83.911
-megacyte	1.068
-zydrine	1
-isogen	13.432
