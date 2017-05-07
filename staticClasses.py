@@ -1,13 +1,96 @@
 import sqlite3
 import pubsub
 import ConfigParser
+import os
+
+
+
+########################################################################
+class Settings:
+  """read and hold settings variables"""
+  debug = True
+
+  knownLocations = {
+    1019684069461: "amarr, manufacturing container",
+    60006142 : "yehnifi station hangar",
+    1019684069479L: "amarr misc container",
+    61000035 : 'navitas lol',
+    60015108: "asset safety, vexor blueprint",
+    60008071: "shit blueprints from savaal",
+  }  
+
+  
+  #code listener
+  _listener = pubsub.subscribe("code")
+
+  #config variables
+  iniFile = 'config.ini'
+  config = ConfigParser.RawConfigParser()
+  config.read(iniFile)
+  
+  #general variables
+  crestUrl = config.get('GENERAL', 'CRESTURL')
+  esiUrl = config.get('GENERAL', 'ESIURL')
+  esiEndpointsUrl = config.get('GENERAL', 'ESIURL')
+  userAgent = config.get('GENERAL', 'USERAGENT')
+  port = config.get('GENERAL', 'PORT')
+  clientID = config.get('GENERAL', 'CLIENTID')
+  secret = config.get('GENERAL', 'SECRET')
+  authUrl = config.get('GENERAL', 'AUTHTOKEN')
+  esiEndpoints = config.get('GENERAL', 'ESIENDPOINTS')
+  dataFolder = os.path.abspath(config.get('GENERAL', 'DATAFOLDER'))
+  charDBName = config.get('GENERAL', 'CHARDBNAME')
+  staticDBName = config.get('GENERAL', 'STATICDBNAME')
+  
+  #char specific variables
+  charIDList = []
+  charConfig = {}
+  blueprintLocations = []
+  materialsLocations = []
+  
+  for section in config.sections():
+    if not section.isdigit(): #to ensure i'm grabbing only sections that correspond to charIDs
+      continue
+    charID = config.getint(section, 'CHARID')
+    charIDList.append(charID)
+    charConfig[charID] = {}
+    for option in config.options(section):
+      if option == 'blueprint_containers':
+        tempBpLocations = [int(x) for x in config.get(section, option).split(",") if x]
+        charConfig[charID][option.upper()] = tempBpLocations
+        blueprintLocations.extend(tempBpLocations)               
+      elif option == 'mineral_containers':
+        tempBpLocations = [int(x) for x in config.get(section, option).split(",") if x]
+        charConfig[charID][option.upper()] = tempBpLocations
+        materialsLocations.extend(tempBpLocations)
+      else:
+        charConfig[charID][option.upper()] = config.get(section, option)
+        
+      
+  #blueprint and material containers
+  
+  
+  
+  
+  #object Storer
+  DataObjectStorage = {}
+    
+  marketStationID = 60008494 # DO6 STATION, 60008494 is for amarr station
+  componentsBpoContainer = 1024285489730 #all bpos in here will be flagged as components and require no copying or inventing.
+  fadeID = 10000046
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateCode(cls, charID):
+    """listen for code broadcasts and set the variable."""
+    Settings.charConfig[charID]['CODE'] = cls._listener.listen().next()['data']
 
 
 ########################################################################
 class StaticData():
   """"""
 
-  __database = sqlite3.connect('data/static_ascension.sqlite')  
+  _database = sqlite3.connect(os.path.join(Settings.dataFolder, Settings.staticDBName)) 
   T1toT2, T2toT1 = {}, {}
 
   #----------------------------------------------------------------------
@@ -17,7 +100,7 @@ class StaticData():
     T1toT2 = {} 
     T2toT1 = {}
 
-    T1T2 = cls.__database.execute('SELECT "typeID","productTypeID" FROM "industryActivityProducts" where "activityID" = 8')
+    T1T2 = cls._database.execute('SELECT "typeID","productTypeID" FROM "industryActivityProducts" where "activityID" = 8')
     for row in T1T2:
       if row[0] in T1toT2:
         T1toT2[row[0]].append(row[1])
@@ -37,11 +120,11 @@ class StaticData():
     """return id if name is provided and vice versa"""
     try:
       idOrName = int(idOrName)
-      selected = cls.__database.execute('SELECT "typeName" FROM "invTypes" WHERE "typeID" = ?', (idOrName, )) #note that parameters of execute must be a tuple, even if only contains only one element
+      selected = cls._database.execute('SELECT "typeName" FROM "invTypes" WHERE "typeID" = ?', (idOrName, )) #note that parameters of execute must be a tuple, even if only contains only one element
       nameTuple = selected.fetchone()
       return str(nameTuple[0]) #[0] is required because fetchone returns a tuple      
     except ValueError:
-      selected = cls.__database.execute('SELECT "typeID" FROM "invTypes" WHERE "typeName" = ?', (idOrName, ))
+      selected = cls._database.execute('SELECT "typeID" FROM "invTypes" WHERE "typeName" = ?', (idOrName, ))
       nameTuple = selected.fetchone()
       return str(nameTuple[0]) 
 
@@ -63,7 +146,7 @@ class StaticData():
   def productID(cls, ID):
     """return id if name is provided and vice versa"""
     ID = int(ID)
-    selected = cls.__database.execute('SELECT "productTypeID" FROM "industryActivityProducts" WHERE "typeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    selected = cls._database.execute('SELECT "productTypeID" FROM "industryActivityProducts" WHERE "typeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     productTuple = selected.fetchone()
     if productTuple is not None:
       return int(productTuple[0]) #[0] is required because fetchone returns a tuple
@@ -75,7 +158,7 @@ class StaticData():
   def producerID(cls, ID):
     """return id if name is provided and vice versa"""
     ID = int(ID)
-    selected = cls.__database.execute('SELECT "typeID" FROM "industryActivityProducts" WHERE "productTypeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    selected = cls._database.execute('SELECT "typeID" FROM "industryActivityProducts" WHERE "productTypeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     producerTuple = selected.fetchone()
     if producerTuple is not None:
       return str(producerTuple[0]) #[0] is required because fetchone returns a tuple
@@ -86,7 +169,7 @@ class StaticData():
   def marketSize(cls, typeID):
     """estimate quantity of things to put on the market on the basis of their market category"""
     typeID = cls.productID(int(typeID)) #need product typeID
-    selected = cls.__database.execute('SELECT "marketGroupID" FROM "invTypes" WHERE "TypeID" = ? ' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    selected = cls._database.execute('SELECT "marketGroupID" FROM "invTypes" WHERE "TypeID" = ? ' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     marketGroupID = selected.fetchone()
     
     if marketGroupID[0]:
@@ -101,7 +184,7 @@ class StaticData():
     frigsDessiesID = [1361, 1372]
     cruisersBCsID = [1367, 1374]
     modulesID = [9]
-    componentsID = [475]
+    componentsID = [800, 798, 796, 1097, 1191]
     ammoScriptsID = [2290, 100, 99, 1094, 114]
     miningCrystalsID = [593]
     deployableID = [404]
@@ -129,7 +212,7 @@ class StaticData():
     elif marketGroupID is None:
       raise TypeError('I do not know the market group of this blueprint: {}'.format(cls.idName(typeID)))
     else:
-      selected = cls.__database.execute('SELECT "parentGroupID" FROM "invMarketGroups" WHERE "marketGroupID" = ?' , (marketGroupID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+      selected = cls._database.execute('SELECT "parentGroupID" FROM "invMarketGroups" WHERE "marketGroupID" = ?' , (marketGroupID, )) #note that parameters of execute must be a tuple, even if only contains only one element
       parentGroupTuple = selected.fetchone()      
       marketGroupID = parentGroupTuple[0]
       
@@ -141,7 +224,7 @@ class StaticData():
     """calculate the manufacturing cost of an item"""
     typeID = int(typeID)
     returnDict = {}
-    selected = cls.__database.execute('SELECT "materialTypeID", "quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 1' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    selected = cls._database.execute('SELECT "materialTypeID", "quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 1' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     resultsList = selected.fetchall()
 
     if len(resultsList) > 0:
@@ -159,8 +242,8 @@ class StaticData():
   def inventionProb(cls, charSkills, bpID): 
     """calculate invention probability based on skill levels"""
     encryptionSkillsID = [21791,23087,21790,23121]
-    baseProb = cls.__database.execute('SELECT "probability" FROM "industryActivityProbabilities" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
-    reqSkills = cls.__database.execute('SELECT "skillID" FROM "industryActivitySkills" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    baseProb = cls._database.execute('SELECT "probability" FROM "industryActivityProbabilities" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    reqSkills = cls._database.execute('SELECT "skillID" FROM "industryActivitySkills" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
   
     baseProb = float(baseProb.fetchone()[0])
     reqSkills = reqSkills.fetchall()
@@ -182,9 +265,9 @@ class StaticData():
   @classmethod
   def categoryID(cls, typeID):
     """return the category to which an item belongs"""
-    itemGroup = cls.__database.execute('SELECT "groupID" FROM "invTypes" WHERE "TypeID" = ?' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    itemGroup = cls._database.execute('SELECT "groupID" FROM "invTypes" WHERE "TypeID" = ?' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     itemGroup = itemGroup.fetchone()[0]
-    itemCategory = cls.__database.execute('SELECT "categoryID" FROM "invGroups" WHERE "groupID" = ?' , (itemGroup, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    itemCategory = cls._database.execute('SELECT "categoryID" FROM "invGroups" WHERE "groupID" = ?' , (itemGroup, )) #note that parameters of execute must be a tuple, even if only contains only one element
     itemCategory = int(itemCategory.fetchone()[0])
     return itemCategory
   
@@ -193,7 +276,7 @@ class StaticData():
   def datacoreRequirements(cls, typeID):
     """return the number of datacores required to invent a particular bpc"""
     returnDict = {}
-    datacoresQuantities = cls.__database.execute('SELECT "materialTypeID","quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 8' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    datacoresQuantities = cls._database.execute('SELECT "materialTypeID","quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 8' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     datacoresQuantities = datacoresQuantities.fetchall()
     
     for tup in datacoresQuantities:
@@ -215,7 +298,7 @@ class StaticData():
   def productAmount(cls, typeID):
     """return the amount of items produced by one run"""
     quantity = ""
-    dbQuantity = cls.__database.execute('SELECT "quantity" FROM "industryActivityProducts" WHERE "TypeID" = ? and "activityID" = 1' , (str(typeID), )) #note that parameters of execute must be a tuple, even if only contains only one element
+    dbQuantity = cls._database.execute('SELECT "quantity" FROM "industryActivityProducts" WHERE "TypeID" = ? and "activityID" = 1' , (str(typeID), )) #note that parameters of execute must be a tuple, even if only contains only one element
     dbQuantity = dbQuantity.fetchone()
     
     quantity = int(dbQuantity[0])
@@ -227,7 +310,7 @@ class StaticData():
   def t2BlueprintAmount(cls, typeID):
     """return the amount of runs that an invented blueprint is born with"""
     quantity = ""
-    dbQuantity = cls.__database.execute('SELECT "quantity" FROM "industryActivityProducts" WHERE "TypeID" = ? and "activityID" = 8' , (str(typeID), )) #note that parameters of execute must be a tuple, even if only contains only one element
+    dbQuantity = cls._database.execute('SELECT "quantity" FROM "industryActivityProducts" WHERE "TypeID" = ? and "activityID" = 8' , (str(typeID), )) #note that parameters of execute must be a tuple, even if only contains only one element
     dbQuantity = dbQuantity.fetchone()
     
     quantity = int(dbQuantity[0])
@@ -287,82 +370,6 @@ StaticData.T1toT2, StaticData.T2toT1 = StaticData._inventablesFetcher()
 
 
 
-########################################################################
-class Settings:
-  """read and hold settings variables"""
-  debug = True
-
-  knownLocations = {
-    1019684069461: "amarr, manufacturing container",
-    60006142 : "yehnifi station hangar",
-    1019684069479L: "amarr misc container",
-    61000035 : 'navitas lol',
-    60015108: "asset safety, vexor blueprint",
-    60008071: "shit blueprints from savaal",
-  }  
-
-  
-  #code listener
-  _listener = pubsub.subscribe("code")
-
-  #config variables
-  iniPath = 'data/config.ini'
-  config = ConfigParser.RawConfigParser()
-  config.read(iniPath)
-  
-  #general variables
-  crestUrl = config.get('GENERAL', 'CRESTURL')
-  esiUrl = config.get('GENERAL', 'ESIURL')
-  esiEndpointsUrl = config.get('GENERAL', 'ESIURL')
-  userAgent = config.get('GENERAL', 'USERAGENT')
-  port = config.get('GENERAL', 'PORT')
-  clientID = config.get('GENERAL', 'CLIENTID')
-  secret = config.get('GENERAL', 'SECRET')
-  authUrl = config.get('GENERAL', 'AUTHTOKEN')
-  esiEndpoints = config.get('GENERAL', 'ESIENDPOINTS')
-  
-  #char specific variables
-  charIDList = []
-  charConfig = {}
-  blueprintLocations = []
-  materialsLocations = []
-  
-  for section in config.sections():
-    if not section.isdigit(): #to ensure i'm grabbing only sections that correspond to charIDs
-      continue
-    charID = config.getint(section, 'CHARID')
-    charIDList.append(charID)
-    charConfig[charID] = {}
-    for option in config.options(section):
-      if option == 'blueprint_containers':
-        tempBpLocations = [int(x) for x in config.get(section, option).split(",") if x]
-        charConfig[charID][option.upper()] = tempBpLocations
-        blueprintLocations.extend(tempBpLocations)               
-      elif option == 'mineral_containers':
-        tempBpLocations = [int(x) for x in config.get(section, option).split(",") if x]
-        charConfig[charID][option.upper()] = tempBpLocations
-        materialsLocations.extend(tempBpLocations)
-      else:
-        charConfig[charID][option.upper()] = config.get(section, option)
-        
-      
-  #blueprint and material containers
-  
-  
-  
-  
-  #object Storer
-  DataObjectStorage = {}
-    
-  marketStationID = 60008494 # DO6 STATION, 60008494 is for amarr station
-  componentsBpoContainer = 1024285489730 #all bpos in here will be flagged as components and require no copying or inventing.
-  fadeID = 10000046
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def updateCode(cls, charID):
-    """listen for code broadcasts and set the variable."""
-    Settings.charConfig[charID]['CODE'] = cls._listener.listen().next()['data']
 
 
 

@@ -1,5 +1,4 @@
 from os.path import join, exists
-from Auth import DataRequest
 from staticClasses import StaticData,  Settings
 from scipy.stats import binom as binomial
 import math

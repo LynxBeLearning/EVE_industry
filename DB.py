@@ -1,8 +1,79 @@
 from staticClasses import StaticData, Settings
+import API
+import sqlite3
 import datetime
 import scipy
 import time
+import os
+import re
 
+########################################################################
+class DBUpdate:
+  """Push data returned from the API to the playerDB"""
+  _database = sqlite3.connect(os.path.join(Settings.dataFolder, Settings.charDBName))
+  
+  #----------------------------------------------------------------------
+  @classmethod
+  def _updateBlueprints(cls):
+    """get blueprint data from the API and """
+    for charID in Settings.charIDList:
+      insertList =  []
+      xmlBlueprints = API.DataRequest.getBlueprints(charID)
+      
+        
+      for apiRow in xmlBlueprints.blueprints._rows:
+        itemID = apiRow[0] #unique id of the item, should not change if item changes location
+        locationID = apiRow[1] #id of the place where the item is, containers count as different locations and have ids that depend on the station or citadel
+        typeID = apiRow[2] #id of the item type
+        name = apiRow[3] #actual name of the item
+        flag = apiRow[4] #
+        if apiRow[5] == -1: #not really a quantity, -1 for bpo, -2 for bpc
+          bpClass = 0
+        elif apiRow[5] == -2:
+          if typeID in StaticData.T2toT1:
+            bpClass = 2
+          else:
+            bpClass =  1
+        TE = apiRow[6]
+        ME = apiRow[7]
+        if apiRow[8] < 0: #-1 for infinite in the api, 0 for infinet in the db
+          runs = 0
+        else:
+          runs = apiRow[8]
+
+        insertList.append((itemID, charID, Settings.charConfig[charID]["NAME"] , locationID, typeID, StaticData.idName(typeID), bpClass, ME, TE, runs, StaticData.productID(typeID), StaticData.idName(StaticData.productID(typeID))))
+          
+      cls._database.executemany('INSERT INTO Blueprints VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', insertList)
+      cls._database.commit()
+      
+  #----------------------------------------------------------------------
+  @classmethod
+  def _DBWipe(cls):
+    """wipe the database of all entries"""
+    tableNames = [x[0] for x in _database.execute("SELECT name FROM sqlite_master WHERE type='table';")] #_database.execute returns a list of tuples with only one element, hence the list comprehension
+    cls._database.executemany("DELETE FROM ?", tableNames)
+    cls._database.commit()
+    
+  #----------------------------------------------------------------------
+  @classmethod
+  def _DBDump(cls):
+    """dump the database in a txt file for future restoration if needed"""
+    #dumping current db
+    with open('dump{}.sql'.format(time.time()), 'w') as f:
+      for line in cls._database.iterdump():
+        f.write('{}\n'.format(line))
+    
+    #deleting too old dumps
+    oldDumps = [x for x in os.listdir(Settings.dbfolder) if x.startswith('dump')]
+    if len(oldDumps > 3):
+      oldDumps.sort()
+      os.remove(os.path.join(Settings.dbfolder, oldDumps[0]))
+      
+  #----------------------------------------------------------------------
+  def _DBRestore(self):
+    """read a dump file and restore old databases"""
+    pass
+    
 
 class Assets:
   """Parse json ESI output for character assets"""
@@ -133,42 +204,8 @@ class MarketOrders:
         print "{}\t{}/{}".format(StaticData.idName(typeID), remainingItems, volEntered)
 
 
-########################################################################
-class BlueprintItem:
-  """"""
-  #----------------------------------------------------------------------
-  def __init__(self, apiRow):
-    """Constructor"""
-    self.itemID = apiRow[0] #unique id of the item, changes if item changes location
-    self.locationID = apiRow[1] #id of the place where the item is, containers count as different locations and have ids that depend on the station or citadel
-    self.typeID = apiRow[2] #id of the item type
-    self.name = apiRow[3] #actual name of the item
-    self.flag = apiRow[4] #
-    if apiRow[5] == -1: #not really a quantity, -1 for bpo, -2 for bpc
-      self.bpo = 1
-      self.bpc = 0
-    elif apiRow[5] == -2:
-      self.bpo = 0
-      self.bpc = 1
-    else:
-      self.bpo = 0
-      self.bpc = 0
-    self.TE = apiRow[6]
-    self.ME = apiRow[7]
-    self.runs = apiRow[8] #-1 for infinite
     
-########################################################################
-class BlueprintItemParser:
-  """parse raw api blueprint output into data structures."""
 
-  #----------------------------------------------------------------------
-  def __init__(self, blueprintApiObj):
-    """Constructor"""
-    self.rawBlueprints = {}
-    for row in blueprintApiObj.blueprints._rows:
-      itemID = row[0]
-      self.rawBlueprints[itemID] = BlueprintItem(row)
-      
 ########################################################################
 class IndustryJobs:
   """stores structured data about industry jobs and who is performing them"""

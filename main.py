@@ -1,8 +1,8 @@
-from Auth import DataRequest
 from staticClasses import StaticData,  Settings
-from blueprintClasses import * 
-import eveapi
-import LPClasses
+import DB
+
+
+DB.DBUpdate._updateBlueprints()
 
 #connect to esi, the ESI class contains methods to obtain data (e.g. getMaterials). 
  #joltanAssets = DataRequest.getAssets(1004487144)
