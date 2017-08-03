@@ -13,7 +13,7 @@ class Settings:
   knownLocations = {
     1019684069461: "amarr, manufacturing container",
     60006142 : "yehnifi station hangar",
-    1019684069479L: "amarr misc container",
+    1019684069479: "amarr misc container",
     61000035 : 'navitas lol',
     60015108: "asset safety, vexor blueprint",
     60008071: "shit blueprints from savaal",
@@ -75,7 +75,7 @@ class Settings:
   #object Storer
   DataObjectStorage = {}
     
-  marketStationID = 60008494 # DO6 STATION, 60008494 is for amarr station
+  marketStationID = 60008494 #  is for amarr station
   componentsBpoContainer = 1024285489730 #all bpos in here will be flagged as components and require no copying or inventing.
   fadeID = 10000046
 
@@ -290,7 +290,7 @@ class StaticData():
     """print a readable version of the dictionaries containing the typeid:value structure"""
     
     for item in dictionary:
-      print "{}\t{}".format(StaticData.idName(item), dictionary[item])
+      print f'{StaticData.idName(item)}\t{dictionary[item]}'
       
       
   #----------------------------------------------------------------------

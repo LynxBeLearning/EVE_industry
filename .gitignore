@@ -1,4 +1,6 @@
-Eve-Market.wpu
+*.wpu
+*.wpr
 *.pyc
 *.mps
 *.sol
+swagger_client/
