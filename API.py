@@ -1,226 +1,70 @@
-from http.server import BaseHTTPRequestHandler,HTTPServer
+import swagger_client
 import threading
-import os
 import webbrowser
 import json
 import requests
 import time
-from pubsub import pub
-
 import pickle
 import urllib
 import os
+from pubsub import pub
 from base64 import  b64encode
 from os.path import join, exists
+from swagger_client.rest import ApiException
+from http.server import BaseHTTPRequestHandler,HTTPServer
 from staticClasses import StaticData, settings, configFile
 
 ########################################################################
-class DataRequest:
-  """request data to APIs, either ESI or XML"""
+class Auth:
+  """manage of login and authentication operations for the ESI interface"""
 
   #----------------------------------------------------------------------
-  @classmethod
-  def getAssets(cls, charID):
-    """query esi for asset data"""
-    cacheName = str(charID) + "Assets.cache"
-    objIdentifier = str(charID) + "Assets"
-
-    #checking existance of object
-    if objIdentifier in settings.DataObjectStorage:
-      return settings.DataObjectStorage[objIdentifier]
-    else:
-    #checking existance and age
-      try:
-        lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
-      except:
-        lastModified = 999999999999
-
-      #obtaining data
-      if lastModified < 3600:
-        #loading cache
-        pickleIn = open("cache/"+cacheName, 'rb')
-        assets = pickle.load(pickleIn)
-        pickleIn.close()
-        return assets
-      else:
-        #getting data from api
-        esi = ESI(charID)
-        assetUrl = 'https://esi.tech.ccp.is/latest/characters/{}/assets/'.format(charID)
-        r = requests.get(assetUrl, headers=esi.authHeader)
-        assets = r.json()
-
-        #saving cache
-        if not os.path.isdir('cache'):
-          os.mkdir('cache')
-        pickleOut = open("cache/"+cacheName, 'wb')
-        pickle.dump(assets, pickleOut)
-
-        #settings.DataObjectStorage[objIdentifier] = assets
-        return assets
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getSkills(cls, charID):
-    """query esi for skill data"""
-    cacheName = str(charID) + "Skill.cache"
-    objIdentifier = str(charID) + "Skill"
-
-    #checking existance of object
-    if objIdentifier in settings.DataObjectStorage:
-      return settings.DataObjectStorage[objIdentifier]
-    else:
-      #checking existance and age
-      try:
-        lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
-      except:
-        lastModified = 999999999999
-
-      #obtaining data
-      if lastModified < 3600:
-        pickleIn = open("cache/"+cacheName, 'rb')
-        skills = pickle.load(pickleIn)
-        return skills
-      else:
-        #getting data from api
-        esi = ESI(charID)
-        skillsUrl = 'https://esi.tech.ccp.is/latest/characters/{}/skills/?datasource=tranquility'.format(charID)
-        r = requests.get(skillsUrl, headers=esi.authHeader)
-        skills = Skills(r.json())
-
-        #saving cache
-        if not os.path.isdir('cache'):
-          os.mkdir('cache')
-        pickleOut = open("cache/"+cacheName, 'wb')
-        pickle.dump(skills, pickleOut)
-
-        settings.DataObjectStorage[objIdentifier] = skills
-        return skills
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getMarketHistory(cls, charID, typeID):
-    """query esi for market history data"""
-    cacheName = str(charID) + "marketHistory" + str(typeID)+ ".cache"
-    objIdentifier = str(charID) + "marketHistory" + str(typeID)
-
-    #checking existance of object
-    if objIdentifier in settings.DataObjectStorage:
-      return settings.DataObjectStorage[objIdentifier]
-    else:
-      #checking existance and age
-      try:
-        lastModified = time.time() - os.path.getmtime("cache/"+cacheName)
-      except:
-        lastModified = 999999999999
-
-      #obtaining data
-      if lastModified < 3600:
-        #lastModified = os.path.getmtime("cache/"+cacheName)
-        pickleIn = open("cache/"+cacheName, 'rb')
-        marketHistory = pickle.load(pickleIn)
-        return marketHistory
-      else:
-        #getting data from api
-        esi = ESI(charID)
-        marketHistoryUrl = 'https://esi.tech.ccp.is/latest/markets/{}/history/?type_id={}'.format(settings.fadeID, typeID)
-        r = requests.get(marketHistoryUrl, headers=esi.authHeader)
-        marketHistory = MarketHistory(r.json())
-
-        #saving cache
-        if not os.path.isdir('cache'):
-          os.mkdir('cache')
-        pickleOut = open("cache/"+cacheName, 'wb')
-        pickle.dump(marketHistory, pickleOut)
-
-        settings.DataObjectStorage[objIdentifier] = marketHistory
-        return marketHistory
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getBlueprints(cls, charID):
-    """"""
-    objIdentifier = str(charID) + "blueprints"
-    if objIdentifier in settings.DataObjectStorage:
-      return settings.DataObjectStorage[objIdentifier]
-    else:
-      keyID = settings.charConfig[charID]['KEYID']
-      vCode = settings.charConfig[charID]['VCODE']
-
-      cachedApi = EVEAPIConnection(cacheHandler=MyCacheHandler(debug=settings.debug))
-      xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
-      return xml.Blueprints()
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getMarketOrders(cls, charID):
-    """obtain data about market orders for given character"""
-    objIdentifier = str(charID) + "marketOrders"
-    if objIdentifier in settings.DataObjectStorage:
-      return settings.DataObjectStorage[objIdentifier]
-    else:
-      keyID = settings.charConfig[charID]['KEYID']
-      vCode = settings.charConfig[charID]['VCODE']
-
-      cachedApi = eveapi.EVEAPIConnection(cacheHandler=eveapi.MyCacheHandler(debug=settings.debug))
-      xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
-      marketOrders = MarketOrders(xml.MarketOrders().orders)
-
-      settings.DataObjectStorage[objIdentifier] = marketOrders
-      return marketOrders
-
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getIndustryJobs(cls, charID):
-    """obtain data about market orders for given character"""
-    objIdentifier = str(charID) + "Jobs"
-    if objIdentifier in settings.DataObjectStorage:
-      return settings.DataObjectStorage[objIdentifier]
-    else:
-      keyID = settings.charConfig[charID]['KEYID']
-      vCode = settings.charConfig[charID]['VCODE']
-
-      cachedApi = EVEAPIConnection(cacheHandler=MyCacheHandler(debug=settings.debug))
-      xml = cachedApi.auth(keyID=keyID, vCode=vCode).character(charID)
-      ind = xml.IndustryJobs()
-
-      return ind
-
-
-
-
-
-########################################################################
-class ESI:
-  """take care of login and authentication operations for the ESI interface"""
-
-  #----------------------------------------------------------------------
-  def __init__(self, charID):
+  def __init__(self, forceLogin = False, forceRefresh = False) :
     """Constructor, perform credentials operations and handles the code returned by the api"""
-    self.charID = charID
-    if hasattr(settings, "accessToken"):
-      self.authHeader = {'Authorization':'Bearer '+ settings.accessToken,
-                         'User-Agent': settings.userAgent}
-    elif hasattr(settings, 'refreshToken'):
+
+    if forceLogin:
+      self._credentials()
+      self._login()
+    elif forceRefresh:
       self._refresh()
-      self.authHeader = {'Authorization':'Bearer ' + settings.accessToken,
-                         'User-Agent': settings.userAgent}
+    elif hasattr(settings, "accessToken"):
+      pass
+    elif hasattr(settings, 'refreshToken') :
+      self._refresh()
     else:
       self._credentials()
       self._login()
-      self.authHeader = {'Authorization':'Bearer '+ settings.accessToken,
-                         'User-Agent': settings.userAgent}
+
 
   #----------------------------------------------------------------------
   def _credentials(self):
-    """"""
-    scopes = "esi-assets.read_assets.v1%20esi-planets.manage_planets.v1%20publicData%20esi-wallet.read_character_wallet.v1%20esi-skills.read_skillqueue.v1%20esi-skills.read_skills.v1"
+    """open a login window in the default browser so the user can authenticate"""
+    scopes = ("publicData%20"
+              "esi-skills.read_skills.v1%20"
+              "esi-assets.read_corporation_assets.v1%20"
+              "esi-corporations.read_blueprints.v1%20"
+              "esi-markets.read_corporation_orders.v1%20"
+              "esi-industry.read_corporation_jobs.v1%20"
+              "esi-characters.read_blueprints.v1"
+              )
 
     server = HTTPServer(('', int(settings.port)), CodeHandler)
     serverThread = threading.Thread(target=server.serve_forever)
     serverThread.daemon = True
     serverThread.start()
-    webbrowser.open('https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=http://localhost:'+settings.port+'/&client_id='+settings.clientID+'&scope='+scopes+'&state=')
+    webbrowser.open( (f'https://login.eveonline.com/oauth/authorize?'
+                      f'response_type=code&'
+                      f'redirect_uri=http://localhost:{settings.port}/&'
+                      f'client_id={settings.clientID}&'
+                      f'scope={scopes}&'
+                      f'state=evesso') )
+
+
+    a = (
+         'scope=esi-assets.read_assets.v1%20%20%20%20%20%20'
+         'esi-characters.read_agents_research.v1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20&'
+         'state=evesso')
+
 
     while 1:
       time.sleep(2)
@@ -230,7 +74,7 @@ class ESI:
 
   #----------------------------------------------------------------------
   def _login(self):
-    """"""
+    """query ESI to retrieve access and refresh tokens"""
     headers = {'User-Agent':settings.userAgent}
     query = {'grant_type':'authorization_code','code': settings.code}
     secretEncoded = b64encode((settings.clientID+':'+settings.secret).encode()).decode()
@@ -243,7 +87,7 @@ class ESI:
 
   #----------------------------------------------------------------------
   def _refresh(self):
-    """handle token refresh requests"""
+    """query ESI to refresh an access token"""
     refreshToken = settings.refreshToken
     secretEncoded = b64encode((settings.clientID+':'+settings.secret).encode()).decode()
     headers = {'Authorization':'Basic '+ secretEncoded,'User-Agent':settings.userAgent}
@@ -289,7 +133,129 @@ class CodeHandler(BaseHTTPRequestHandler):
   def log_message(self, format, *args):
     return
 
+
+
+########################################################################
+class DataRequest:
+  """request data to the ESI api"""
+  #swagger_client setup
+  Auth()
+  apiConfig = swagger_client.api_client.ApiClient()
+  apiConfig.configuration.access_token = settings.accessToken
+  apiConfig.default_headers = {'User-Agent': settings.userAgent}
+
+  #----------------------------------------------------------------------
+  def _refreshCredentials(cls, apiObject):
+    """force a refresh of the access token and set the appropriate value to api client"""
+    Auth(forceRefresh = True)
+    apiObject.configuration.access_token = settings.accessToken
+    cls.apiConfig.configuration.access_token = settings.accessToken
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getAssets(cls):
+    """query esi for asset data"""
+    assetsApi = swagger_client.AssetsApi(cls.apiConfig)
+
+    try:
+      assets = assetsApi.get_corporations_corporation_id_assets(settings.corpID)
+    except ApiException:
+      assetsApi = cls._refreshCredentials(assetsApi)
+      assets = assetsApi.get_corporations_corporation_id_assets(settings.corpID)
+    finally:
+      if not assets:
+        raise ApiException("sum tin wong")
+
+    return assets
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getSkills(cls, ):
+    """query esi for skill data"""
+    skillsApi = swagger_client.SkillsApi(cls.apiConfig)
+
+    try:
+      skills = skillsApi.get_characters_character_id_attributes(settings.ceoID)
+    except ApiException:
+      skillsApi = cls._refreshCredentials(skillsApi)
+      skills = skillsApi.get_characters_character_id_attributes(settings.ceoID)
+    finally:
+      if not skills:
+        raise ApiException('sum tin wong')
+
+    return skills
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getBlueprints(cls):
+    """"""
+    corpApi = swagger_client.CorporationApi(cls.apiConfig)
+
+    try:
+      blueprints = corpApi.get_corporations_corporation_id_blueprints(settings.corpID)
+    except ApiException:
+      corpApi = cls._refreshCredentials(corpApi)
+      blueprints = corpApi.get_corporations_corporation_id_blueprints(settings.corpID)
+    finally:
+      if not blueprints:
+        raise ApiException('sum tin wong')
+
+    return blueprints
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getMarketOrders(cls):
+    """obtain data about market orders for given corp"""
+    marketApi = swagger_client.MarketApi(cls.apiConfig)
+
+    try:
+      marketOrders = marketApi.get_corporations_corporation_id_orders(settings.corpID)
+    except ApiException:
+      marketApi = cls._refreshCredentials(marketApi)
+      marketOrders = marketApi.get_corporations_corporation_id_orders(settings.corpID)
+    finally:
+      if not marketOrders:
+        raise ApiException('sum tin wong')
+
+    return marketOrders
+
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getIndustryJobs(cls):
+    """obtain data about market orders for given character"""
+    industryApi = swagger_client.IndustryApi(cls.apiConfig)
+
+    try:
+      industryJobs = industryApi.get_corporations_corporation_id_industry_jobs(settings.corpID)
+    except ApiException:
+      industryApi = cls._refreshCredentials(industryApi)
+      industryJobs = industryApi.get_corporations_corporation_id_industry_jobs(settings.corpID)
+    finally:
+      if not industryJobs:
+        raise ApiException('sum tin wong')
+
+    return industryJobs
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getAdjustedPrices(cls):
+    """"""
+    marketApi = swagger_client.MarketApi(cls.apiConfig)
+
+    try:
+      adjustedPrices = marketApi.get_markets_prices()
+    except ApiException:
+      marketApi = cls._refreshCredentials(marketApi)
+      adjustedPrices = marketApi.get_markets_prices()
+    finally:
+      if not adjustedPrices:
+        raise ApiException('sum tin wong')
+
+    return adjustedPrices
+
 if __name__ == "__main__":
   #a = ESI(1004487144)
-  a = DataRequest.getAssets(1004487144)
+  a = DataRequest.getAssets()
+  b = DataRequest.getAdjustedPrices()
   print('lae')
