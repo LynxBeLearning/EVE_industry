@@ -1,26 +1,110 @@
 from staticClasses import StaticData, settings
-import API
 import sqlite3
 import datetime
 import scipy
 import time
 import os
 import re
+from API import DataRequest
 import swagger_client
 
 ########################################################################
 class DBUpdate:
   """Push data returned from the API to the playerDB"""
   #db connection
-  _database = sqlite3.connect(os.path.join(settings.dataFolder, settings.charDBName))
+  database = sqlite3.connect(os.path.join(settings.dataFolder, settings.charDBName))
 
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateAssets(cls):
+    """
+    take data in the form of:
+      {
+        "is_singleton": false,
+        "item_id": 1000000016835,
+        "location_flag": "Hangar",
+        "location_id": 60002959,
+        "location_type": "station",
+        "type_id": 3516
+      }
 
+    from the assets api and push the appropriate components to the database
+    """
+    assets = DataRequest.getAssets()
+    valuesList = []
+
+    for item in assets:
+      itemName = StaticData.idName(item.type_id)
+
+      #check if bp ###normally this is done through singleton checks, but singletons don't work
+      if 'blueprint' in itemName.lower():
+        continue
+
+      dbRow = (item.item_id,
+               item.type_id,
+               item.is_singleton,
+               item.location_id,
+               item.location_flag,
+               item.location_type,
+               item.quantity,
+               itemName)
+      valuesList.append(dbRow)
+
+    cls._DBWipe(['Assets'])
+    cls.database.executemany('INSERT INTO Assets VALUES (?,?,?,?,?,?,?,?)', valuesList)
+    cls.database.commit()
 
 
   #----------------------------------------------------------------------
   @classmethod
   def _updateBlueprints(cls):
-    """get blueprint data from the API and push it to the database"""
+    """get blueprint data in the form of
+       {
+       'item_id': 1001131739044,
+       'location_flag': 'CorpSAG2',
+       'location_id': 1025695702796,
+       'material_efficiency': 10,
+       'quantity': -1,
+       'runs': -1,
+       'time_efficiency': 20,
+       'type_id': 1153
+       }
+       and push it to the blueprints table
+    """
+    blueprints = DataRequest.getBlueprints()
+    valuesList = []
+
+    for blueprint in blueprints:
+      #recover plain name
+      itemName = StaticData.idName(blueprint.type_id)
+
+      #determina if bpo, t1 copy or t2 copy ### or t3 copy
+      if blueprint.quantity == -1:
+        bpClass = 0
+      elif blueprint.type_id in StaticData.T2toT1:
+        bpClass = 2
+      else:
+        bpClass = 1
+
+      #determine product id and name
+      productID = StaticData.productID(blueprint.type_id)
+      productName = StaticData.idName(productID)
+
+      #set ignore flag
+      dbRow = (blueprint.item_id,
+               blueprint.type_id,
+               itemName,
+               blueprint.location,
+               bpClass,
+               blueprint.material_efficiency,
+               blueprint.time_efficiency,
+               blueprint.runs,
+               productID,
+               productName, )
+      valuesList.append(dbRow)
+
+
+
     for charID in settings.charIDList:
       insertList =  []
       xmlBlueprints = API.DataRequest.getBlueprints(charID)
@@ -48,17 +132,21 @@ class DBUpdate:
 
         insertList.append((itemID, charID, settings.charConfig[charID]["NAME"] , locationID, typeID, StaticData.idName(typeID), bpClass, ME, TE, runs, StaticData.productID(typeID), StaticData.idName(StaticData.productID(typeID))))
 
-      cls._database.executemany('INSERT INTO Blueprints VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', insertList)
-      cls._database.commit()
+      cls.database.executemany('INSERT INTO Blueprints VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', insertList)
+      cls.database.commit()
 
   #----------------------------------------------------------------------
   @classmethod
-  def _DBWipe(cls):
+  def _DBWipe(cls,  tableNames = []):
     """wipe the database of all entries"""
-    tableRequest = _database.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    tableNames = [x[0] for x in tableRequest] #_database.execute returns a list of tuples with only one element, hence the list comprehension
-    cls._database.executemany("DELETE FROM ?", tableNames)
-    cls._database.commit()
+    if not tableNames:
+      tableRequest = cls.database.execute("SELECT name FROM sqlite_master WHERE type='table';")
+      tableNames = [x[0] for x in tableRequest]
+
+    for table in tableNames:
+      cls.database.execute(f'DELETE FROM {table}')
+
+    cls.database.commit()
 
   #----------------------------------------------------------------------
   @classmethod
@@ -66,7 +154,7 @@ class DBUpdate:
     """dump the database in a txt file for future restoration if needed"""
     #dumping current db
     with open('dump{}.sql'.format(time.time()), 'w') as f:
-      for line in cls._database.iterdump():
+      for line in cls.database.iterdump():
         f.write('{}\n'.format(line))
 
     #deleting too old dumps
@@ -221,7 +309,10 @@ class DBUpdate:
     #"""Constructor"""
 
 if __name__ == '__main__':
-  DBUpdate._updateAssets()
+  DBUpdate.updateAssets()
+  #DBUpdate._updateBlueprints()
+  print('asdasd')
+  pass
 
 
 

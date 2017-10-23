@@ -27,13 +27,25 @@ class Auth:
       self._login()
     elif forceRefresh:
       self._refresh()
-    elif hasattr(settings, "accessToken"):
-      pass
-    elif hasattr(settings, 'refreshToken') :
-      self._refresh()
     else:
-      self._credentials()
-      self._login()
+      fresh = self._validateAccessToken()
+      if not fresh:
+        self._refresh()
+
+  #----------------------------------------------------------------------
+  def _validateAccessToken(self, ):
+    """"""
+    apiConfig = swagger_client.api_client.ApiClient()
+    apiConfig.configuration.access_token = settings.accessToken
+    apiConfig.default_headers = {'User-Agent': settings.userAgent}
+
+    assetsApi = swagger_client.CharacterApi(apiConfig)
+
+    try:
+      name = assetsApi.get_characters_character_id_standings(1004487144)
+      return True
+    except ApiException:
+      return False
 
 
   #----------------------------------------------------------------------
@@ -58,13 +70,6 @@ class Auth:
                       f'client_id={settings.clientID}&'
                       f'scope={scopes}&'
                       f'state=evesso') )
-
-
-    a = (
-         'scope=esi-assets.read_assets.v1%20%20%20%20%20%20'
-         'esi-characters.read_agents_research.v1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20&'
-         'state=evesso')
-
 
     while 1:
       time.sleep(2)
@@ -96,6 +101,7 @@ class Auth:
     response = r.json()
     settings.accessToken = response['access_token']
     settings.refreshToken = response['refresh_token']
+
     #save refresh token
     self._saveRefreshToken()
 
@@ -105,7 +111,7 @@ class Auth:
     #save refresh token
     settingDict = settings.__dict__.copy()
     settingDict.pop('code', None)
-    settingDict.pop('accessToken', None)
+    #settingDict.pop('accessToken', None)
 
 
     with open(configFile, 'w') as config:
@@ -175,10 +181,10 @@ class DataRequest:
     skillsApi = swagger_client.SkillsApi(cls.apiConfig)
 
     try:
-      skills = skillsApi.get_characters_character_id_attributes(settings.ceoID)
+      skills = skillsApi.get_characters_character_id_skills(settings.ceoID)
     except ApiException:
       skillsApi = cls._refreshCredentials(skillsApi)
-      skills = skillsApi.get_characters_character_id_attributes(settings.ceoID)
+      skills = skillsApi.get_characters_character_id_skills(settings.ceoID)
     finally:
       if not skills:
         raise ApiException('sum tin wong')
@@ -254,8 +260,49 @@ class DataRequest:
 
     return adjustedPrices
 
+  #----------------------------------------------------------------------
+  @classmethod
+  def getSystemIndexes(cls):
+    """"""
+    industryApi = swagger_client.IndustryApi(cls.apiConfig)
+
+    try:
+      systemIndexes = industryApi.get_industry_systems()
+    except ApiException:
+      industryApi = cls._refreshCredentials(industryApi)
+      systemIndexes = industryApi.get_industry_systems()
+    finally:
+      if not systemIndexes:
+        raise ApiException('sum tin wong')
+
+    return systemIndexes
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getSystemIndexes(cls):
+    """"""
+    industryApi = swagger_client.IndustryApi(cls.apiConfig)
+
+    try:
+      systemIndexes = industryApi.get_industry_systems()
+    except ApiException:
+      industryApi = cls._refreshCredentials(industryApi)
+      systemIndexes = industryApi.get_industry_systems()
+    finally:
+      if not systemIndexes:
+        raise ApiException('sum tin wong')
+
+    return systemIndexes
+
 if __name__ == "__main__":
   #a = ESI(1004487144)
-  a = DataRequest.getAssets()
-  b = DataRequest.getAdjustedPrices()
+  #assets = DataRequest.getAssets()
+  #adjustedP = DataRequest.getAdjustedPrices()
+  #indJobs = DataRequest.getIndustryJobs()
+  #bp = DataRequest.getBlueprints()
+  #skills = DataRequest.getSkills()
+  #marketOrders = DataRequest.getMarketOrders()
+  #sysInd = DataRequest.getSystemIndexes()
+  #Auth()
   print('lae')
+  pass
