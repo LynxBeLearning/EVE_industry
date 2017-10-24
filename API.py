@@ -2,9 +2,8 @@ import swagger_client
 import threading
 import webbrowser
 import json
-import requests
 import time
-import pickle
+import requests
 import urllib
 import os
 from pubsub import pub
@@ -57,7 +56,8 @@ class Auth:
               "esi-corporations.read_blueprints.v1%20"
               "esi-markets.read_corporation_orders.v1%20"
               "esi-industry.read_corporation_jobs.v1%20"
-              "esi-characters.read_blueprints.v1"
+              "esi-characters.read_blueprints.v1%20"
+              "esi-wallet.read_corporation_wallets.v1"
               )
 
     server = HTTPServer(('', int(settings.port)), CodeHandler)
@@ -111,7 +111,6 @@ class Auth:
     #save refresh token
     settingDict = settings.__dict__.copy()
     settingDict.pop('code', None)
-    #settingDict.pop('accessToken', None)
 
 
     with open(configFile, 'w') as config:
@@ -144,13 +143,14 @@ class CodeHandler(BaseHTTPRequestHandler):
 ########################################################################
 class DataRequest:
   """request data to the ESI api"""
-  #swagger_client setup
+  # token and swagger_client setup
   Auth()
   apiConfig = swagger_client.api_client.ApiClient()
   apiConfig.configuration.access_token = settings.accessToken
   apiConfig.default_headers = {'User-Agent': settings.userAgent}
 
   #----------------------------------------------------------------------
+  @classmethod
   def _refreshCredentials(cls, apiObject):
     """force a refresh of the access token and set the appropriate value to api client"""
     Auth(forceRefresh = True)
@@ -159,18 +159,37 @@ class DataRequest:
 
   #----------------------------------------------------------------------
   @classmethod
+  def _apiCall(cls, apiObject, methodName, *args, **kwargs):
+    """"""
+    requestMethod = getattr(apiObject, methodName)
+    exception = ''
+    returnJson = ''  #initialize object so it exists even in the "finally" clause
+
+    try:
+      returnJson = requestMethod(*args, **kwargs)
+    except ApiException as exp:
+      print(f'Warning: encountered a problem when requesting {methodName}.\n'
+            f'reason: {exp.reason}\n'
+            f'retrying after refresh')
+      exceptionReason = exp
+      apiObject = cls._refreshCredentials(apiObject)
+      requestMethod = getattr(apiObject, methodName)
+      returnJson = requestMethod(*args, **kwargs)
+    finally:
+      if not returnJson:
+        raise ApiException(f"Query Failed after retrial, exception "
+                           f"reason was: {exception.reason}")
+
+    return returnJson
+
+  #----------------------------------------------------------------------
+  @classmethod
   def getAssets(cls):
     """query esi for asset data"""
     assetsApi = swagger_client.AssetsApi(cls.apiConfig)
+    methodName = "get_corporations_corporation_id_assets"
 
-    try:
-      assets = assetsApi.get_corporations_corporation_id_assets(settings.corpID)
-    except ApiException:
-      assetsApi = cls._refreshCredentials(assetsApi)
-      assets = assetsApi.get_corporations_corporation_id_assets(settings.corpID)
-    finally:
-      if not assets:
-        raise ApiException("sum tin wong")
+    assets = cls._apiCall(assetsApi, methodName, settings.corpID)
 
     return assets
 
@@ -179,15 +198,9 @@ class DataRequest:
   def getSkills(cls, ):
     """query esi for skill data"""
     skillsApi = swagger_client.SkillsApi(cls.apiConfig)
+    methodName = "get_characters_character_id_skills"
 
-    try:
-      skills = skillsApi.get_characters_character_id_skills(settings.ceoID)
-    except ApiException:
-      skillsApi = cls._refreshCredentials(skillsApi)
-      skills = skillsApi.get_characters_character_id_skills(settings.ceoID)
-    finally:
-      if not skills:
-        raise ApiException('sum tin wong')
+    skills = cls._apiCall(skillsApi, methodName, settings.ceoID)
 
     return skills
 
@@ -196,15 +209,9 @@ class DataRequest:
   def getBlueprints(cls):
     """"""
     corpApi = swagger_client.CorporationApi(cls.apiConfig)
+    methodName = "get_corporations_corporation_id_blueprints"
 
-    try:
-      blueprints = corpApi.get_corporations_corporation_id_blueprints(settings.corpID)
-    except ApiException:
-      corpApi = cls._refreshCredentials(corpApi)
-      blueprints = corpApi.get_corporations_corporation_id_blueprints(settings.corpID)
-    finally:
-      if not blueprints:
-        raise ApiException('sum tin wong')
+    blueprints = cls._apiCall(corpApi, methodName, settings.corpID)
 
     return blueprints
 
@@ -213,15 +220,9 @@ class DataRequest:
   def getMarketOrders(cls):
     """obtain data about market orders for given corp"""
     marketApi = swagger_client.MarketApi(cls.apiConfig)
+    methodName = "get_corporations_corporation_id_orders"
 
-    try:
-      marketOrders = marketApi.get_corporations_corporation_id_orders(settings.corpID)
-    except ApiException:
-      marketApi = cls._refreshCredentials(marketApi)
-      marketOrders = marketApi.get_corporations_corporation_id_orders(settings.corpID)
-    finally:
-      if not marketOrders:
-        raise ApiException('sum tin wong')
+    marketOrders = cls._apiCall(marketApi, methodName, settings.corpID)
 
     return marketOrders
 
@@ -231,78 +232,57 @@ class DataRequest:
   def getIndustryJobs(cls):
     """obtain data about market orders for given character"""
     industryApi = swagger_client.IndustryApi(cls.apiConfig)
+    methodName = "get_corporations_corporation_id_industry_jobs"
 
-    try:
-      industryJobs = industryApi.get_corporations_corporation_id_industry_jobs(settings.corpID)
-    except ApiException:
-      industryApi = cls._refreshCredentials(industryApi)
-      industryJobs = industryApi.get_corporations_corporation_id_industry_jobs(settings.corpID)
-    finally:
-      if not industryJobs:
-        raise ApiException('sum tin wong')
+    marketOrders = cls._apiCall(industryApi, methodName, settings.corpID)
 
-    return industryJobs
+    return marketOrders
 
   #----------------------------------------------------------------------
   @classmethod
   def getAdjustedPrices(cls):
     """"""
     marketApi = swagger_client.MarketApi(cls.apiConfig)
+    methodName = "get_markets_prices"
 
-    try:
-      adjustedPrices = marketApi.get_markets_prices()
-    except ApiException:
-      marketApi = cls._refreshCredentials(marketApi)
-      adjustedPrices = marketApi.get_markets_prices()
-    finally:
-      if not adjustedPrices:
-        raise ApiException('sum tin wong')
+    adjustedPrices = cls._apiCall(marketApi, methodName)
+
+    return adjustedPrices
+
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getSystemIndexes(cls):
+    """"""
+    industryApi = swagger_client.IndustryApi(cls.apiConfig)
+    methodName = "get_industry_systems"
+
+    adjustedPrices = cls._apiCall(industryApi, methodName)
 
     return adjustedPrices
 
   #----------------------------------------------------------------------
   @classmethod
-  def getSystemIndexes(cls):
+  def getJournal(cls):
     """"""
-    industryApi = swagger_client.IndustryApi(cls.apiConfig)
+    walletApi = swagger_client.WalletApi(cls.apiConfig)
+    methodName = "get_corporations_corporation_id_wallets_division_journal"
 
-    try:
-      systemIndexes = industryApi.get_industry_systems()
-    except ApiException:
-      industryApi = cls._refreshCredentials(industryApi)
-      systemIndexes = industryApi.get_industry_systems()
-    finally:
-      if not systemIndexes:
-        raise ApiException('sum tin wong')
+    corpJournal = cls._apiCall(walletApi, methodName, settings.corpID, 1)
 
-    return systemIndexes
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getSystemIndexes(cls):
-    """"""
-    industryApi = swagger_client.IndustryApi(cls.apiConfig)
-
-    try:
-      systemIndexes = industryApi.get_industry_systems()
-    except ApiException:
-      industryApi = cls._refreshCredentials(industryApi)
-      systemIndexes = industryApi.get_industry_systems()
-    finally:
-      if not systemIndexes:
-        raise ApiException('sum tin wong')
-
-    return systemIndexes
+    return corpJournal
 
 if __name__ == "__main__":
   #a = ESI(1004487144)
-  #assets = DataRequest.getAssets()
-  #adjustedP = DataRequest.getAdjustedPrices()
-  #indJobs = DataRequest.getIndustryJobs()
-  #bp = DataRequest.getBlueprints()
-  #skills = DataRequest.getSkills()
-  #marketOrders = DataRequest.getMarketOrders()
-  #sysInd = DataRequest.getSystemIndexes()
+  assets = DataRequest.getAssets()
+  adjustedP = DataRequest.getAdjustedPrices()
+  indJobs = DataRequest.getIndustryJobs()
+  bp = DataRequest.getBlueprints()
+  skills = DataRequest.getSkills()
+  marketOrders = DataRequest.getMarketOrders()
+  sysInd = DataRequest.getSystemIndexes()
+  #Auth(forceLogin= True)
+  journal = DataRequest.getJournal()
   #Auth()
   print('lae')
   pass
