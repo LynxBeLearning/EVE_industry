@@ -5,13 +5,11 @@ import json
 import time
 import requests
 import urllib
-import os
 from pubsub import pub
 from base64 import  b64encode
-from os.path import join, exists
 from swagger_client.rest import ApiException
-from http.server import BaseHTTPRequestHandler,HTTPServer
-from staticClasses import StaticData, settings, configFile
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from staticClasses import settings, configFile
 
 ########################################################################
 class Auth:
@@ -41,7 +39,7 @@ class Auth:
     assetsApi = swagger_client.CharacterApi(apiConfig)
 
     try:
-      name = assetsApi.get_characters_character_id_standings(1004487144)
+      assetsApi.get_characters_character_id_standings(1004487144)
       return True
     except ApiException:
       return False
@@ -126,7 +124,7 @@ class CodeHandler(BaseHTTPRequestHandler):
   """retrieve authentication token from localhost redirect after login"""
   def do_GET(self):
     if self.path == "/favicon.ico":
-      return;
+      return
     parsed_path = urllib.parse.urlparse(self.path)
     parts=urllib.parse.parse_qs(parsed_path.query)
     self.send_response(200)
@@ -169,16 +167,16 @@ class DataRequest:
       returnJson = requestMethod(*args, **kwargs)
     except ApiException as exp:
       print(f'Warning: encountered a problem when requesting {methodName}.\n'
-            f'reason: {exp.reason}\n'
+            f'reason: {exp}\n'
             f'retrying after refresh')
-      exceptionReason = exp
+      exception = exp
       apiObject = cls._refreshCredentials(apiObject)
       requestMethod = getattr(apiObject, methodName)
       returnJson = requestMethod(*args, **kwargs)
     finally:
       if not returnJson:
         raise ApiException(f"Query Failed after retrial, exception "
-                           f"reason was: {exception.reason}")
+                           f"reason was: {exception}")
 
     return returnJson
 
@@ -272,8 +270,19 @@ class DataRequest:
 
     return corpJournal
 
+  #----------------------------------------------------------------------
+  @classmethod
+  def getName(cls, charID):
+    """"""
+    characterApi = swagger_client.CharacterApi(cls.apiConfig)
+    methodName = "get_characters_names"
+
+    charName = cls._apiCall(characterApi, methodName, [charID])
+
+    return charName
+
 if __name__ == "__main__":
-  #a = ESI(1004487144)
+
   assets = DataRequest.getAssets()
   adjustedP = DataRequest.getAdjustedPrices()
   indJobs = DataRequest.getIndustryJobs()
@@ -283,6 +292,5 @@ if __name__ == "__main__":
   sysInd = DataRequest.getSystemIndexes()
   #Auth(forceLogin= True)
   journal = DataRequest.getJournal()
-  #Auth()
   print('lae')
   pass

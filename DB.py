@@ -57,7 +57,7 @@ class DBUpdate:
 
   #----------------------------------------------------------------------
   @classmethod
-  def _updateBlueprints(cls):
+  def updateBlueprints(cls):
     """get blueprint data in the form of
        {
        'item_id': 1001131739044,
@@ -80,60 +80,166 @@ class DBUpdate:
 
       #determina if bpo, t1 copy or t2 copy ### or t3 copy
       if blueprint.quantity == -1:
-        bpClass = 0
-      elif blueprint.type_id in StaticData.T2toT1:
-        bpClass = 2
+        bpo = 1
       else:
-        bpClass = 1
+        bpo = 0
+      bpClass = StaticData.bpClass(blueprint.type_id)
+
 
       #determine product id and name
       productID = StaticData.productID(blueprint.type_id)
-      productName = StaticData.idName(productID)
+      if productID:
+        productName = StaticData.idName(productID)
+      else:
+        productID = 'NULL'
+        productName = 'NULL'
+
+
+      #determine if inventable or invented
+      inventable = int(StaticData.inventable(blueprint.type_id))  #needs to be integer not bool
+      inventedFromID = StaticData.invented(blueprint.type_id)
+      if not inventedFromID:
+        inventedFromID = 'NULL'
+        inventedFromName = 'NULL'
+      else:
+        inventedFromName = StaticData.idName(inventedFromID)
+
+      #determine if component
+      if bpClass == 1:
+        component = int(StaticData.component(blueprint.type_id))
 
       #set ignore flag
       dbRow = (blueprint.item_id,
                blueprint.type_id,
                itemName,
-               blueprint.location,
+               blueprint.location_id,
+               blueprint.location_flag,
+               bpo,
                bpClass,
                blueprint.material_efficiency,
                blueprint.time_efficiency,
                blueprint.runs,
                productID,
-               productName, )
+               productName,
+               component,
+               inventable,
+               inventedFromID,
+               inventedFromName  )
       valuesList.append(dbRow)
 
 
+      #itemID, typeID, typeName, class, ME, TE, runs, prodID, prodName, inventable, component,
+      #inventedFrom, inventedFromName
 
-    for charID in settings.charIDList:
-      insertList =  []
-      xmlBlueprints = API.DataRequest.getBlueprints(charID)
+    cls.database.executemany('INSERT INTO Blueprints VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', valuesList)
+    cls.database.commit()
 
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateMaterials(cls):
+    """"""
+    assets = cls.database.execute( (f'SELECT "typeID", "quantity" '
+                                    f'FROM "Assets" ') )
+    assetRows = assets.fetchall()
 
-      for apiRow in xmlBlueprints.blueprints._rows:
-        itemID = apiRow[0] #unique id of the item, should not change if item changes location
-        locationID = apiRow[1] #id of the place where the item is, containers count as different locations and have ids that depend on the station or citadel
-        typeID = apiRow[2] #id of the item type
-        name = apiRow[3] #actual name of the item
-        flag = apiRow[4] #
-        if apiRow[5] == -1: #not really a quantity, -1 for bpo, -2 for bpc
-          bpClass = 0
-        elif apiRow[5] == -2:
-          if typeID in StaticData.T2toT1:
-            bpClass = 2
-          else:
-            bpClass =  1
-        TE = apiRow[6]
-        ME = apiRow[7]
-        if apiRow[8] < 0: #-1 for infinite in the api, 0 for infinet in the db
-          runs = 0
-        else:
-          runs = apiRow[8]
+    materialsDict = {}
+    for row in assetRows:
+      typeID = row[0]
+      quantity = row[1]
+      if typeID in materialsDict:
+        materialsDict[typeID] += quantity
+      else:
+        materialsDict[typeID] = quantity
 
-        insertList.append((itemID, charID, settings.charConfig[charID]["NAME"] , locationID, typeID, StaticData.idName(typeID), bpClass, ME, TE, runs, StaticData.productID(typeID), StaticData.idName(StaticData.productID(typeID))))
+    valuesList = []
+    for typeID in materialsDict:
+      buildable = int(StaticData.buildable(typeID))
+      typeName = StaticData.idName(typeID)
+      dbRow = (typeID,
+               typeName,
+               materialsDict[typeID],
+               buildable)
+      valuesList.append(dbRow)
 
-      cls.database.executemany('INSERT INTO Blueprints VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', insertList)
-      cls.database.commit()
+    cls.database.executemany( ('INSERT INTO AggregatedMaterials '
+                               'VALUES (?,?,?,?)')
+                              , valuesList)
+    cls.database.commit()
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateIndustryJobs(cls):
+    """"""
+    indyJobs = DataRequest.getIndustryJobs()
+
+    #jobid, itemid, bpid, bptypeName, runs, prodtypeID, prodTypeName endDate, status
+
+    valuesList = []
+    for job in indyJobs:
+      jobID = job.job_id
+      bpID = job.blueprint_id
+      bpTypeID = job.blueprint_type_id
+      bpTypeName = StaticData.idName(bpTypeID)
+      runs = job.runs
+      endDate = job.end_date
+      status = job.status
+      productTypeID = job.product_type_id
+      productTypeName = StaticData.idName(productTypeID)
+      installerID = job.installer_id
+      installerName = DataRequest.getName(installerID)[0].character_name
+      activityID = job.activity_id
+      activityName = StaticData.activityID2Name[activityID]
+
+      dbRow = (jobID,  #
+               bpID,  #
+               bpTypeID,  #
+               bpTypeName,  #
+               runs,  #
+               productTypeID,  #
+               productTypeName,  #
+               endDate,  #
+               status,  #
+               installerID,  #
+               installerName,  #
+               activityID,  #
+               activityName)  #
+      valuesList.append(dbRow)
+
+    cls.database.executemany( ('INSERT INTO IndustryJobs '
+                               'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
+                              , valuesList)
+    cls.database.commit()
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateMarketOrders(cls):
+    """"""
+    marketOrders = DataRequest.getMarketOrders()
+
+    valuesList = []
+    for marketOrder in marketOrders:
+      if marketOrder.state == 'completed':
+        continue
+      orderID = marketOrder.order_id
+      stationID = marketOrder.location_id
+      remainingItems = marketOrder.volume_remain
+      typeID = marketOrder.type_id
+      typeName = StaticData.idName(typeID)
+      sellOrder = int(not marketOrder.is_buy_order)
+      stationName = StaticData.stationName(stationID)
+
+      dbRow = (orderID,
+               typeID,
+               typeName,
+               remainingItems,
+               sellOrder,
+               stationID,
+               stationName)
+      valuesList.append(dbRow)
+    cls.database.executemany( ('INSERT INTO MarketOrders '
+                                   'VALUES (?,?,?,?,?,?,?)')
+                                  , valuesList)
+    cls.database.commit()
 
   #----------------------------------------------------------------------
   @classmethod
@@ -168,149 +274,146 @@ class DBUpdate:
     """read a dump file and restore old databases"""
     pass
 
-
-#class Assets:
-  #"""Parse json ESI output for character assets"""
-
-  ##----------------------------------------------------------------------
-  #def __init__(self, jsonList):
-    #"""Constructor"""
-    #self.assets = []
-    #for idx in range(len(jsonList)):
-      #self.assets.append(jsonList[idx])
-
-    ##this conditional prints asset name and location that are not in the known locations, useful when you need to know which containers to allow.
-    ##for item in self.assets:
-    ##  if item["location_id"] not in Settings.materialsLocations:
-    ##    print "{}\t{}".format(StaticData.idName(item["type_id"]), item['location_id'])
-
-  ##----------------------------------------------------------------------
-  #def materials(self):
-    #""""""
-
-    #mats = {}
-    #for item in self.assets:
-      #itemLocationID = item["location_id"]
-      #itemTypeID = item['type_id']
-
-      ##this conditional prints asset name and location that are not in the known locations, useful when you need to know which containers to allow.
-      ##if item["location_id"] not in Settings.materialsLocations:
-        ##print "{}\t{}".format(StaticData.idName(item["type_id"]), item['location_id'])
-
-      #if itemLocationID in Settings.materialsLocations:
-        #if itemTypeID not in mats:
-          #mats[itemTypeID] =  item['quantity']
-        #else:
-          #mats[itemTypeID] += item['quantity']
-
-    #return mats
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateAll(cls):
+    """"""
+    cls._DBWipe()
+    cls.updateAssets()
+    cls.updateBlueprints()
+    cls.updateMaterials()
+    cls.updateIndustryJobs()
+    cls.updateMarketOrders()
 
 
-#########################################################################
-#class Skills:
-  #"""store information on character skills"""
+########################################################################
+class LogDBUpdate:
+  """"""
+  #db connection
+  logDatabase = sqlite3.connect(os.path.join(settings.dataFolder, settings.logDB))
+  currentDatabase = sqlite3.connect(os.path.join(settings.dataFolder, settings.charDBName))
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateMaterialLog(cls):
+    """"""
+    #getting newly updated info
+    materials = cls.currentDatabase.execute( (f'SELECT "typeID", "quantity" '
+                                              f'FROM "AggregatedMaterials" ') )
+    materialsRows = materials.fetchall()
 
-  ##----------------------------------------------------------------------
-  #def __init__(self, jsonDict):
-    #"""Constructor"""
-    #self.totalSP = jsonDict['total_sp']
-    #self.skills = {}
-    #for skill in jsonDict['skills']:
-      #self.skills[skill['skill_id']] = skill['current_skill_level']
+    #getting current mats
+    currentMatsDict = {}
+    for material in materialsRows:
+      typeID = material[0]
+      currentQuantity = material[1]
+      currentMatsDict[typeID] = currentQuantity
 
-  ##----------------------------------------------------------------------
-  #def skillLevel(self, skillID):
-    #"""return the level of the supplied skill"""
-    #default = 4
-    #if skillID in self.skills:
-      #return self.skills[skillID]
-    #else:
-      #print "WARNING: ESI seems to be having problems? skill\"{}\" was not found. returning default (4)".format(StaticData.idName(skillID))
-      #return default
+    #checking for new materials
+    valuesList = []
+    for typeID,currentQuantity in currentMatsDict.items():
+      #checking previous log entry for this material
+      lastLogEntry = cls._getLastLogEntry(typeID)
 
+      if lastLogEntry:
+        oldBalance = lastLogEntry[1]
+        if oldBalance == currentMatsDict[typeID]:
+          continue
+        else:
+          matEntryID = 'NULL'
+          delta = currentQuantity - oldBalance
+          timestamp = time.time()
+          balance = currentQuantity
+          typeName = StaticData.idName(typeID)
 
+          dbRow = (timestamp,
+                   typeID,
+                   delta,
+                   balance,
+                   typeName)
+          valuesList.append(dbRow)
 
+      else:
+        matEntryID = 'NULL'
+        delta = 0
+        timestamp = time.time()
+        balance = currentQuantity
+        typeName = StaticData.idName(typeID)
 
-#########################################################################
-#class MarketHistory:
-  #"""store market order history information"""
-
-  ##----------------------------------------------------------------------
-  #def __init__(self, jsonList):
-    #"""Constructor"""
-    #self.history = jsonList
-
-  ##----------------------------------------------------------------------
-  #def medianVolume(self, daysBack):
-    #"""calculate """
-    #volumeList = []
-    #for dayItems in self.history:
-      #year, month, day = [int(x) for x in dayItems['date'].split("-")]
-      #dayDate = datetime.date(year, month, day)
-      #delta = datetime.date.today() - dayDate
-      #if delta.days <= daysBack:
-        #volumeList.append(dayItems['volume'])
-
-    #return scipy.median(volumeList)
-
-
-#########################################################################
-#class MarketOrders:
-  #""""""
-
-  ##----------------------------------------------------------------------
-  #def __init__(self, marketOrders):
-    #"""Constructor"""
-    #self.marketOrders = marketOrders
-
-
-  ##----------------------------------------------------------------------
-  #def remainingItems(self, blueprintTypeID): #blueprint or object typeID? need converter of bp to object
-    #""""""
-
-    #blueprintTypeID = int(blueprintTypeID)
-    #returnValue = 0
-
-    #for row in self.marketOrders._rows:
-      #stationID = row[2]
-      #typeID = row[7]
-      #bid = row[13]
-      #remainingItems = row[4]
-      #orderState = row[6]
-      #if stationID == Settings.marketStationID and typeID == StaticData.productID(blueprintTypeID) and bid == 0 and orderState == 0:
-        #returnValue = remainingItems
-        #break
-
-    #return returnValue
+        dbRow = (timestamp,
+                 typeID,
+                 delta,
+                 balance,
+                 typeName)
+        valuesList.append(dbRow)
 
 
-  ##----------------------------------------------------------------------
-  #def ordersList(self):
-    #""""""
-    #for row in self.marketOrders._rows:
-      #stationID = row[2]
-      #typeID = row[7]
-      #bid = row[13]
-      #volEntered=row[3]
-      #remainingItems = row[4]
+    #checking for depleted materials
+    lastEntries = cls._getLastEntries()
 
-      #if stationID == Settings.marketStationID and bid == 0 and remainingItems != 0:
-        #print "{}\t{}/{}".format(StaticData.idName(typeID), remainingItems, volEntered)
+    for entry in lastEntries:
+      typeID = entry[0][0]
+      timestamp = entry[1]
+      balance = entry[2]
+
+      if typeID not in currentMatsDict and balance > 0:
+        matEntryID = 'NULL'
+        delta = -balance
+        timestamp = time.time()
+        balance = 0
+        typeName = StaticData.idName(typeID)
+
+        dbRow = (timestamp,
+                 typeID,
+                 delta,
+                 balance,
+                 typeName)
+        valuesList.append(dbRow)
+
+    #updating database
+    cls.logDatabase.executemany( ('INSERT INTO materialsLog '
+                                  '(timestamp,typeID,delta,balance,typeName)'
+                                  'VALUES (?,?,?,?,?)')
+                                 , valuesList)
+    cls.logDatabase.commit()
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def _getLastEntries(cls):
+    """"""
+    bdResponse = cls.logDatabase.execute( (f'SELECT DISTINCT "typeID" '
+                                                f'FROM "materialsLog" ') )
+    uniqueTypeIDs = bdResponse.fetchall()
+
+    lastEntries = []
+    for typeID in uniqueTypeIDs:
+      lastLogEntry = cls._getLastLogEntry(typeID[0])
+      timestamp = lastLogEntry[0]
+      balance = lastLogEntry[1]
+      lastEntries.append([typeID, timestamp, balance])
+
+    return lastEntries
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def _getLastLogEntry(cls, typeID):
+    """"""
+    logEntries = cls.logDatabase.execute( (f'SELECT "timestamp", "balance" '
+                                           f'FROM materialsLog '
+                                           f'WHERE typeID = {typeID} '
+                                           f'ORDER BY "timestamp" DESC') )
+    lastLogEntry = logEntries.fetchone()
+
+    if lastLogEntry:
+      return lastLogEntry
+    else:
+      return None
 
 
 
-
-#########################################################################
-#class IndustryJobs:
-  #"""stores structured data about industry jobs and who is performing them"""
-
-  ##----------------------------------------------------------------------
-  #def __init__(self, industryJobsXml):
-    #"""Constructor"""
 
 if __name__ == '__main__':
-  DBUpdate.updateAssets()
-  #DBUpdate._updateBlueprints()
+
+  LogDBUpdate.updateMaterialLog()
   print('asdasd')
   pass
 

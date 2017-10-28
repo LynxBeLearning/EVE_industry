@@ -11,6 +11,7 @@ with open(configFile, 'r') as config:
 settings = SimpleNamespace()
 settings.__dict__.update(configDict)
 
+
 #TEMP, SHOULD TAKE THIS AWAY WITH REWORK OF DATA REQUEST CLASSES
 settings.DataObjectStorage = []
 #TEMP
@@ -29,6 +30,70 @@ class StaticData():
 
   _database = sqlite3.connect(os.path.join(settings.dataFolder, settings.staticDBName))
   T1toT2, T2toT1 = {}, {}
+
+  activityID2Name = {8: "invention",
+                     1: "manufacturing",
+                     3: "time efficiency",
+                     4: "mterial efficiency",
+                     5: "copying",}
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def stationName(cls, stationID):
+    """"""
+    dbResponse = cls._database.execute(f'SELECT "stationName"'
+                                         f'FROM "staStations"'
+                                         f'WHERE "stationID" = {stationID} ')
+    stationName = dbResponse.fetchone()
+    if stationName:
+      return stationName[0]
+    else:
+      return None
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def inventable(cls, typeID):
+    """determine if a typeID can be invented or reverse engineered"""
+    dbResponse = cls._database.execute(f'SELECT "time"'
+                                       f'FROM "industryActivity"'
+                                       f'WHERE "activityID" = 8 '
+                                       f'AND "typeID" = {typeID}')
+    inventable = dbResponse.fetchone()
+    if inventable:
+      return True
+    else:
+      return False
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def invented(cls, typeID):
+    """"""
+    dbResponse = cls._database.execute(f'SELECT "typeID"'
+                                         f'FROM "industryActivityProducts"'
+                                         f'WHERE "activityID" = 8 '
+                                         f'AND "productTypeID" = {typeID}')
+    invented = dbResponse.fetchone()
+
+    if invented:
+      return invented[0]
+    else:
+      return False
+
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def bpClass(cls, typeID):
+    """determine if the typeID is t1, t2 or t3"""
+    t3Items = ['Legion', 'Tengu', 'Loki', 'Proteus',
+               'Jackdaw', 'Hekate', 'Svipul', 'Confessor']
+
+    if not StaticData.invented(typeID):
+      return 1
+    else:
+      if any(word in StaticData.idName(typeID) for word in t3Items):
+        return 3
+      else:
+        return 2
 
   #----------------------------------------------------------------------
   @classmethod
@@ -83,9 +148,9 @@ class StaticData():
   def productID(cls, ID):
     """return id if name is provided and vice versa"""
     ID = int(ID)
-    selected = cls._database.execute('SELECT "productTypeID" FROM "industryActivityProducts" WHERE "typeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
+    selected = cls._database.execute(f'SELECT "productTypeID" FROM "industryActivityProducts" WHERE "typeID" = ?', (ID, )) #note that parameters of execute must be a tuple, even if only contains only one element
     productTuple = selected.fetchone()
-    if productTuple is not None:
+    if productTuple:
       return int(productTuple[0]) #[0] is required because fetchone returns a tuple
     else:
       return None
@@ -154,6 +219,59 @@ class StaticData():
       marketGroupID = parentGroupTuple[0]
 
       return cls.__marketGroupExplorer(marketGroupID,  typeID)
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def _marketGroupPath(cls, marketGroupID, retList = []):
+    """return a list of all parent market groups above the provided one"""
+
+    tempList = []
+    selected = cls._database.execute( (f'SELECT "parentGroupID" '
+                                       f'FROM "invMarketGroups" '
+                                       f'WHERE "marketGroupID" = ?') ,
+                                      (marketGroupID, ))
+    parentGroupTuple = selected.fetchone()
+    ParentmarketGroupID = parentGroupTuple[0]
+
+    if ParentmarketGroupID:
+      tempList.append(ParentmarketGroupID)
+      tempList.extend(retList)
+      return cls._marketGroupPath(ParentmarketGroupID,  tempList)
+    else:
+      return retList
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def component(cls, typeID):
+    """determine if blueprint is a component blueprint or not"""
+    componentBlueprintMarketGroup = 800
+
+    selected = cls._database.execute( (f'SELECT "marketGroupID" '
+                                       f'FROM "invTypes" '
+                                       f'WHERE "TypeID" = ? ') , (typeID, ))
+    marketGroupID = selected.fetchone()
+
+    if marketGroupID and marketGroupID[0]:
+      marketGroupID = marketGroupID[0]
+      marketGroupList = cls._marketGroupPath(marketGroupID, [marketGroupID])
+    else:
+      raise TypeError(f'{StaticData.idName(typeID)} has no market group?')
+
+    if componentBlueprintMarketGroup in marketGroupList:
+      return True
+    else:
+      return False
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def buildable(cls, typeID):
+    """determine if item is buildable from bpo or not"""
+    producer = cls.producerID(typeID)
+
+    if producer:
+      return True
+    else:
+      return False
 
   #----------------------------------------------------------------------
   @classmethod
