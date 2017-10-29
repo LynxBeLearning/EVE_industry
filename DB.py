@@ -468,6 +468,7 @@ class LogDBUpdate:
       #refID, refType, delta, balance, date, transactionID, jobID
 
   #----------------------------------------------------------------------
+  #this method is still buggy, messy and ultimately not even useful, leaving bc you never know
   @classmethod
   def updateBlueprintsLog(cls):
     """"""
