@@ -334,7 +334,7 @@ class LogDBUpdate:
 
       else:
         matEntryID = 'NULL'
-        delta = 0
+        delta = currentQuantity
         timestamp = time.time()
         balance = currentQuantity
         typeName = StaticData.idName(typeID)
@@ -413,7 +413,10 @@ class LogDBUpdate:
 
 if __name__ == '__main__':
 
-  LogDBUpdate.updateMaterialLog()
+  #LogDBUpdate.updateMaterialLog()
+
+
+
   print('asdasd')
   pass
 

@@ -36,10 +36,10 @@ class Auth:
     apiConfig.configuration.access_token = settings.accessToken
     apiConfig.default_headers = {'User-Agent': settings.userAgent}
 
-    assetsApi = swagger_client.CharacterApi(apiConfig)
+    walletApi = swagger_client.WalletApi(apiConfig)
 
     try:
-      assetsApi.get_characters_character_id_standings(1004487144)
+      walletApi.get_characters_character_id_wallet(1004487144)
       return True
     except ApiException:
       return False
@@ -55,7 +55,8 @@ class Auth:
               "esi-markets.read_corporation_orders.v1%20"
               "esi-industry.read_corporation_jobs.v1%20"
               "esi-characters.read_blueprints.v1%20"
-              "esi-wallet.read_corporation_wallets.v1"
+              "esi-wallet.read_corporation_wallets.v1%20"
+              "esi-wallet.read_character_wallet.v1"
               )
 
     server = HTTPServer(('', int(settings.port)), CodeHandler)
@@ -152,8 +153,10 @@ class DataRequest:
   def _refreshCredentials(cls, apiObject):
     """force a refresh of the access token and set the appropriate value to api client"""
     Auth(forceRefresh = True)
-    apiObject.configuration.access_token = settings.accessToken
+    apiObject.api_client.configuration.access_token = settings.accessToken
     cls.apiConfig.configuration.access_token = settings.accessToken
+
+    return apiObject
 
   #----------------------------------------------------------------------
   @classmethod
@@ -167,9 +170,10 @@ class DataRequest:
       returnJson = requestMethod(*args, **kwargs)
     except ApiException as exp:
       print(f'Warning: encountered a problem when requesting {methodName}.\n'
-            f'reason: {exp}\n'
-            f'retrying after refresh')
+            f'reason: {exp}\n')
       exception = exp
+
+      #retry
       apiObject = cls._refreshCredentials(apiObject)
       requestMethod = getattr(apiObject, methodName)
       returnJson = requestMethod(*args, **kwargs)
@@ -283,14 +287,18 @@ class DataRequest:
 
 if __name__ == "__main__":
 
-  assets = DataRequest.getAssets()
-  adjustedP = DataRequest.getAdjustedPrices()
-  indJobs = DataRequest.getIndustryJobs()
-  bp = DataRequest.getBlueprints()
-  skills = DataRequest.getSkills()
-  marketOrders = DataRequest.getMarketOrders()
-  sysInd = DataRequest.getSystemIndexes()
+  Auth(forceLogin = True)
+  #assets = DataRequest.getAssets()
+  #adjustedP = DataRequest.getAdjustedPrices()
+  #indJobs = DataRequest.getIndustryJobs()
+  #bp = DataRequest.getBlueprints()
+  #skills = DataRequest.getSkills()
+  #marketOrders = DataRequest.getMarketOrders()
+  #sysInd = DataRequest.getSystemIndexes()
   #Auth(forceLogin= True)
-  journal = DataRequest.getJournal()
+  #journal = DataRequest.getJournal()
+
+
+
   print('lae')
   pass
