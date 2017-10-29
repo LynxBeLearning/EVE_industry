@@ -13,5 +13,5 @@ def countdown(t):
 
 while True:
     DBUpdate.updateAll()
-    LogDBUpdate.updateMaterialLog()
-    countdown(1300)
+    LogDBUpdate.updateAllLogs()
+    countdown(900)

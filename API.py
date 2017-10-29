@@ -169,18 +169,15 @@ class DataRequest:
     try:
       returnJson = requestMethod(*args, **kwargs)
     except ApiException as exp:
-      print(f'Warning: encountered a problem when requesting {methodName}.\n'
-            f'reason: {exp}\n')
       exception = exp
-
       #retry
       apiObject = cls._refreshCredentials(apiObject)
       requestMethod = getattr(apiObject, methodName)
       returnJson = requestMethod(*args, **kwargs)
     finally:
       if not returnJson:
-        raise ApiException(f"Query Failed after retrial, exception "
-                           f"reason was: {exception}")
+        raise TypeError(f"Query Failed after retrial with this message {exception}.\n "
+                        f"continuing without updating...\n")
 
     return returnJson
 
@@ -284,6 +281,17 @@ class DataRequest:
     charName = cls._apiCall(characterApi, methodName, [charID])
 
     return charName
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def getMarketTransactions(cls):
+    """"""
+    walletApi = swagger_client.WalletApi(cls.apiConfig)
+    methodName = "get_corporations_corporation_id_wallets_division_transactions"
+
+    corpTransactions = cls._apiCall(walletApi, methodName, settings.corpID, 1)
+
+    return corpTransactions
 
 if __name__ == "__main__":
 

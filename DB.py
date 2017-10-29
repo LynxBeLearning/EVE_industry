@@ -292,6 +292,319 @@ class LogDBUpdate:
   #db connection
   logDatabase = sqlite3.connect(os.path.join(settings.dataFolder, settings.logDB))
   currentDatabase = sqlite3.connect(os.path.join(settings.dataFolder, settings.charDBName))
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateIndyJobsLog(cls):
+    """"""
+    indyJobs = DataRequest.getIndustryJobs()
+
+    valuesList = []
+    for job in indyJobs:
+      jobID = job.job_id
+      bpID = job.blueprint_id
+      activityID = job.activity_id
+      productTypeID = job.product_type_id
+      productName = StaticData.idName(productTypeID)
+      activityName = StaticData.activityID2Name[activityID]
+      bpTypeID = job.blueprint_type_id
+      bpName = StaticData.idName(bpTypeID)
+      runs = job.runs
+      cost = job.cost
+      startDate = job.start_date
+      endDate = job.end_date
+      installerID = job.installer_id
+      installerName = DataRequest.getName(installerID)[0].character_name
+
+      dbRow = (jobID,
+               bpID,
+               bpTypeID,
+               activityID,
+               productTypeID,
+               activityName,
+               bpName,
+               productName,
+               runs,
+               cost,
+               startDate,
+               endDate,
+               installerID,
+               installerName)
+      valuesList.append(dbRow)
+
+    presentJobIDs = cls._getPresentJobIDs()
+    valuesList = [x for x in valuesList if x[0] not in presentJobIDs]
+
+    if valuesList:
+      cls.logDatabase.executemany( ('INSERT INTO indyJobsLog '
+                                  'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+                                  , valuesList)
+      cls.logDatabase.commit()
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def _getPresentJobIDs(cls):
+    """"""
+    dbResponse = cls.logDatabase.execute( (f'SELECT "jobID" '
+                                           f'FROM indyJobsLog ') )
+    jobIDs = dbResponse.fetchall()
+
+    if not jobIDs:
+      return []
+    else:
+      return [x[0] for x in jobIDs]
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def upgradeTransactionLog(cls):
+    """"""
+    transactions = DataRequest.getMarketTransactions()
+
+    valuesList = []
+    for transaction in transactions:
+      transID = transaction.transaction_id
+      journalRefID = transaction.journal_ref_id
+      date = transaction.date
+      typeID = transaction.type_id
+      typeName = StaticData.idName(typeID)
+      quantity = transaction.quantity
+      unitPrice = transaction.unit_price
+      totalPrice = unitPrice * quantity
+      locID = transaction.location_id
+      isSell = int(not transaction.is_buy)
+      clientID = transaction.client_id
+      #transID, journalRefID, date, typeID, quantity, unitPrice, locationID, isSell, clientID
+      dbRow = (transID,
+               journalRefID,
+               date,
+               typeID,
+               typeName,
+               quantity,
+               unitPrice,
+               totalPrice,
+               locID,
+               isSell,
+               clientID)
+      valuesList.append(dbRow)
+
+    presentTransIDs = cls._getPresentTransIDs()
+    valuesList = [x for x in valuesList if x[0] not in presentTransIDs]
+
+    if valuesList:
+      cls.logDatabase.executemany( ('INSERT INTO transactionLog '
+                                  'VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+                                  , valuesList)
+      cls.logDatabase.commit()
+  #----------------------------------------------------------------------
+  @classmethod
+  def _getPresentTransIDs(cls):
+    """"""
+    dbResponse = cls.logDatabase.execute( (f'SELECT "transID" '
+                                             f'FROM transactionLog ') )
+    transIDs = dbResponse.fetchall()
+
+    if not transIDs:
+      return []
+    else:
+      return [x[0] for x in transIDs]
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateJournalLog(cls):
+    """"""
+    journal = DataRequest.getJournal()
+
+    valuesList = []
+    for entry in journal:
+      refID = entry.ref_id
+      refType = entry.ref_type
+      delta = entry.amount
+      balance = entry.balance
+      date = entry.date
+      if entry.extra_info:
+        if entry.extra_info.transaction_id:
+          transactionID = entry.extra_info.transaction_id
+        else:
+          transactionID = 'NULL'
+        if entry.extra_info.job_id:
+          jobID = entry.extra_info.job_id
+        else:
+          jobID = 'NULL'
+      else:
+        transactionID = 'NULL'
+        jobID = 'NULL'
+
+
+      dbRow = (refID,
+               refType,
+               delta,
+               balance,
+               date,
+               transactionID,
+               jobID)
+      valuesList.append(dbRow)
+
+
+    currentRefIDs = cls._getJournalRefIDs()
+    valuesList = [x for x in valuesList if x[0] not in currentRefIDs]
+
+    if valuesList:
+      cls.logDatabase.executemany( ('INSERT INTO journalLog '
+                                  'VALUES (?,?,?,?,?,?,?)')
+                                  , valuesList)
+      cls.logDatabase.commit()
+  #----------------------------------------------------------------------
+  @classmethod
+  def _getJournalRefIDs(cls):
+    """"""
+    dbResponse = cls.logDatabase.execute( (f'SELECT "refID" '
+                                           f'FROM journalLog ') )
+    journalRefIDs = dbResponse.fetchall()
+
+    if not journalRefIDs:
+      return []
+    else:
+      return [x[0] for x in journalRefIDs]
+      #refID, refType, delta, balance, date, transactionID, jobID
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateBlueprintsLog(cls):
+    """"""
+    #getting newly updated info
+    blueprints = cls.currentDatabase.execute( (f'SELECT "itemID", "typeID", "typeName", '
+                                              f'"ME", "TE","runs" '
+                                              f'FROM "Blueprints" ') )
+    blueprintsRows = blueprints.fetchall()
+
+    currentBPDict = {}
+    for blueprint in blueprintsRows:
+      bpID = blueprint[0]
+      typeID = blueprint[1]
+      typeName = blueprint[2]
+      ME = blueprint[3]
+      TE = blueprint[4]
+      runs = blueprint[5]
+      currentBPDict[bpID] = [typeID, typeName, ME, TE, runs]
+
+    valuesList = []
+    for bpID in  currentBPDict:
+      typeID, typeName, ME, TE, runs = currentBPDict[bpID]
+
+      lastLogEntry = cls._getLastBPLogEntry(bpID)
+
+      if lastLogEntry:
+        oldRuns = lastLogEntry[1]
+        oldME = lastLogEntry[2]
+        oldTE = lastLogEntry[3]
+        oldPresent = lastLogEntry[4]
+
+        if oldRuns == runs and oldME == ME and oldTE == TE:
+          continue
+        else:
+          date = datetime.datetime.now()
+          present = 1
+          deltaME = ME - oldME
+          deltaTE = TE - oldTE
+          deltaRuns = runs - oldRuns
+
+          dbRow = (bpID,
+                   date,
+                   typeID,
+                   typeName,
+                   present,
+                   deltaME,
+                   ME,
+                   deltaTE,
+                   TE,
+                   deltaRuns,
+                   runs,)
+          valuesList.append(dbRow)
+      else:
+        date = datetime.datetime.now()
+        present = 1
+        deltaME = ME
+        deltaTE = TE
+        deltaRuns = runs
+
+        dbRow = (bpID,
+                 date,
+                 typeID,
+                 typeName,
+                 present,
+                 deltaME,
+                 ME,
+                 deltaTE,
+                 TE,
+                 deltaRuns,
+                 runs,)
+        valuesList.append(dbRow)
+
+      #checking for used bps
+      lastEntries = cls._getLastBPEntries()
+      for entry in lastEntries:
+        bpID, runs, ME, TE, present = entry
+
+        if bpID not in currentBPDict and present:
+          date = datetime.datetime.now()
+          present = 0
+          deltaME = 0
+          deltaTE = 0
+          if runs > 0:
+            deltaruns = -runs
+          else:
+            deltaRuns = 0
+
+          dbRow = (bpID,
+                   date,
+                   typeID,
+                   typeName,
+                   present,
+                   deltaME,
+                   ME,
+                   deltaTE,
+                   TE,
+                   deltaRuns,
+                   runs,)
+          valuesList.append(dbRow)
+      cls.logDatabase.executemany( ('INSERT INTO blueprintsLog '
+                                      'VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+                                     , valuesList)
+      cls.logDatabase.commit()
+  #----------------------------------------------------------------------
+  @classmethod
+  def _getLastBPLogEntry(cls, bpID):
+    """"""
+    logEntries = cls.logDatabase.execute( (f'SELECT "date", "runs", "ME", "TE", "present" '
+                                             f'FROM blueprintsLog '
+                                             f'WHERE bpID = {bpID} '
+                                             f'ORDER BY "date" DESC') )
+    lastLogEntry = logEntries.fetchone()
+
+    if lastLogEntry:
+      return lastLogEntry
+    else:
+      return None
+
+  #----------------------------------------------------------------------
+  @classmethod
+  def _getLastBPEntries(cls):
+    """"""
+    bdResponse = cls.logDatabase.execute( (f'SELECT DISTINCT "bpID" '
+                                                f'FROM "blueprintsLog" ') )
+    uniqueBpIDs = bdResponse.fetchall()
+
+    lastEntries = []
+    for bpID in uniqueBpIDs:
+      lastLogEntry = cls._getLastBPLogEntry(bpID[0])
+      runs = lastLogEntry[1]
+      ME = lastLogEntry[2]
+      TE = lastLogEntry[3]
+      present = lastLogEntry[4]
+      lastEntries.append([bpID, runs, ME, TE, present])
+
+    return lastEntries
+
   #----------------------------------------------------------------------
   @classmethod
   def updateMaterialLog(cls):
@@ -410,12 +723,22 @@ class LogDBUpdate:
 
 
 
+  #----------------------------------------------------------------------
+  @classmethod
+  def updateAllLogs(cls):
+    """"""
+    cls.updateJournalLog()
+    cls.updateMaterialLog()
+    cls.upgradeTransactionLog()
+    cls.updateIndyJobsLog()
 
 if __name__ == '__main__':
 
   #LogDBUpdate.updateMaterialLog()
-
-
+  #LogDBUpdate.updateJournalLog()
+  #LogDBUpdate.upgradeTransactionLog()
+  #LogDBUpdate.updateIndyJobsLog()
+  LogDBUpdate.updateBlueprintsLog()
 
   print('asdasd')
   pass
