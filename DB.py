@@ -5,7 +5,7 @@ import scipy
 import time
 import os
 import re
-from API import DataRequest
+from API import ApiRequest
 import swagger_client
 
 ########################################################################
@@ -30,7 +30,7 @@ class DBUpdate:
 
     from the assets api and push the appropriate components to the database
     """
-    assets = DataRequest.getAssets()
+    assets = ApiRequest.getAssets()
     valuesList = []
 
     for item in assets:
@@ -71,7 +71,7 @@ class DBUpdate:
        }
        and push it to the blueprints table
     """
-    blueprints = DataRequest.getBlueprints()
+    blueprints = ApiRequest.getBlueprints()
     valuesList = []
 
     for blueprint in blueprints:
@@ -170,7 +170,7 @@ class DBUpdate:
   @classmethod
   def updateIndustryJobs(cls):
     """"""
-    indyJobs = DataRequest.getIndustryJobs()
+    indyJobs = ApiRequest.getIndustryJobs()
 
     #jobid, itemid, bpid, bptypeName, runs, prodtypeID, prodTypeName endDate, status
 
@@ -186,7 +186,7 @@ class DBUpdate:
       productTypeID = job.product_type_id
       productTypeName = StaticData.idName(productTypeID)
       installerID = job.installer_id
-      installerName = DataRequest.getName(installerID)[0].character_name
+      installerName = ApiRequest.getName(installerID)[0].character_name
       activityID = job.activity_id
       activityName = StaticData.activityID2Name[activityID]
 
@@ -214,7 +214,7 @@ class DBUpdate:
   @classmethod
   def updateMarketOrders(cls):
     """"""
-    marketOrders = DataRequest.getMarketOrders()
+    marketOrders = ApiRequest.getMarketOrders()
 
     valuesList = []
     for marketOrder in marketOrders:
@@ -297,7 +297,7 @@ class LogDBUpdate:
   @classmethod
   def updateIndyJobsLog(cls):
     """"""
-    indyJobs = DataRequest.getIndustryJobs()
+    indyJobs = ApiRequest.getIndustryJobs()
 
     valuesList = []
     for job in indyJobs:
@@ -314,7 +314,7 @@ class LogDBUpdate:
       startDate = job.start_date
       endDate = job.end_date
       installerID = job.installer_id
-      installerName = DataRequest.getName(installerID)[0].character_name
+      installerName = ApiRequest.getName(installerID)[0].character_name
 
       dbRow = (jobID,
                bpID,
@@ -358,7 +358,7 @@ class LogDBUpdate:
   @classmethod
   def upgradeTransactionLog(cls):
     """"""
-    transactions = DataRequest.getMarketTransactions()
+    transactions = ApiRequest.getMarketTransactions()
 
     valuesList = []
     for transaction in transactions:
@@ -412,7 +412,7 @@ class LogDBUpdate:
   @classmethod
   def updateJournalLog(cls):
     """"""
-    journal = DataRequest.getJournal()
+    journal = ApiRequest.getJournal()
 
     valuesList = []
     for entry in journal:
@@ -739,7 +739,7 @@ if __name__ == '__main__':
   #LogDBUpdate.updateJournalLog()
   #LogDBUpdate.upgradeTransactionLog()
   #LogDBUpdate.updateIndyJobsLog()
-  LogDBUpdate.updateBlueprintsLog()
+  #LogDBUpdate.updateBlueprintsLog()
 
   print('asdasd')
   pass

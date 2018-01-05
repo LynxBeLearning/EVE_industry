@@ -1,149 +1,13 @@
 import swagger_client
-import threading
-import webbrowser
-import json
-import time
-import requests
-import urllib
-from pubsub import pub
-from base64 import  b64encode
 from swagger_client.rest import ApiException
-from http.server import BaseHTTPRequestHandler, HTTPServer
 from staticClasses import settings, configFile
+from Auth import authenticate
 
 ########################################################################
-class Auth:
-  """manage of login and authentication operations for the ESI interface"""
-
-  #----------------------------------------------------------------------
-  def __init__(self, forceLogin = False, forceRefresh = False) :
-    """Constructor, perform credentials operations and handles the code returned by the api"""
-
-    if forceLogin:
-      self._credentials()
-      self._login()
-    elif forceRefresh:
-      self._refresh()
-    else:
-      fresh = self._validateAccessToken()
-      if not fresh:
-        self._refresh()
-
-  #----------------------------------------------------------------------
-  def _validateAccessToken(self, ):
-    """"""
-    apiConfig = swagger_client.api_client.ApiClient()
-    apiConfig.configuration.access_token = settings.accessToken
-    apiConfig.default_headers = {'User-Agent': settings.userAgent}
-
-    walletApi = swagger_client.WalletApi(apiConfig)
-
-    try:
-      walletApi.get_characters_character_id_wallet(1004487144)
-      return True
-    except ApiException:
-      return False
-
-
-  #----------------------------------------------------------------------
-  def _credentials(self):
-    """open a login window in the default browser so the user can authenticate"""
-    scopes = ("publicData%20"
-              "esi-skills.read_skills.v1%20"
-              "esi-assets.read_corporation_assets.v1%20"
-              "esi-corporations.read_blueprints.v1%20"
-              "esi-markets.read_corporation_orders.v1%20"
-              "esi-industry.read_corporation_jobs.v1%20"
-              "esi-characters.read_blueprints.v1%20"
-              "esi-wallet.read_corporation_wallets.v1%20"
-              "esi-wallet.read_character_wallet.v1"
-              )
-
-    server = HTTPServer(('', int(settings.port)), CodeHandler)
-    serverThread = threading.Thread(target=server.serve_forever)
-    serverThread.daemon = True
-    serverThread.start()
-    webbrowser.open( (f'https://login.eveonline.com/oauth/authorize?'
-                      f'response_type=code&'
-                      f'redirect_uri=http://localhost:{settings.port}/&'
-                      f'client_id={settings.clientID}&'
-                      f'scope={scopes}&'
-                      f'state=evesso') )
-
-    while 1:
-      time.sleep(2)
-      if hasattr(settings, 'code'):
-        server.shutdown()
-        break
-
-  #----------------------------------------------------------------------
-  def _login(self):
-    """query ESI to retrieve access and refresh tokens"""
-    headers = {'User-Agent':settings.userAgent}
-    query = {'grant_type':'authorization_code','code': settings.code}
-    secretEncoded = b64encode((settings.clientID+':'+settings.secret).encode()).decode()
-    headers = {'Authorization':'Basic '+ secretEncoded,'User-Agent':settings.userAgent}
-    r = requests.post(settings.authUrl,params=query,headers=headers)
-    response = r.json()
-    settings.accessToken = response['access_token']
-    settings.refreshToken = response['refresh_token']
-    self._saveRefreshToken()
-
-  #----------------------------------------------------------------------
-  def _refresh(self):
-    """query ESI to refresh an access token"""
-    refreshToken = settings.refreshToken
-    secretEncoded = b64encode((settings.clientID+':'+settings.secret).encode()).decode()
-    headers = {'Authorization':'Basic '+ secretEncoded,'User-Agent':settings.userAgent}
-    query = {'grant_type':'refresh_token','refresh_token':refreshToken}
-    r = requests.post(settings.authUrl,params=query,headers=headers)
-    response = r.json()
-    settings.accessToken = response['access_token']
-    settings.refreshToken = response['refresh_token']
-
-    #save refresh token
-    self._saveRefreshToken()
-
-  #----------------------------------------------------------------------
-  def _saveRefreshToken(self):
-    """save the refresh token to config.json"""
-    #save refresh token
-    settingDict = settings.__dict__.copy()
-    settingDict.pop('code', None)
-
-
-    with open(configFile, 'w') as config:
-      json.dump(settingDict, config)
-
-##########################################################################
-#This class is engineered as a handler for BaseHTTPRequest,
-#it catches the authentication token after login.
-#the original (and mostly unmodified) template from this
-#comes from CREST-market-downloader from fuzzworks.
-#note: i think this class inherits from BaseHTTPServer.BaseHTTPRequestHandler
-class CodeHandler(BaseHTTPRequestHandler):
-  """retrieve authentication token from localhost redirect after login"""
-  def do_GET(self):
-    if self.path == "/favicon.ico":
-      return
-    parsed_path = urllib.parse.urlparse(self.path)
-    parts=urllib.parse.parse_qs(parsed_path.query)
-    self.send_response(200)
-    self.end_headers()
-    self.wfile.write(b'Login successful. you can close this window now')
-    pub.sendMessage('code', code = str(parts['code'][0]) )
-    self.finish()
-    self.connection.close()
-  def log_message(self, format, *args):
-    return
-
-
-
-########################################################################
-class DataRequest:
+class ApiRequest:
   """request data to the ESI api"""
   # token and swagger_client setup
-  Auth()
+  authenticate()
   apiConfig = swagger_client.api_client.ApiClient()
   apiConfig.configuration.access_token = settings.accessToken
   apiConfig.default_headers = {'User-Agent': settings.userAgent}
@@ -152,7 +16,7 @@ class DataRequest:
   @classmethod
   def _refreshCredentials(cls, apiObject):
     """force a refresh of the access token and set the appropriate value to api client"""
-    Auth(forceRefresh = True)
+    authenticate(forceRefresh = True)
     apiObject.api_client.configuration.access_token = settings.accessToken
     cls.apiConfig.configuration.access_token = settings.accessToken
 
@@ -164,7 +28,6 @@ class DataRequest:
     """"""
     requestMethod = getattr(apiObject, methodName)
     exception = ''
-    returnJson = ''  #initialize object so it exists even in the "finally" clause
 
     try:
       returnJson = requestMethod(*args, **kwargs)
@@ -173,11 +36,7 @@ class DataRequest:
       #retry
       apiObject = cls._refreshCredentials(apiObject)
       requestMethod = getattr(apiObject, methodName)
-      returnJson = requestMethod(*args, **kwargs)
-    finally:
-      if not returnJson:
-        raise TypeError(f"Query Failed after retrial with this message {exception}.\n "
-                        f"continuing without updating...\n")
+      returnJson = requestMethod(*args, **kwargs)  #this second try might give an unhandled exception. I think this is what i want to happen, but there might be a better way.
 
     return returnJson
 
@@ -233,9 +92,9 @@ class DataRequest:
     industryApi = swagger_client.IndustryApi(cls.apiConfig)
     methodName = "get_corporations_corporation_id_industry_jobs"
 
-    marketOrders = cls._apiCall(industryApi, methodName, settings.corpID)
+    industryJobs = cls._apiCall(industryApi, methodName, settings.corpID)
 
-    return marketOrders
+    return industryJobs
 
   #----------------------------------------------------------------------
   @classmethod
@@ -295,7 +154,7 @@ class DataRequest:
 
 if __name__ == "__main__":
 
-  Auth(forceLogin = True)
+  #authenticate()  #forceLogin = True
   #assets = DataRequest.getAssets()
   #adjustedP = DataRequest.getAdjustedPrices()
   #indJobs = DataRequest.getIndustryJobs()
