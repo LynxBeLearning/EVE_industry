@@ -7,6 +7,7 @@ import webbrowser
 import swagger_client
 from pubsub import pub
 from base64 import b64encode
+from swagger_client.rest import ApiException
 from staticClasses import settings, configFile
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -83,7 +84,7 @@ def _login():
     response = r.json()
     settings.accessToken = response['access_token']
     settings.refreshToken = response['refresh_token']
-    self._saveRefreshToken()
+    _saveRefreshToken()
 
 #----------------------------------------------------------------------
 def _refresh():
@@ -98,7 +99,7 @@ def _refresh():
     settings.refreshToken = response['refresh_token']
 
     #save refresh token
-    self._saveRefreshToken()
+    _saveRefreshToken()
 
 #----------------------------------------------------------------------
 def _saveRefreshToken():
