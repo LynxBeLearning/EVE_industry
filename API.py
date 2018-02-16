@@ -3,154 +3,142 @@ from swagger_client.rest import ApiException
 from staticClasses import settings, configFile
 from Auth import authenticate
 
-########################################################################
-class ApiRequest:
-  """request data to the ESI api"""
-  # token and swagger_client setup
+#generating the proper swagger_client configuration
+_apiConfig = swagger_client.api_client.ApiClient()
+_apiConfig.configuration.access_token = settings.accessToken
+_apiConfig.default_headers = {'User-Agent': settings.userAgent}
+
+#----------------------------------------------------------------------
+def _refreshCredentials(apiObject):
+  """force a refresh of the access token and set the appropriate value to api client"""
+  #authenticate again to refresh keys...
   authenticate()
-  apiConfig = swagger_client.api_client.ApiClient()
-  apiConfig.configuration.access_token = settings.accessToken
-  apiConfig.default_headers = {'User-Agent': settings.userAgent}
+  #...modify the access token of the object in question...
+  apiObject.api_client.configuration.access_token = settings.accessToken
+  #...and change the global configuration so later calls will work too!
+  _apiConfig.configuration.access_token = settings.accessToken
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def _refreshCredentials(cls, apiObject):
-    """force a refresh of the access token and set the appropriate value to api client"""
-    authenticate(forceRefresh = True)
-    apiObject.api_client.configuration.access_token = settings.accessToken
-    cls.apiConfig.configuration.access_token = settings.accessToken
+  return apiObject
 
-    return apiObject
+#----------------------------------------------------------------------
+def _apiCall(apiObject, methodName, *args, **kwargs):
+  """"""
+  requestMethod = getattr(apiObject, methodName)
+  exception = ''
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def _apiCall(cls, apiObject, methodName, *args, **kwargs):
-    """"""
+  try:
+    returnJson = requestMethod(*args, **kwargs)
+  except ApiException as exp:
+    exception = exp
+    #retry
+    apiObject = _refreshCredentials(apiObject)
     requestMethod = getattr(apiObject, methodName)
-    exception = ''
+    returnJson = requestMethod(*args, **kwargs)  #this second try might give an unhandled exception. I think this is what i want to happen, but there might be a better way.
 
-    try:
-      returnJson = requestMethod(*args, **kwargs)
-    except ApiException as exp:
-      exception = exp
-      #retry
-      apiObject = cls._refreshCredentials(apiObject)
-      requestMethod = getattr(apiObject, methodName)
-      returnJson = requestMethod(*args, **kwargs)  #this second try might give an unhandled exception. I think this is what i want to happen, but there might be a better way.
+  return returnJson
 
-    return returnJson
+#----------------------------------------------------------------------
+def getAssets():
+  """query esi for asset data"""
+  assetsApi = swagger_client.AssetsApi(_apiConfig)
+  methodName = "get_corporations_corporation_id_assets"
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def getAssets(cls):
-    """query esi for asset data"""
-    assetsApi = swagger_client.AssetsApi(cls.apiConfig)
-    methodName = "get_corporations_corporation_id_assets"
+  assets = _apiCall(assetsApi, methodName, settings.corpID)
 
-    assets = cls._apiCall(assetsApi, methodName, settings.corpID)
-
-    return assets
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getSkills(cls, ):
-    """query esi for skill data"""
-    skillsApi = swagger_client.SkillsApi(cls.apiConfig)
-    methodName = "get_characters_character_id_skills"
-
-    skills = cls._apiCall(skillsApi, methodName, settings.ceoID)
-
-    return skills
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getBlueprints(cls):
-    """"""
-    corpApi = swagger_client.CorporationApi(cls.apiConfig)
-    methodName = "get_corporations_corporation_id_blueprints"
-
-    blueprints = cls._apiCall(corpApi, methodName, settings.corpID)
-
-    return blueprints
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def getMarketOrders(cls):
-    """obtain data about market orders for given corp"""
-    marketApi = swagger_client.MarketApi(cls.apiConfig)
-    methodName = "get_corporations_corporation_id_orders"
-
-    marketOrders = cls._apiCall(marketApi, methodName, settings.corpID)
-
-    return marketOrders
+  return assets
 
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def getIndustryJobs(cls):
-    """obtain data about market orders for given character"""
-    industryApi = swagger_client.IndustryApi(cls.apiConfig)
-    methodName = "get_corporations_corporation_id_industry_jobs"
+#----------------------------------------------------------------------
+def getSkills( ):
+  """query esi for skill data"""
+  skillsApi = swagger_client.SkillsApi(_apiConfig)
+  methodName = "get_characters_character_id_skills"
 
-    industryJobs = cls._apiCall(industryApi, methodName, settings.corpID)
+  skills = _apiCall(skillsApi, methodName, settings.ceoID)
 
-    return industryJobs
+  return skills
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def getAdjustedPrices(cls):
-    """"""
-    marketApi = swagger_client.MarketApi(cls.apiConfig)
-    methodName = "get_markets_prices"
+#----------------------------------------------------------------------
+def getBlueprints():
+  """"""
+  corpApi = swagger_client.CorporationApi(_apiConfig)
+  methodName = "get_corporations_corporation_id_blueprints"
 
-    adjustedPrices = cls._apiCall(marketApi, methodName)
+  blueprints = _apiCall(corpApi, methodName, settings.corpID)
 
-    return adjustedPrices
+  return blueprints
+
+#----------------------------------------------------------------------
+def getMarketOrders():
+  """obtain data about market orders for given corp"""
+  marketApi = swagger_client.MarketApi(_apiConfig)
+  methodName = "get_corporations_corporation_id_orders"
+
+  marketOrders = _apiCall(marketApi, methodName, settings.corpID)
+
+  return marketOrders
 
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def getSystemIndexes(cls):
-    """"""
-    industryApi = swagger_client.IndustryApi(cls.apiConfig)
-    methodName = "get_industry_systems"
+#----------------------------------------------------------------------
+def getIndustryJobs():
+  """obtain data about market orders for given character"""
+  industryApi = swagger_client.IndustryApi(_apiConfig)
+  methodName = "get_corporations_corporation_id_industry_jobs"
 
-    adjustedPrices = cls._apiCall(industryApi, methodName)
+  industryJobs = _apiCall(industryApi, methodName, settings.corpID)
 
-    return adjustedPrices
+  return industryJobs
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def getJournal(cls):
-    """"""
-    walletApi = swagger_client.WalletApi(cls.apiConfig)
-    methodName = "get_corporations_corporation_id_wallets_division_journal"
+#----------------------------------------------------------------------
+def getAdjustedPrices():
+  """"""
+  marketApi = swagger_client.MarketApi(_apiConfig)
+  methodName = "get_markets_prices"
 
-    corpJournal = cls._apiCall(walletApi, methodName, settings.corpID, 1)
+  adjustedPrices = _apiCall(marketApi, methodName)
 
-    return corpJournal
+  return adjustedPrices
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def getName(cls, charID):
-    """"""
-    characterApi = swagger_client.CharacterApi(cls.apiConfig)
-    methodName = "get_characters_names"
 
-    charName = cls._apiCall(characterApi, methodName, [charID])
+#----------------------------------------------------------------------
+def getSystemIndexes():
+  """"""
+  industryApi = swagger_client.IndustryApi(_apiConfig)
+  methodName = "get_industry_systems"
 
-    return charName
+  adjustedPrices = _apiCall(industryApi, methodName)
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def getMarketTransactions(cls):
-    """"""
-    walletApi = swagger_client.WalletApi(cls.apiConfig)
-    methodName = "get_corporations_corporation_id_wallets_division_transactions"
+  return adjustedPrices
 
-    corpTransactions = cls._apiCall(walletApi, methodName, settings.corpID, 1)
+#----------------------------------------------------------------------
+def getJournal():
+  """"""
+  walletApi = swagger_client.WalletApi(_apiConfig)
+  methodName = "get_corporations_corporation_id_wallets_division_journal"
 
-    return corpTransactions
+  corpJournal = _apiCall(walletApi, methodName, settings.corpID, 1)
+
+  return corpJournal
+
+#----------------------------------------------------------------------
+def getName(charID):
+  """"""
+  characterApi = swagger_client.CharacterApi(_apiConfig)
+  methodName = "get_characters_names"
+
+  charName = _apiCall(characterApi, methodName, [charID])
+
+  return charName
+
+#----------------------------------------------------------------------
+def getMarketTransactions():
+  """"""
+  walletApi = swagger_client.WalletApi(_apiConfig)
+  methodName = "get_corporations_corporation_id_wallets_division_transactions"
+
+  corpTransactions = _apiCall(walletApi, methodName, settings.corpID, 1)
+
+  return corpTransactions
 
 if __name__ == "__main__":
 

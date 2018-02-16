@@ -1,6 +1,7 @@
 import time
+import corpDB
+import historyDB
 from staticClasses import settings
-from DB import LogDBUpdate, DBUpdate
 
 def countdown(t):
     while t:
@@ -12,6 +13,6 @@ def countdown(t):
     print('updating...', end = '\r')
 
 while True:
-    DBUpdate.updateAll()
-    LogDBUpdate.updateAllLogs()
+    corpDB.updateAll()
+    historyDB.updateAll()
     countdown(900)
