@@ -22,9 +22,12 @@ def authenticate(forceLogin = False, forceRefresh = False) :
     elif forceRefresh:
         _refresh()
     else:
-        fresh = _validateAccessToken()
-        if not fresh:
+        if not _validateAccessToken():
             _refresh()
+        if not _validateAccessToken():
+            raise ApiException(reason= "could not refresh token, login might be required")
+
+
 
 #----------------------------------------------------------------------
 def _validateAccessToken():

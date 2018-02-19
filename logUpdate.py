@@ -1,7 +1,12 @@
 import time
 import corpDB
+import logging
 import historyDB
 from staticClasses import settings
+from swagger_client.rest import ApiException
+
+logging.basicConfig(format = '%(asctime)s: %(message)s', filename='eveHistory.log')
+
 
 def countdown(t):
     while t:
@@ -13,6 +18,14 @@ def countdown(t):
     print('updating...', end = '\r')
 
 while True:
-    corpDB.updateAll()
-    historyDB.updateAll()
-    countdown(900)
+    try:
+        corpDB.updateAll()
+        historyDB.updateAll()
+    except ApiException as AE:
+        logging.error(f"Api Exception: {AE}")
+        print("A problem with the API has occurred, see log for details.\n\n")
+        countdownTime = 1800
+    else:
+        countdownTime = 900
+    finally:
+        countdown(countdownTime)
