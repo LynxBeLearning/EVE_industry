@@ -5,6 +5,7 @@ import historyDB
 from staticClasses import settings
 from swagger_client.rest import ApiException
 
+countdownTime = 900
 logging.basicConfig(format = '%(asctime)s: %(message)s',
                     filename='eveHistory.log',
                     level = logging.INFO)
@@ -29,8 +30,10 @@ while True:
     except ConnectionError:
         logging.warn(f"No network connectivity.")
         countdownTime = 1800
+    except Exception:
+        raise
     else:
         logging.warn(f"Database updated.")
         countdownTime = 900
-    finally:
-        countdown(countdownTime)
+
+    countdown(countdownTime)

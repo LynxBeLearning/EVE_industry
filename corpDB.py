@@ -253,11 +253,16 @@ def _DBDump(dumpPath):
   #dumping current db
   with open(dumpPath, 'w') as f:
     for line in database.iterdump():
-      f.write(f'{line}\n')
+      isGoodLine = (line.startswith("INSERT INTO") or
+                   line.startswith("BEGIN TRANSACTION") or
+                   line.startswith("COMMIT"))
+      if isGoodLine:
+        f.write(f'{line}\n')
 
 #----------------------------------------------------------------------
 def _DBRestore(dumpPath):
   """read a dump file and restore old databases"""
+  _DBWipe()
   with open(dumpPath, 'r') as f:
     dump = f.read()
     with database:
@@ -282,23 +287,15 @@ def updateAll():
     updateMaterials()
     updateIndustryJobs()
     updateMarketOrders()
-  except:
+  except Exception:
     _DBRestore(dump.name)
+    dump.close()
     raise
 
 
 
 
-if __name__ == '__main__':
 
-  #LogDBUpdate.updateMaterialLog()
-  #LogDBUpdate.updateJournalLog()
-  #LogDBUpdate.upgradeTransactionLog()
-  #LogDBUpdate.updateIndyJobsLog()
-  #LogDBUpdate.updateBlueprintsLog()
-
-  print('asdasd')
-  pass
 
 
 
