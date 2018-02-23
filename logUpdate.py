@@ -5,8 +5,9 @@ import historyDB
 from staticClasses import settings
 from swagger_client.rest import ApiException
 
-logging.basicConfig(format = '%(asctime)s: %(message)s', filename='eveHistory.log')
-
+logging.basicConfig(format = '%(asctime)s: %(message)s',
+                    filename='eveHistory.log',
+                    level = logging.INFO)
 
 def countdown(t):
     while t:
@@ -25,7 +26,11 @@ while True:
         logging.error(f"Api Exception: {AE}")
         print("A problem with the API has occurred, see log for details.\n\n")
         countdownTime = 1800
+    except ConnectionError:
+        logging.warn(f"No network connectivity.")
+        countdownTime = 1800
     else:
+        logging.warn(f"Database updated.")
         countdownTime = 900
     finally:
         countdown(countdownTime)

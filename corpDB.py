@@ -1,10 +1,11 @@
-from staticClasses import StaticData, settings
-import sqlite3
-import datetime
-import time
-import API
 import os
+import API
+import time
+import sqlite3
+import tempfile
+import datetime
 import swagger_client
+from staticClasses import StaticData, settings
 
 #db connection
 database = sqlite3.connect(os.path.join(settings.dataFolder, settings.charDBName))
@@ -44,9 +45,8 @@ def updateAssets():
              itemName)
     valuesList.append(dbRow)
 
-  _DBWipe(['Assets'])
-  database.executemany('INSERT INTO Assets VALUES (?,?,?,?,?,?,?,?)', valuesList)
-  database.commit()
+  with database:
+    database.executemany('INSERT INTO Assets VALUES (?,?,?,?,?,?,?,?)', valuesList)
 
 
 #----------------------------------------------------------------------
@@ -124,8 +124,9 @@ def updateBlueprints():
     #itemID, typeID, typeName, class, ME, TE, runs, prodID, prodName, inventable, component,
     #inventedFrom, inventedFromName
 
-  database.executemany('INSERT INTO Blueprints VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', valuesList)
-  database.commit()
+  with database:
+    database.executemany('INSERT INTO Blueprints VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                         valuesList)
 
 #----------------------------------------------------------------------
 def updateMaterials():
@@ -153,10 +154,12 @@ def updateMaterials():
              buildable)
     valuesList.append(dbRow)
 
-  database.executemany( ('INSERT INTO AggregatedMaterials '
-                             'VALUES (?,?,?,?)')
-                            , valuesList)
-  database.commit()
+
+  with database:
+    database.executemany( ('INSERT INTO AggregatedMaterials '
+                           'VALUES (?,?,?,?)')
+                          , valuesList)
+
 
 #----------------------------------------------------------------------
 def updateIndustryJobs():
@@ -196,10 +199,10 @@ def updateIndustryJobs():
              activityName)  #
     valuesList.append(dbRow)
 
-  database.executemany( ('INSERT INTO IndustryJobs '
-                             'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
-                            , valuesList)
-  database.commit()
+  with database:
+    database.executemany( ('INSERT INTO IndustryJobs '
+                           'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
+                          , valuesList)
 
 #----------------------------------------------------------------------
 def updateMarketOrders():
@@ -226,10 +229,11 @@ def updateMarketOrders():
              stationID,
              stationName)
     valuesList.append(dbRow)
-  database.executemany( ('INSERT INTO MarketOrders '
-                                 'VALUES (?,?,?,?,?,?,?)')
-                                , valuesList)
-  database.commit()
+
+  with database:
+    database.executemany( ('INSERT INTO MarketOrders '
+                           'VALUES (?,?,?,?,?,?,?)')
+                          , valuesList)
 
 #----------------------------------------------------------------------
 def _DBWipe(tableNames = []):
@@ -244,33 +248,43 @@ def _DBWipe(tableNames = []):
   database.commit()
 
 #----------------------------------------------------------------------
-def _DBDump():
-  """dump the database in a txt file for future restoration if needed"""
+def _DBDump(dumpPath):
+  """dump the database in a txt file."""
   #dumping current db
-  with open('dump{}.sql'.format(time.time()), 'w') as f:
+  with open(dumpPath, 'w') as f:
     for line in database.iterdump():
-      f.write('{}\n'.format(line))
-
-  #deleting too old dumps
-  oldDumps = [x for x in os.listdir(settings.dbfolder) if x.startswith('dump')]
-  if len(oldDumps > 3):
-    oldDumps.sort()
-    os.remove(os.path.join(settings.dbfolder, oldDumps[0]))
+      f.write(f'{line}\n')
 
 #----------------------------------------------------------------------
-def _DBRestore(self):
+def _DBRestore(dumpPath):
   """read a dump file and restore old databases"""
-  pass
+  with open(dumpPath, 'r') as f:
+    dump = f.read()
+    with database:
+      database.executescript(dump)
 
 #----------------------------------------------------------------------
 def updateAll():
   """"""
-  _DBWipe()
-  updateAssets()
-  updateBlueprints()
-  updateMaterials()
-  updateIndustryJobs()
-  updateMarketOrders()
+  #check network connectivity
+  if not API.networkConnectivity():
+    raise ConnectionError("No internet connectivity.\n")
+
+  #database temporary backup
+  dump = tempfile.NamedTemporaryFile(mode = 'w', dir = settings.dataFolder)
+  _DBDump(dump.name)
+
+  #attempt update
+  try:
+    _DBWipe()
+    updateAssets()
+    updateBlueprints()
+    updateMaterials()
+    updateIndustryJobs()
+    updateMarketOrders()
+  except:
+    _DBRestore(dump.name)
+    raise
 
 
 

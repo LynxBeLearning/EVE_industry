@@ -52,10 +52,10 @@ def updateIndyJobsLog():
     valuesList = [x for x in valuesList if x[0] not in presentJobIDs]
 
     if valuesList:
-        database.executemany( ('INSERT INTO indyJobsLog '
-                                'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-                               , valuesList)
-        database.commit()
+        with database:
+            database.executemany( ('INSERT INTO indyJobsLog '
+                                   'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+                                  , valuesList)
 
 #----------------------------------------------------------------------
 def _getPresentJobIDs():
@@ -105,10 +105,10 @@ def upgradeTransactionLog():
     valuesList = [x for x in valuesList if x[0] not in presentTransIDs]
 
     if valuesList:
-        database.executemany( ('INSERT INTO transactionLog '
-                                'VALUES (?,?,?,?,?,?,?,?,?,?,?)')
-                               , valuesList)
-        database.commit()
+        with database:
+            database.executemany( ('INSERT INTO transactionLog '
+                                   'VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+                                  , valuesList)
 
 
 #----------------------------------------------------------------------
@@ -163,11 +163,10 @@ def updateJournalLog():
     valuesList = [x for x in valuesList if x[0] not in currentRefIDs]
 
     if valuesList:
-        database.executemany( ('INSERT INTO journalLog '
-                                'VALUES (?,?,?,?,?,?,?)')
-                               , valuesList)
-        database.commit()
-
+        with database:
+            database.executemany( ('INSERT INTO journalLog '
+                                   'VALUES (?,?,?,?,?,?,?)')
+                                  , valuesList)
 
 #----------------------------------------------------------------------
 def _getJournalRefIDs():
@@ -260,11 +259,12 @@ def updateMaterialLog():
             valuesList.append(dbRow)
 
     #updating database
-    database.executemany( ('INSERT INTO materialsLog '
+    with database:
+        database.executemany(('INSERT INTO materialsLog '
                               '(timestamp,typeID,delta,balance,typeName)'
                               'VALUES (?,?,?,?,?)')
                              , valuesList)
-    database.commit()
+
 
 #----------------------------------------------------------------------
 def _getLastEntries():
@@ -301,6 +301,9 @@ def _getLastLogEntry(typeID):
 #----------------------------------------------------------------------
 def updateAll():
     """"""
+    if not API.networkConnectivity():
+        raise ConnectionError("No internet connectivity.\n")
+
     updateJournalLog()
     updateMaterialLog()
     upgradeTransactionLog()
