@@ -211,14 +211,12 @@ def updateMarketOrders():
 
   valuesList = []
   for marketOrder in marketOrders:
-    if marketOrder.state == 'completed':
-      continue
     orderID = marketOrder.order_id
     stationID = marketOrder.location_id
     remainingItems = marketOrder.volume_remain
     typeID = marketOrder.type_id
     typeName = StaticData.idName(typeID)
-    sellOrder = int(not marketOrder.is_buy_order)
+    sellOrder = 1 if marketOrder.is_buy_order else 0
     stationName = StaticData.stationName(stationID)
 
     dbRow = (orderID,
