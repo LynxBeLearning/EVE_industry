@@ -8,14 +8,13 @@ import swagger_client
 from pubsub import pub
 from base64 import b64encode
 from swagger_client.rest import ApiException
-from staticClasses import settings, configFile
+from utils import settings, configFile
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 #----------------------------------------------------------------------
 def authenticate(forceLogin = False, forceRefresh = False) :
     """perform credentials operations and handles the code returned by the api"""
-
     if forceLogin:
         _credentials()
         _login()
@@ -26,8 +25,6 @@ def authenticate(forceLogin = False, forceRefresh = False) :
             _refresh()
         if not _validateAccessToken():
             raise ApiException(reason= "could not refresh token, login might be required")
-
-
 
 #----------------------------------------------------------------------
 def _validateAccessToken():
@@ -135,4 +132,5 @@ class CodeHandler(BaseHTTPRequestHandler):
         self.connection.close()
     def log_message(self, format, *args):
         return
+
 

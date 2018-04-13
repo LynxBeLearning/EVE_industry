@@ -2,7 +2,6 @@ import time
 import corpDB
 import logging
 import historyDB
-from staticClasses import settings
 from swagger_client.rest import ApiException
 
 countdownTime = 900

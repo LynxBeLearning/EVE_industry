@@ -2,7 +2,7 @@ import socket
 import swagger_client
 from Auth import authenticate
 from swagger_client.rest import ApiException
-from staticClasses import settings, configFile
+from utils import settings, configFile
 
 
 #generating the proper swagger_client configuration

@@ -5,10 +5,9 @@ import datetime
 import corpDB
 import sqlite3
 import swagger_client
-from staticClasses import StaticData, settings
+import utils
 
-#db connection
-database = sqlite3.connect(os.path.join(settings.dataFolder, settings.logDB))
+
 
 #----------------------------------------------------------------------
 def updateIndyJobsLog():
@@ -21,10 +20,10 @@ def updateIndyJobsLog():
         bpID = job.blueprint_id
         activityID = job.activity_id
         productTypeID = job.product_type_id
-        productName = StaticData.idName(productTypeID)
-        activityName = StaticData.activityID2Name[activityID]
+        productName = utils.idName(productTypeID)
+        activityName = utils.activityID2Name[activityID]
         bpTypeID = job.blueprint_type_id
-        bpName = StaticData.idName(bpTypeID)
+        bpName = utils.idName(bpTypeID)
         runs = job.runs
         cost = job.cost
         startDate = job.start_date
@@ -52,15 +51,15 @@ def updateIndyJobsLog():
     valuesList = [x for x in valuesList if x[0] not in presentJobIDs]
 
     if valuesList:
-        with database:
-            database.executemany( ('INSERT INTO indyJobsLog '
+        with utils.logDb:
+            utils.logDb.executemany( ('INSERT INTO indyJobsLog '
                                    'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
                                   , valuesList)
 
 #----------------------------------------------------------------------
 def _getPresentJobIDs():
     """"""
-    dbResponse = database.execute( (f'SELECT "jobID" '
+    dbResponse = utils.logDb.execute( (f'SELECT "jobID" '
                                        f'FROM indyJobsLog ') )
     jobIDs = dbResponse.fetchall()
 
@@ -80,7 +79,7 @@ def upgradeTransactionLog():
         journalRefID = transaction.journal_ref_id
         date = transaction.date
         typeID = transaction.type_id
-        typeName = StaticData.idName(typeID)
+        typeName = utils.idName(typeID)
         quantity = transaction.quantity
         unitPrice = transaction.unit_price
         totalPrice = unitPrice * quantity
@@ -105,8 +104,8 @@ def upgradeTransactionLog():
     valuesList = [x for x in valuesList if x[0] not in presentTransIDs]
 
     if valuesList:
-        with database:
-            database.executemany( ('INSERT INTO transactionLog '
+        with utils.logDb:
+            utils.logDb.executemany( ('INSERT INTO transactionLog '
                                    'VALUES (?,?,?,?,?,?,?,?,?,?,?)')
                                   , valuesList)
 
@@ -114,7 +113,7 @@ def upgradeTransactionLog():
 #----------------------------------------------------------------------
 def _getPresentTransIDs():
     """"""
-    dbResponse = database.execute( (f'SELECT "transID" '
+    dbResponse = utils.logDb.execute( (f'SELECT "transID" '
                                        f'FROM transactionLog ') )
     transIDs = dbResponse.fetchall()
 
@@ -163,15 +162,15 @@ def updateJournalLog():
     valuesList = [x for x in valuesList if x[0] not in currentRefIDs]
 
     if valuesList:
-        with database:
-            database.executemany( ('INSERT INTO journalLog '
+        with utils.logDb:
+            utils.logDb.executemany( ('INSERT INTO journalLog '
                                    'VALUES (?,?,?,?,?,?,?)')
                                   , valuesList)
 
 #----------------------------------------------------------------------
 def _getJournalRefIDs():
     """"""
-    dbResponse = database.execute( (f'SELECT "refID" '
+    dbResponse = utils.logDb.execute( (f'SELECT "refID" '
                                        f'FROM journalLog ') )
     journalRefIDs = dbResponse.fetchall()
 
@@ -186,7 +185,7 @@ def _getJournalRefIDs():
 def updateMaterialLog():
     """"""
     #getting newly updated info
-    materials = corpDB.database.execute( (f'SELECT "typeID", "quantity" '
+    materials = utils.currentDb.execute( (f'SELECT "typeID", "quantity" '
                                           f'FROM "AggregatedMaterials" ') )
     materialsRows = materials.fetchall()
 
@@ -212,7 +211,7 @@ def updateMaterialLog():
                 delta = currentQuantity - oldBalance
                 timestamp = time.time()
                 balance = currentQuantity
-                typeName = StaticData.idName(typeID)
+                typeName = utils.idName(typeID)
 
                 dbRow = (timestamp,
                typeID,
@@ -226,7 +225,7 @@ def updateMaterialLog():
             delta = currentQuantity
             timestamp = time.time()
             balance = currentQuantity
-            typeName = StaticData.idName(typeID)
+            typeName = utils.idName(typeID)
 
             dbRow = (timestamp,
              typeID,
@@ -249,7 +248,7 @@ def updateMaterialLog():
             delta = -balance
             timestamp = time.time()
             balance = 0
-            typeName = StaticData.idName(typeID)
+            typeName = utils.idName(typeID)
 
             dbRow = (timestamp,
              typeID,
@@ -259,8 +258,8 @@ def updateMaterialLog():
             valuesList.append(dbRow)
 
     #updating database
-    with database:
-        database.executemany(('INSERT INTO materialsLog '
+    with utils.logDb:
+        utils.logDb.executemany(('INSERT INTO materialsLog '
                               '(timestamp,typeID,delta,balance,typeName)'
                               'VALUES (?,?,?,?,?)')
                              , valuesList)
@@ -269,7 +268,7 @@ def updateMaterialLog():
 #----------------------------------------------------------------------
 def _getLastEntries():
     """"""
-    bdResponse = database.execute( (f'SELECT DISTINCT "typeID" '
+    bdResponse = utils.logDb.execute( (f'SELECT DISTINCT "typeID" '
                                        f'FROM "materialsLog" ') )
     uniqueTypeIDs = bdResponse.fetchall()
 
@@ -285,7 +284,7 @@ def _getLastEntries():
 #----------------------------------------------------------------------
 def _getLastLogEntry(typeID):
     """"""
-    logEntries = database.execute( (f'SELECT "timestamp", "balance" '
+    logEntries = utils.logDb.execute( (f'SELECT "timestamp", "balance" '
                                        f'FROM materialsLog '
                                        f'WHERE typeID = {typeID} '
                                        f'ORDER BY "timestamp" DESC') )
