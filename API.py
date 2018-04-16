@@ -23,19 +23,37 @@ def _refreshCredentials(apiObject):
   return apiObject
 
 #----------------------------------------------------------------------
-def _apiCall(apiObject, methodName, *args, **kwargs):
+def _apiCall(apiObject, methodName, pages = False *args, **kwargs):
   """"""
   requestMethod = getattr(apiObject, methodName)
   exception = ''
 
   try:
-    returnJson = requestMethod(*args, **kwargs)
+    returnJson = []
+    if pages:
+      for i in range(10):
+        tempList = requestMethod(*args, **kwargs, page = i + 1)
+        if len(tempList) > 0:
+          returnJson.extend(tempList)
+        else:
+          break
+    else:
+      returnJson = requestMethod(*args, **kwargs)
   except ApiException as exp:
     exception = exp
     #retry
     apiObject = _refreshCredentials(apiObject)
     requestMethod = getattr(apiObject, methodName)
-    returnJson = requestMethod(*args, **kwargs)  #this second try might give an unhandled exception. I think this is what i want to happen, but there might be a better way.
+    returnJson = []
+    if pages:  #fix this shit
+      for i in range(10):
+        tempList = requestMethod(*args, **kwargs, page = i + 1)
+        if len(tempList) > 0:
+          returnJson.extend(tempList)
+        else:
+          break
+    else:
+      returnJson = requestMethod(*args, **kwargs)
 
   return returnJson
 
@@ -66,7 +84,7 @@ def getBlueprints():
   corpApi = swagger_client.CorporationApi(_apiConfig)
   methodName = "get_corporations_corporation_id_blueprints"
 
-  blueprints = _apiCall(corpApi, methodName, settings.corpID)
+  blueprints = _apiCall(corpApi, methodName, pages = True, settings.corpID)
 
   return blueprints
 

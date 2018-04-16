@@ -255,7 +255,7 @@ def updateBlueprintPriority():
   bpcRunsOk = [1 if x >= y else 0 for x, y in zip(totalRuns, manufSizes)]
 
   #check if item is being invented
-  invRuns = [utils.jobRuns(x, 8) for x in allInventables]
+  invRuns = [utils.jobRuns(x, activity= 8, parent= True) for x in allInventables]
 
   #calculate if sufficient amount of parent bpc exist
   copySizes = [x[0] for x in sizes]
@@ -263,7 +263,7 @@ def updateBlueprintPriority():
   parentBpcRunsOk = [1 if x >= y else 0 for x, y in zip(totalParentRuns, copySizes)]
 
   #check if parent is being copied
-  copyRuns = [utils.jobRuns(x, 5) for x in allInventables]
+  copyRuns = [utils.jobRuns(x, activity= 5, parent = True) for x in allInventables]
 
   #calculate priority and push to database
   rowList = []

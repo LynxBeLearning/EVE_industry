@@ -88,7 +88,7 @@ def allInventables(onlyBPO = False):
     inventedTupleList = dbQuery(staticDb, command, fetchAll=True)
     inventedList.extend(unpack(inventedTupleList))
 
-  return inventedList
+  return list(set(inventedList))
 
 #----------------------------------------------------------------------
 def idName(idOrName):
@@ -97,7 +97,7 @@ def idName(idOrName):
     idOrName = int(idOrName)
     command = f'SELECT "typeName" FROM "invTypes" WHERE "typeID" = {idOrName}'
   except ValueError:
-    command = f'SELECT "typeID" FROM "invTypes" WHERE "typeName" = {idOrName}'
+    command = f'SELECT "typeID" FROM "invTypes" WHERE "typeName" = "{idOrName}"'
 
   return dbQuery(staticDb, command)
 
@@ -202,22 +202,29 @@ def marketSizes(typeIDs):
 def _marketGroupExplorer(marketGroupID, typeID):
   """recursively walk the tree of market groups until it finds one in a known category"""
   frigsDessiesID = [1361, 1372]
-  cruisersBCsID = [1367, 1374]
+  cruisersBCsID = [1367, 1374, 629]  #629 is transport ships
   modulesID = [9]
   componentsID = [800, 798, 796, 1097, 1191]
   ammoScriptsID = [2290, 100, 99, 1094, 114]
+  battleshipsID = [1377, 1376]
   miningCrystalsID = [593]
   deployableID = [404]
   rigsID = [1111]
   droneID = [157]
+  subsystems = [1112]
+
 
   if marketGroupID in frigsDessiesID:
     return [30, 10, 2]
+  elif marketGroupID in battleshipsID:
+    return [3, 1, 1]
   elif marketGroupID in ammoScriptsID:
     return [300, 50, 100]
   elif marketGroupID in miningCrystalsID:
     return [50, 50, 20]
   elif marketGroupID in cruisersBCsID:
+    return [5, 3, 1]
+  elif marketGroupID in subsystems:
     return [5, 3, 1]
   elif marketGroupID in modulesID:
     return [50, 50, 20]
@@ -273,12 +280,21 @@ def totalRuns(typeID):
     return 0
 
 #----------------------------------------------------------------------
-def jobRuns(typeID, activity = 1):
+def jobRuns(typeID, activity = 1, parent = False):
   """return the number of runs of typeID that are being produced"""
-  command = (f'SELECT "runs" '
-             f'FROM "IndustryJobs" '
-             f'WHERE "bptypeID" = "{typeID}" '
-             f'AND "activityID" = "{activity}" ')
+
+
+  if parent:
+    parentTypeID = inventedFrom(typeID)
+    command = (f'SELECT "runs" '
+               f'FROM "IndustryJobs" '
+               f'WHERE "bpTypeID" = {parentTypeID} '
+               f'AND "activityID" = {activity} ')
+  else:
+    command = (f'SELECT "runs" '
+                 f'FROM "IndustryJobs" '
+                 f'WHERE "bpTypeID" = {typeID} '
+                 f'AND "activityID" = {activity} ')
   runs = dbQuery(currentDb, command, fetchAll=True)
   totRuns = sum(unpack(runs, flatten=True))
 
@@ -538,8 +554,6 @@ class StaticData():
 
 
     return result
-
-
 
 
 #necessary patch to updata static variables from internal methods

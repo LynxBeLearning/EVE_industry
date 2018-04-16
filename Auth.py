@@ -7,8 +7,8 @@ import webbrowser
 import swagger_client
 from pubsub import pub
 from base64 import b64encode
-from swagger_client.rest import ApiException
 from utils import settings, configFile
+from swagger_client.rest import ApiException
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
