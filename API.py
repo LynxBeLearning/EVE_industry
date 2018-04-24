@@ -23,7 +23,7 @@ def _refreshCredentials(apiObject):
   return apiObject
 
 #----------------------------------------------------------------------
-def _apiCall(apiObject, methodName, pages = False *args, **kwargs):
+def _apiCall(apiObject, methodName, *args, pages = False, **kwargs):
   """"""
   requestMethod = getattr(apiObject, methodName)
   exception = ''
@@ -63,7 +63,7 @@ def getAssets():
   assetsApi = swagger_client.AssetsApi(_apiConfig)
   methodName = "get_corporations_corporation_id_assets"
 
-  assets = _apiCall(assetsApi, methodName, settings.corpID)
+  assets = _apiCall(assetsApi, methodName, settings.corpID, pages = True)
 
   return assets
 
@@ -84,7 +84,7 @@ def getBlueprints():
   corpApi = swagger_client.CorporationApi(_apiConfig)
   methodName = "get_corporations_corporation_id_blueprints"
 
-  blueprints = _apiCall(corpApi, methodName, pages = True, settings.corpID)
+  blueprints = _apiCall(corpApi, methodName, settings.corpID, pages = True)
 
   return blueprints
 
@@ -163,6 +163,7 @@ def getMarketTransactions():
 
 def networkConnectivity(host="8.8.8.8", port=53, timeout=3):
   """
+  check wether the system is connected to the internet.
   Host: 8.8.8.8 (google-public-dns-a.google.com)
   OpenPort: 53/tcp
   Service: domain (DNS/TCP)
@@ -176,19 +177,4 @@ def networkConnectivity(host="8.8.8.8", port=53, timeout=3):
     return False
 
 if __name__ == "__main__":
-
-  #authenticate()  #forceLogin = True
-  #assets = DataRequest.getAssets()
-  #adjustedP = DataRequest.getAdjustedPrices()
-  #indJobs = DataRequest.getIndustryJobs()
-  #bp = DataRequest.getBlueprints()
-  #skills = DataRequest.getSkills()
-  #marketOrders = DataRequest.getMarketOrders()
-  #sysInd = DataRequest.getSystemIndexes()
-  #Auth(forceLogin= True)
-  #journal = DataRequest.getJournal()
-
-
-
-  print('lae')
   pass

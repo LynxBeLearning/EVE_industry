@@ -239,7 +239,7 @@ def updateBlueprintPriority():
   parentIDs = utils.inventedFroms(allInventables)
   parentNames = utils.idNames(parentIDs)
 
-  sizes = utils.marketSizes(allInventables)
+  sizes = utils.sizes(allInventables)
 
   #calculate if sufficient number of items on market
   minMarketSizes = [x[2] for x in sizes]
@@ -280,9 +280,19 @@ def updateBlueprintPriority():
     parentBeingCopied = copyRuns[index]
     lowPriority = 0
 
+    totRuns = totalRuns[index]
+
+    #sizes
+    manufSize = manufSizes[index]
+    copySize =  copySizes[index]
+
+    #invention stuff
+    reqInventionRuns = 0
+
     if t2bpcOK and not inProduction and not marketOK:
       priority = 'manufacturing'
     elif not t2bpcOK and not beingInvented and parentBpcOK:
+      reqInventionRuns = utils.inventionCalculator(typeID)
       priority = 'invention'
     elif not parentBpcOK and not parentBeingCopied:
       priority = 'copying'
@@ -300,11 +310,15 @@ def updateBlueprintPriority():
         priority = "no priority"
 
     rowList.append([typeID, name, parentTypeID, parentName, marketOK, inProduction, t2bpcOK,
-                   beingInvented, parentBpcOK, parentBeingCopied, priority, lowPriority])
+                   beingInvented, parentBpcOK, parentBeingCopied, priority, lowPriority,
+                   manufSize, copySize, reqInventionRuns])
+
+
 
   with utils.currentDb:
-    utils.currentDb.executemany('INSERT INTO BlueprintPriority VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-                         rowList)
+    utils.currentDb.executemany(('INSERT INTO BlueprintPriority '
+                                 'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'),
+                                rowList)
 
 
 #----------------------------------------------------------------------

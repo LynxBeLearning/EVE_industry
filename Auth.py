@@ -67,8 +67,9 @@ def _credentials():
                   f'scope={scopes}&'
                   f'state=evesso') )
 
-    while 1:
-        time.sleep(2)
+
+    while True:
+        time.sleep(4)
         if hasattr(settings, 'code'):
             server.shutdown()
             break
@@ -133,4 +134,45 @@ class CodeHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         return
 
+    def handle_one_request(self):
+        """Handle a single HTTP request.
 
+        You normally don't need to override this method; see the class
+        __doc__ string for information on how to handle specific HTTP
+        commands such as GET and POST.
+
+        This method is almost exacly the same as in the base class, however,
+        a "self.wfile.flush()" line at the end of this method was removed
+        because it kept raising an exception about writing to closed files.
+
+        """
+        try:
+            self.raw_requestline = self.rfile.readline(65537)
+            if len(self.raw_requestline) > 65536:
+                self.requestline = ''
+                self.request_version = ''
+                self.command = ''
+                self.send_error(HTTPStatus.REQUEST_URI_TOO_LONG)
+                return
+            if not self.raw_requestline:
+                self.close_connection = True
+                return
+            if not self.parse_request():
+                # An error code has been sent, just exit
+                return
+            mname = 'do_' + self.command
+            if not hasattr(self, mname):
+                self.send_error(
+                    HTTPStatus.NOT_IMPLEMENTED,
+                    "Unsupported method (%r)" % self.command)
+                return
+            method = getattr(self, mname)
+            method()
+        except socket.timeout as e:
+            #a read or a write timed out.  Discard this connection
+            self.log_error("Request timed out: %r", e)
+            self.close_connection = True
+            return
+
+if __name__ == "__main__":
+    authenticate(forceLogin=True)

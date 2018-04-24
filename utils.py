@@ -1,8 +1,10 @@
-import sqlite3
 import os
 import json
-from types import SimpleNamespace
+import math
+import sqlite3
 from pubsub import pub
+from types import SimpleNamespace
+from scipy.stats import binom as binomial
 
 activityID2Name = {8: "invention",
                    1: "manufacturing",
@@ -43,7 +45,10 @@ def dbQuery(database, command, fetchAll = False):
   response = database.execute(command)
   if fetchAll:
     rows = response.fetchall()
-    return rows
+    if rows and len(rows[0]) == 1:
+      return unpack(rows, flatten = True)
+    else:
+      return rows
   else:
     row = response.fetchone()
     if not row:
@@ -74,8 +79,7 @@ def allInventables(onlyBPO = False):
                'where "inventable" = 1')
 
   #unpack and get unique values
-  inventablesTupleList = dbQuery(currentDb, command, fetchAll=True)
-  inventablesList = unpack(inventablesTupleList)
+  inventablesList = dbQuery(currentDb, command, fetchAll=True)
   uniqueInventables = list(set(inventablesList))
 
   #extract invented IDs from static db
@@ -85,8 +89,8 @@ def allInventables(onlyBPO = False):
                f'FROM "industryActivityProducts" '
                f'WHERE "typeID" = "{inventable}"'
                f'AND "activityID" = "8"')
-    inventedTupleList = dbQuery(staticDb, command, fetchAll=True)
-    inventedList.extend(unpack(inventedTupleList))
+    inventedTempList = dbQuery(staticDb, command, fetchAll=True)
+    inventedList.extend(inventedTempList)
 
   return list(set(inventedList))
 
@@ -168,7 +172,7 @@ def bpClass(typeID):
 
 #----------------------------------------------------------------------
 def productID(typeID):
-  """return id if name is provided and vice versa"""
+  """return the id of the product of typeID"""
   typeID = int(typeID)
   command = (f'SELECT "productTypeID" '
              f'FROM "industryActivityProducts" '
@@ -179,9 +183,9 @@ def productID(typeID):
   else:
     return None
 
-
-def marketSize(typeID):
-  """estimate quantity of things to put on the market on the basis of their market category"""
+#----------------------------------------------------------------------
+def size(typeID):
+  """return list of 3 elements: copySize, manufSize and minMarketSize"""
   prodID = productID(typeID)
   command = (f'SELECT "marketGroupID" '
              f'FROM "invTypes" '
@@ -194,9 +198,9 @@ def marketSize(typeID):
     raise("{} does not have copy time. maybe it's not a bpo".format(StaticData.idName(typeID)))
 
 #----------------------------------------------------------------------
-def marketSizes(typeIDs):
+def sizes(typeIDs):
   """applies market size to a list of typeIDs"""
-  return [marketSize(x) for x in typeIDs]
+  return [size(x) for x in typeIDs]
 
 #----------------------------------------------------------------------
 def _marketGroupExplorer(marketGroupID, typeID):
@@ -255,7 +259,7 @@ def onTheMarket(typeID):
              f'AND "sellOrder" = 1 ')
 
   remainingItems = dbQuery(currentDb, command, fetchAll=True)
-  remainingItems = sum(unpack(remainingItems, flatten= True))
+  remainingItems = sum(remainingItems)
 
   return remainingItems
 
@@ -272,7 +276,7 @@ def totalRuns(typeID):
              f'WHERE "typeID" = "{typeID}" '
              f'AND "bpo" = "0"')
   runs = dbQuery(currentDb, command, fetchAll=True)
-  totRuns = sum(unpack(runs, flatten=True))
+  totRuns = sum(runs)
 
   if totRuns:
     return totRuns
@@ -296,7 +300,7 @@ def jobRuns(typeID, activity = 1, parent = False):
                  f'WHERE "bpTypeID" = {typeID} '
                  f'AND "activityID" = {activity} ')
   runs = dbQuery(currentDb, command, fetchAll=True)
-  totRuns = sum(unpack(runs, flatten=True))
+  totRuns = sum(runs)
 
   if totRuns:
     return totRuns
@@ -343,7 +347,7 @@ def component(typeID):
 
 #----------------------------------------------------------------------
 def producerID(typeID):
-  """return id if name is provided and vice versa"""
+  """return the id of the bp from which typeID is produced"""
   typeID = int(typeID)
   command =  (f'SELECT "typeID" '
               f'FROM "industryActivityProducts" '
@@ -363,6 +367,101 @@ def buildable(typeID):
     return True
   else:
     return False
+
+#----------------------------------------------------------------------
+def inventionProb(typeID, isParent = True):
+  """calculate invention probability based on skill levels"""
+  encryptionSkillsID = [21791,23087,21790,23121]
+  if not isParent:
+    typeID = producerID(typeID)
+
+  baseProbCommand = (f'SELECT "probability" '
+                     f'FROM "industryActivityProbabilities" '
+                     f'WHERE "TypeID" = {typeID} '
+                     f'AND "activityID" = 8')
+
+  reqSkillsCommand = (f'SELECT "skillID" '
+                      f'FROM "industryActivitySkills" '
+                      f'WHERE "TypeID" = {typeID} '
+                      f'AND "activityID" = 8')
+
+  baseProb = dbQuery(staticDb, baseProbCommand)
+  reqSkills = dbQuery(staticDb, reqSkillsCommand, fetchAll=True)
+
+  encryptionSkill = ''
+  scienceSkills = []
+
+  #assuming flat 4 skill level now, might update in future.
+  #infrastructure to query api for skill levels is already in place
+  #database schema must be updated to accomodate skills storage
+  #and a function must be made to query the db and recover the corresponding level
+  for skill in reqSkills:
+    if skill in encryptionSkillsID:
+      encryptionSkill = float(4)
+    else:
+      scienceSkills.append(float(4))
+
+  scienceSkill1 = scienceSkills[0]
+  scienceSkill2 = scienceSkills[1]
+
+  modifiedProb = round(baseProb * (1.0 + ( (scienceSkill1 + scienceSkill2 ) / 30 + (encryptionSkill / 40) ) ), 3)
+  return modifiedProb
+
+
+#----------------------------------------------------------------------
+def nativeT2Runs(typeID):
+  """return the amount of runs that an invented blueprint is born with"""
+  command = (f'SELECT "quantity" '
+             f'FROM "industryActivityProducts" '
+             f'WHERE "productTypeID" = {typeID} '
+             f'AND "activityID" = 8')
+  runs = dbQuery(staticDb, command, fetchAll=False)
+  return int(runs)
+
+
+#----------------------------------------------------------------------
+def reqInventionSuccesses(typeID):
+  """return the amount of runs that an invented blueprint is born with"""
+  manufSize = size(typeID)[1]
+  totRuns = totalRuns(typeID)
+  nativeBpRuns = nativeT2Runs(typeID)
+
+  reqT2Blueprints = manufSize / nativeBpRuns
+  ownedT2Blueprints = math.floor(totRuns / nativeBpRuns)
+
+  reqInventionSuccesses = reqT2Blueprints - ownedT2Blueprints
+
+  return(reqInventionSuccesses)
+
+#----------------------------------------------------------------------
+def inventionCalculator(typeID, alpha = 0.95):
+  """calculate the number of invention runs necessary to have alpha probability of successNumber successes"""
+  successNumber = reqInventionSuccesses(typeID)
+  successProbability = inventionProb(typeID, isParent= False)
+
+  for runs in range(200):
+    prob = 1-binomial.cdf(successNumber, runs, successProbability)
+    if prob > alpha:
+      return runs
+
+
+#----------------------------------------------------------------------
+def getBlueprintsItems(typeID):
+  """return all the blueprints items of the specified typeID"""
+  command = (f'SELECT "ME", "runs" '
+             f'FROM "Blueprints" '
+             f'WHERE "typeID" = {typeID}')
+
+  bpItems = dbQuery(currentDb, command, fetchAll=True)
+
+  return bpItems
+
+#----------------------------------------------------------------------
+def printDict(dictionary):
+  """print a readable version of the dictionaries containing the typeid:value structure"""
+
+  for item in dictionary:
+    print(f'{idName(item)}\t{dictionary[item]}')
 
 
 ########################################################################
@@ -411,48 +510,7 @@ class StaticData():
 
 
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def baseManufacturingCost(cls, typeID):
-    """calculate the manufacturing cost of an item"""
-    typeID = int(typeID)
-    returnDict = {}
-    selected = cls._database.execute('SELECT "materialTypeID", "quantity" FROM "industryActivityMaterials" WHERE "TypeID" = ? and "activityID" = 1' , (typeID, )) #note that parameters of execute must be a tuple, even if only contains only one element
-    resultsList = selected.fetchall()
 
-    if len(resultsList) > 0:
-      for resultTuple in resultsList:
-        #print "{} {}".format(cls.idName(tup[0]), tup[1]) #print material name and cost
-        returnDict[resultTuple[0]] = resultTuple[1]
-
-    else:
-      return None
-
-    return returnDict
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def inventionProb(cls, charSkills, bpID):
-    """calculate invention probability based on skill levels"""
-    encryptionSkillsID = [21791,23087,21790,23121]
-    baseProb = cls._database.execute('SELECT "probability" FROM "industryActivityProbabilities" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
-    reqSkills = cls._database.execute('SELECT "skillID" FROM "industryActivitySkills" WHERE "TypeID" = ? and "activityID" = 8' , (bpID, )) #note that parameters of execute must be a tuple, even if only contains only one element
-
-    baseProb = float(baseProb.fetchone()[0])
-    reqSkills = reqSkills.fetchall()
-
-    encryptionSkill = ''
-    scienceSkills = []
-
-    if len(reqSkills) > 0:
-      for resultTuple in reqSkills:
-        if resultTuple[0] in encryptionSkillsID:
-          encryptionSkill = float(charSkills.skillLevel(resultTuple[0]))
-        else:
-          scienceSkills.append(float(charSkills.skillLevel(resultTuple[0])))
-
-    modifiedProb = round(baseProb * (1.0 + ( (scienceSkills[0] + scienceSkills[1] ) / 30 + (encryptionSkill / 40) ) ), 3)
-    return modifiedProb
 
   #----------------------------------------------------------------------
   @classmethod
@@ -477,13 +535,6 @@ class StaticData():
 
     return returnDict
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def printDict(cls, dictionary):
-    """print a readable version of the dictionaries containing the typeid:value structure"""
-
-    for item in dictionary:
-      print(f'{StaticData.idName(item)}\t{dictionary[item]}')
 
 
   #----------------------------------------------------------------------
@@ -498,17 +549,6 @@ class StaticData():
 
     return quantity
 
-  #----------------------------------------------------------------------
-  @classmethod
-  def t2BlueprintAmount(cls, typeID):
-    """return the amount of runs that an invented blueprint is born with"""
-    quantity = ""
-    dbQuantity = cls._database.execute('SELECT "quantity" FROM "industryActivityProducts" WHERE "TypeID" = ? and "activityID" = 8' , (str(typeID), )) #note that parameters of execute must be a tuple, even if only contains only one element
-    dbQuantity = dbQuantity.fetchone()
-
-    quantity = int(dbQuantity[0])
-
-    return quantity
 
   #----------------------------------------------------------------------
   @classmethod
@@ -546,7 +586,7 @@ class StaticData():
         addition = int(addend1[key]) + int(addend2[key])
         addend2Keys.remove(key)
         result[key] = addition
-      if key not in addend2:
+      elif key not in addend2:
         result[key] = addend1[key]
 
     for key in addend2Keys:
