@@ -2,12 +2,12 @@ import math
 import utils
 
 #----------------------------------------------------------------------
-def baseManufacturingCost(typeID):
+def baseMaterials(typeID):
     """calculate the manufacturing cost of an item"""
     typeID = int(typeID)
     returnDict = {}
     command = (f'SELECT "materialTypeID", "quantity" '
-             f'FROM "industryActivityMaterials" '
+               f'FROM "industryActivityMaterials" '
                f'WHERE "TypeID" = {typeID} '
                f'AND "activityID" = 1')
 
@@ -26,7 +26,7 @@ def materialModifier(ME):
     """calculate the overall material modifier for a set of bpcs"""
     #calculate ME modifier
     MEModifier = 1 - (ME / 100.0)
-    raitaruModifier = 0.99
+    engComplexModifier = 0.99
     #commented code below is used to implement rigged categories on engineering complexes
     #not used for the moment.
     #if StaticData.categoryID(StaticData.productID(blueprintItem.typeID)) in self.riggedCategories:
@@ -34,12 +34,12 @@ def materialModifier(ME):
     #else:
     #  rigModifier = 1
 
-    return MEModifier * raitaruModifier  #* rigModifier
+    return MEModifier * engComplexModifier  #* rigModifier
 
 #----------------------------------------------------------------------
-def BPCmaterialsCalculator(typeID, requiredRuns, ME):
+def modifiedMaterials(typeID, requiredRuns, ME):
     """determine modified manufacturing cost for N runs of one BPC"""
-    baseCost = baseManufacturingCost(typeID)
+    baseCost = baseMaterials(typeID)
     matMod = materialModifier(ME)
 
     modMats = {}
@@ -51,78 +51,52 @@ def BPCmaterialsCalculator(typeID, requiredRuns, ME):
 
 
 #----------------------------------------------------------------------
-def requiredComponents(typeID):
-    """return the component materials needed for an item"""
+def requiredMaterials(typeID, componentsOnly = False):
+    """return the component materials needed for manufSize number of items"""
     bpItems = utils.getBlueprintsItems(typeID)
     manufSize = utils.size(typeID)[1]
 
+    #modify runs if they are negative (i.e, if a bpo is available)
+    for bp in bpItems:
+        ME = bp[0]
+        runs = bp[1]
+        if runs == -1:  #bpos have -1 runs
+            bpItems = [[ME, 10000000]]
+            break
+
     #logic that decides which bpc to use given the amount of things to produce
-    sortedBPCs = sorted(bpItems, key=lambda x: x[0])
+    sortedBPCs = sorted(bpItems, key=lambda x: x[0], reverse= True)
 
     totalMaterialCost = {}
-    for BPC in sortedBPCs:
-        ME = BPC[0]
-        runs = BPC[1]
+    for BP in sortedBPCs:
+        ME = BP[0]
+        runs = BP[1]
         if manufSize - runs > 0:
-            modMaterialCost = BPCmaterialsCalculator(typeID, runs, ME)
+            modMaterialCost = modifiedMaterials(typeID, runs, ME)
             for matID in modMaterialCost:
-                if matID in totalMaterialCost:
+                if componentsOnly and not utils.buildable(matID):
+                    continue
+                elif matID in totalMaterialCost:
                     totalMaterialCost[matID] += modMaterialCost[matID]
                 else:
                     totalMaterialCost[matID] = modMaterialCost[matID]
             manufSize = manufSize - runs
         elif manufSize - runs == 0:
-            modMaterialCost = BPCmaterialsCalculator(typeID, runs, ME)
+            modMaterialCost = modifiedMaterials(typeID, runs, ME)
             for matID in modMaterialCost:
-                if matID in totalMaterialCost:
+                if componentsOnly and not utils.buildable(matID):
+                    continue
+                elif matID in totalMaterialCost:
                     totalMaterialCost[matID] += modMaterialCost[matID]
                 else:
                     totalMaterialCost[matID] = modMaterialCost[matID]
             break
-        elif manufSize - BPC.runs < 0:
-            modMaterialCost = BPCmaterialsCalculator(typeID, manufSize, ME)
+        elif manufSize - runs < 0:
+            modMaterialCost = modifiedMaterials(typeID, manufSize, ME)
             for matID in modMaterialCost:
-                if matID in totalMaterialCost:
-                    totalMaterialCost[matID] += modMaterialCost[matID]
-                else:
-                    totalMaterialCost[matID] = modMaterialCost[matID]
-            break
-
-    return totalMaterialCost
-
-
-
-
-#----------------------------------------------------------------------
-def t1MaterialCost(self, runs, bpContainer):
-    """"""
-    blueprint = bpContainer
-    manufSize = runs
-    totalMaterialCost = {}
-    #logic that decides which bpc to use given the amount of things to produce
-    sortedBPCs = sorted(blueprint.BPC.rawItems, key=lambda x: x.TE)
-
-    for BPC in sortedBPCs:
-        if manufSize - BPC.runs > 0:
-            modMaterialCost = self._BPCmaterialsCalculator(BPC.runs, BPC)
-            for matID in modMaterialCost:
-                if matID in totalMaterialCost:
-                    totalMaterialCost[matID] += modMaterialCost[matID]
-                else:
-                    totalMaterialCost[matID] = modMaterialCost[matID]
-            manufSize = manufSize - BPC.runs
-        elif manufSize - BPC.runs == 0:
-            modMaterialCost = self._BPCmaterialsCalculator(BPC.runs, BPC)
-            for matID in modMaterialCost:
-                if matID in totalMaterialCost:
-                    totalMaterialCost[matID] += modMaterialCost[matID]
-                else:
-                    totalMaterialCost[matID] = modMaterialCost[matID]
-            break
-        elif manufSize - BPC.runs < 0:
-            modMaterialCost = self._BPCmaterialsCalculator(manufSize, BPC)
-            for matID in modMaterialCost:
-                if matID in totalMaterialCost:
+                if componentsOnly and not utils.buildable(matID):
+                    continue
+                elif matID in totalMaterialCost:
                     totalMaterialCost[matID] += modMaterialCost[matID]
                 else:
                     totalMaterialCost[matID] = modMaterialCost[matID]
@@ -131,32 +105,14 @@ def t1MaterialCost(self, runs, bpContainer):
     return totalMaterialCost
 
 #----------------------------------------------------------------------
-def requiredBaseMaterials(self, typeID):
-    """return the total base materials needed for a given item"""
-    components = self.requiredComponents(typeID)
+def itemChooser():
+    """query db for produceable stuff and applies whatever
+    filter, return list of typeIDs"""
 
-    breakDownDict = {}
+#----------------------------------------------------------------------
+def productionBreakdown():
+    """choses items, calculates materials, presents results"""
 
-    for component in components:
-        bpTypeID = utils.producerID(component)
-        if bpTypeID: #this stupid conditional is needed because producerID returns strings but i need int, but if producerID returns null int throws an error.
-            bpTypeID = int(bpTypeID)
-        if not bpTypeID:
-            breakDownDict[component] = components[component]
-            continue
-        elif bpTypeID in self.blueprints.blueprints:
-            if self.blueprints.blueprints[bpTypeID].BPO.component == 1:
-                mats = self._componentsMaterialsCalculator(components[component], self.blueprints.blueprints[bpTypeID].BPO)
-                breakDownDict[component] = mats
-            elif self.blueprints.blueprints[bpTypeID].BPO.component == 0:
-                mats = self.t1MaterialCost(components[component], self.blueprints.blueprints[bpTypeID])
-                breakDownDict[component] = mats
 
-    try:
-        return MatsBreakDown(breakDownDict, typeID, self.blueprints.blueprints[typeID].manufSize, components)
-    except KeyError:
-        t1TypeID = StaticData.originatorBp(typeID)
-        return MatsBreakDown(breakDownDict, typeID, self.blueprints.blueprints[t1TypeID].manufSize, components)
-
-a = requiredComponents(11175)
+a = requiredMaterials(956)
 pls = "efw"

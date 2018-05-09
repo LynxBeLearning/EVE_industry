@@ -129,20 +129,18 @@ def updateJournalLog():
 
     valuesList = []
     for entry in journal:
-        refID = entry.ref_id
+        refID = entry.id
         refType = entry.ref_type
         delta = entry.amount
         balance = entry.balance
         date = entry.date
-        if entry.extra_info:
-            if entry.extra_info.transaction_id:
-                transactionID = entry.extra_info.transaction_id
-            else:
-                transactionID = 'NULL'
-            if entry.extra_info.job_id:
-                jobID = entry.extra_info.job_id
-            else:
+        if entry.context_id_type:
+            if entry.context_id_type == "market_transaction_id":
+                transactionID = entry.context_id
                 jobID = 'NULL'
+            elif entry.context_id_type == "industry_job_id":
+                transactionID = 'NULL'
+                jobID = entry.context_id
         else:
             transactionID = 'NULL'
             jobID = 'NULL'

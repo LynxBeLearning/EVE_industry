@@ -338,7 +338,7 @@ def component(typeID):
   if marketGroupID:
     marketGroupList = _marketGroupPath(marketGroupID, [marketGroupID])
   else:
-    raise TypeError(f'{StaticData.idName(typeID)} has no market group?')
+    raise TypeError(f'{idName(typeID)} has no market group?')
 
   if componentBlueprintMarketGroup in marketGroupList:
     return True

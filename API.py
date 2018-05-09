@@ -1,8 +1,8 @@
-import socket
+import subprocess
 import swagger_client
 from Auth import authenticate
-from swagger_client.rest import ApiException
 from utils import settings, configFile
+from swagger_client.rest import ApiException
 
 
 #generating the proper swagger_client configuration
@@ -161,20 +161,19 @@ def getMarketTransactions():
   return corpTransactions
 
 
-def networkConnectivity(host="8.8.8.8", port=53, timeout=3):
+def networkConnectivity(host="8.8.8.8"):
   """
   check wether the system is connected to the internet.
   Host: 8.8.8.8 (google-public-dns-a.google.com)
-  OpenPort: 53/tcp
-  Service: domain (DNS/TCP)
   """
-  try:
-    socket.setdefaulttimeout(timeout)
-    socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
-    return True
-  except Exception as ex:
-    print(ex)
+  ping = subprocess.Popen(["ping", "-c", "1", host],
+                          stdout = subprocess.DEVNULL,
+                          stderr = subprocess.DEVNULL)
+  ping.wait()
+  if ping.returncode:
     return False
+  else:
+    return True
 
 if __name__ == "__main__":
   pass
