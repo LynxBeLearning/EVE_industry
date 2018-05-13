@@ -463,6 +463,48 @@ def printDict(dictionary):
   for item in dictionary:
     print(f'{idName(item)}\t{dictionary[item]}')
 
+#----------------------------------------------------------------------
+def integrate(dictionary, key, value):
+  """create a new entry if key is not in dictionary, otherwise adds value to the
+  already existing entry dictionary[key]"""
+  if key not in dictionary:
+    dictionary[key] = value
+  else:
+    dictionary[key] += value
+
+  return dictionary
+
+#----------------------------------------------------------------------
+def dictSubtraction(minuhend, subtrahend):
+  """subtract elements of two dictionaries from one another"""
+  minuhendCopy = dict(minuhend)
+  subtrahendCopy = dict(subtrahend)
+
+
+  for key in subtrahend:
+    if key in minuhendCopy:
+      sub = int(minuhendCopy[key]) - int(subtrahendCopy[key])
+      if sub == 0:
+        del minuhendCopy[key]
+        del subtrahendCopy[key]
+      elif sub > 0:
+        minuhendCopy[key] = sub
+        del subtrahendCopy[key]
+      elif sub < 0:
+        del minuhendCopy[key]
+        subtrahendCopy[key] = sub * -1
+
+  return (minuhendCopy, subtrahendCopy)
+
+#----------------------------------------------------------------------
+def getOwnedMaterials():
+  """return a dictionary containing owned materials"""
+  command = (f'SELECT "typeID", "quantity" '
+             f'FROM "aggregatedMaterials"')
+
+  mats = dbQuery(currentDb, command, fetchAll=True)
+  mats = dict(mats)
+  return mats
 
 ########################################################################
 class StaticData():
@@ -549,30 +591,6 @@ class StaticData():
 
     return quantity
 
-
-  #----------------------------------------------------------------------
-  @classmethod
-  def materialSubtraction(cls, minuhend, subtrahend):
-    """subtract elements of two dictionaries from one another"""
-    minuhendCopy = dict(minuhend)
-    subtrahendCopy = dict(subtrahend)
-    result = {}
-    remainder = {}
-
-    for key in subtrahend:
-      if key in minuhendCopy:
-        sub = int(minuhendCopy[key]) - int(subtrahendCopy[key])
-        if sub == 0:
-          del minuhendCopy[key]
-          del subtrahendCopy[key]
-        elif sub > 0:
-          minuhendCopy[key] = sub
-          del subtrahendCopy[key]
-        elif sub < 0:
-          del minuhendCopy[key]
-          subtrahendCopy[key] = sub * -1
-
-    return (minuhendCopy, subtrahendCopy)
 
   #----------------------------------------------------------------------
   @classmethod

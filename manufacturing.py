@@ -1,5 +1,6 @@
 import math
 import utils
+import random
 
 #----------------------------------------------------------------------
 def baseMaterials(typeID):
@@ -51,10 +52,11 @@ def modifiedMaterials(typeID, requiredRuns, ME):
 
 
 #----------------------------------------------------------------------
-def requiredMaterials(typeID, componentsOnly = False):
+def requiredMaterials(typeID, componentsOnly = False, manufSize = None):
     """return the component materials needed for manufSize number of items"""
     bpItems = utils.getBlueprintsItems(typeID)
-    manufSize = utils.size(typeID)[1]
+    if not manufSize:
+        manufSize = utils.size(typeID)[1]
 
     #modify runs if they are negative (i.e, if a bpo is available)
     for bp in bpItems:
@@ -76,43 +78,99 @@ def requiredMaterials(typeID, componentsOnly = False):
             for matID in modMaterialCost:
                 if componentsOnly and not utils.buildable(matID):
                     continue
-                elif matID in totalMaterialCost:
-                    totalMaterialCost[matID] += modMaterialCost[matID]
-                else:
-                    totalMaterialCost[matID] = modMaterialCost[matID]
+                totalMaterialCost = utils.integrate(totalMaterialCost,
+                                                    matID,
+                                                    modMaterialCost[matID])
             manufSize = manufSize - runs
         elif manufSize - runs == 0:
             modMaterialCost = modifiedMaterials(typeID, runs, ME)
             for matID in modMaterialCost:
                 if componentsOnly and not utils.buildable(matID):
                     continue
-                elif matID in totalMaterialCost:
-                    totalMaterialCost[matID] += modMaterialCost[matID]
-                else:
-                    totalMaterialCost[matID] = modMaterialCost[matID]
+                totalMaterialCost = utils.integrate(totalMaterialCost,
+                                                    matID,
+                                                    modMaterialCost[matID])
             break
         elif manufSize - runs < 0:
             modMaterialCost = modifiedMaterials(typeID, manufSize, ME)
             for matID in modMaterialCost:
                 if componentsOnly and not utils.buildable(matID):
                     continue
-                elif matID in totalMaterialCost:
-                    totalMaterialCost[matID] += modMaterialCost[matID]
-                else:
-                    totalMaterialCost[matID] = modMaterialCost[matID]
+                totalMaterialCost = utils.integrate(totalMaterialCost,
+                                                    matID,
+                                                    modMaterialCost[matID])
             break
 
     return totalMaterialCost
 
 #----------------------------------------------------------------------
-def itemChooser():
+def chooseItems(mode = 'random', nItems = 10):
     """query db for produceable stuff and applies whatever
     filter, return list of typeIDs"""
+    command = (f'SELECT "typeID", "manufSize" '
+               f'FROM "BlueprintPriority" '
+               f'WHERE "priority" = "manufacturing" ')
+
+    typeIDs = utils.dbQuery(utils.currentDb, command, fetchAll=True)
+    typeIDs = dict(typeIDs)
+
+    if mode == 'random':
+        chosen = random.sample(typeIDs.keys(), nItems)
+        return {typeID: typeIDs[typeID] for typeID in typeIDs if typeID in chosen}
 
 #----------------------------------------------------------------------
-def productionBreakdown():
+def materialReport(items, components, materials):
+    """prints list of items and required components and materials"""
+    print("TO BUILD ITEMS:\n")
+    utils.printDict(items)
+    print("\nCOMPONENTS REQUIRED:\n")
+    utils.printDict(components)
+    print("\nRAW MATERIALS REQUIRED:\n")
+    utils.printDict(materials)
+
+
+#----------------------------------------------------------------------
+def manufactureItems(mode = 'random', nItems = 10, disregardOwnedMats = False):
     """choses items, calculates materials, presents results"""
+    typeIDs = chooseItems(mode=mode, nItems=nItems)
+
+    #calculate total components and additional raw materials needed for typeID production
+    materials = {}
+    components = {}
+    for typeID in typeIDs:
+        reqMats = requiredMaterials(typeID)
+        for matID in reqMats:
+            if utils.buildable(matID):
+                components = utils.integrate(components,
+                                             matID,
+                                             reqMats[matID])
+            else:
+                materials = utils.integrate(materials,
+                                            matID,
+                                            reqMats[matID])
+
+    #subtract already owned components from the list
+    if not disregardOwnedMats:
+        ownedMats = utils.getOwnedMaterials()
+        components, ownedMats = utils.dictSubtraction(components,
+                                                  ownedMats)
 
 
-a = requiredMaterials(956)
+    #further break down components into raw materials
+    for componentID in components:
+        producerID = utils.producerID(componentID)
+        reqMats = requiredMaterials(producerID, manufSize= components[componentID])
+        for matID in reqMats:
+            materials = utils.integrate(materials,
+                                        matID,
+                                        reqMats[matID])
+
+    #subtract already owned raw materials from the list
+    if not disregardOwnedMats:
+        materials, ownedMats = utils.dictSubtraction(materials, ownedMats)
+
+    #final report
+    materialReport(typeIDs, components, materials)
+
+manufactureItems(nItems = 1)
 pls = "efw"
