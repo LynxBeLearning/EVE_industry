@@ -253,9 +253,10 @@ def _marketGroupExplorer(marketGroupID, typeID):
 #----------------------------------------------------------------------
 def onTheMarket(typeID):
   """return the total number of produced items being sold on the market"""
+  prodID = productID(typeID)
   command = (f'SELECT "remainingItems" '
              f'FROM "MarketOrders" '
-             f'WHERE "typeID" = "{typeID}" '
+             f'WHERE "typeID" = "{prodID}" '
              f'AND "sellOrder" = 1 ')
 
   remainingItems = dbQuery(currentDb, command, fetchAll=True)

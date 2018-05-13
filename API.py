@@ -119,7 +119,19 @@ def getAdjustedPrices():
 
   return adjustedPrices
 
+#----------------------------------------------------------------------
+def getRegionOrders(typeID):
+  """queries the API to obtain the current list of orders for an item in a region"""
+  marketApi = swagger_client.MarketApi(_apiConfig)
+  methodName = "get_markets_region_id_orders"
 
+  orders = _apiCall(marketApi, methodName,
+                         order_type = 'sell',
+                         region_id = 10000043,  #domain
+                         type_id = typeID,
+                         pages= True)
+
+  return orders
 #----------------------------------------------------------------------
 def getSystemIndexes():
   """"""
@@ -176,4 +188,6 @@ def networkConnectivity(host="8.8.8.8"):
     return True
 
 if __name__ == "__main__":
+  a = getRegionOrders(28661)
+  print('lel')
   pass

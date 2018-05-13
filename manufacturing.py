@@ -1,6 +1,8 @@
 import math
 import utils
 import random
+import market
+import operator
 
 #----------------------------------------------------------------------
 def baseMaterials(typeID):
@@ -104,6 +106,31 @@ def requiredMaterials(typeID, componentsOnly = False, manufSize = None):
     return totalMaterialCost
 
 #----------------------------------------------------------------------
+def marketChooser(typeIDs):
+    """chose items on the basis of expected profit"""
+    profits = {}
+    for typeID in typeIDs:
+        print(f'calculating profits for {utils.idName(typeID)}...')
+        manufSize = typeIDs[typeID]
+        productID = utils.productID(typeID)
+        itemSellPrice = market.avgSellPrice(productID) * manufSize
+
+        matsToBuild = manufactureItems(disregardOwnedMats=True,
+                                      report=False,
+                                      typeIDs={typeID: manufSize,})
+
+        totalMatCost = 0
+        for mat in matsToBuild:
+            numMats = matsToBuild[mat]
+            matCost = market.avgSellPrice(mat) * numMats
+            totalMatCost += matCost
+
+        profits[typeID] = itemSellPrice - totalMatCost
+        print(f'expected profits {market.millify(profits[typeID])}!')
+
+    return profits
+
+#----------------------------------------------------------------------
 def chooseItems(mode = 'random', nItems = 10):
     """query db for produceable stuff and applies whatever
     filter, return list of typeIDs"""
@@ -117,7 +144,11 @@ def chooseItems(mode = 'random', nItems = 10):
     if mode == 'random':
         chosen = random.sample(typeIDs.keys(), nItems)
         return {typeID: typeIDs[typeID] for typeID in typeIDs if typeID in chosen}
-
+    elif mode == 'market':
+        profits = marketChooser(typeIDs)
+        sortedProfits = sorted(profits.items(), key=operator.itemgetter(1), reverse= True)
+        print(f"expected total profit: {market.millify(sum(x[1] for x in sortedProfits[1:nItems]))}")
+        return {typeID[0]: typeIDs[typeID[0]] for typeID in sortedProfits[1:nItems]}
 #----------------------------------------------------------------------
 def materialReport(items, components, materials):
     """prints list of items and required components and materials"""
@@ -130,9 +161,11 @@ def materialReport(items, components, materials):
 
 
 #----------------------------------------------------------------------
-def manufactureItems(mode = 'random', nItems = 10, disregardOwnedMats = False):
+def manufactureItems(mode = 'market', nItems = 10, disregardOwnedMats = False,
+                     report = True, typeIDs = None):
     """choses items, calculates materials, presents results"""
-    typeIDs = chooseItems(mode=mode, nItems=nItems)
+    if not typeIDs:
+        typeIDs = chooseItems(mode=mode, nItems=nItems)
 
     #calculate total components and additional raw materials needed for typeID production
     materials = {}
@@ -170,7 +203,11 @@ def manufactureItems(mode = 'random', nItems = 10, disregardOwnedMats = False):
         materials, ownedMats = utils.dictSubtraction(materials, ownedMats)
 
     #final report
-    materialReport(typeIDs, components, materials)
+    if report:
+        materialReport(typeIDs, components, materials)
+    else:
+        return materials
 
-manufactureItems(nItems = 1)
-pls = "efw"
+if __name__ == "__main__":
+
+    manufactureItems()

@@ -214,7 +214,7 @@ def updateMarketOrders():
     remainingItems = marketOrder.volume_remain
     typeID = marketOrder.type_id
     typeName = utils.idName(typeID)
-    sellOrder = 1 if marketOrder.is_buy_order else 0
+    sellOrder = 0 if marketOrder.is_buy_order else 1
     stationName = utils.stationName(stationID)
 
     dbRow = (orderID,
