@@ -42,6 +42,11 @@ logDb = sqlite3.connect(os.path.join(settings.dataFolder, settings.logDB))
 # STATIC DATA AND UTILITY FUNCTIONS
 #----------------------------------------------------------------------
 def dbQuery(database, command, fetchAll = False):
+  #some fuckery is going on here.
+  #is fetchone ever necessary?
+  #if only one tuple is present, fetchall returns list of 1 tuple
+  #fetchone returns just the tuple.
+  #need testing
   response = database.execute(command)
   if fetchAll:
     rows = response.fetchall()
@@ -56,7 +61,8 @@ def dbQuery(database, command, fetchAll = False):
     elif len(row) == 1:
       return row[0]
     else:
-      return unpack(row, flatten = True)
+      #return unpack(row, flatten = True)
+      return row
 
 #----------------------------------------------------------------------
 def unpack(listOfTuples, flatten = False, element = 0):
@@ -139,6 +145,20 @@ def stationName(stationID):
   stationName = dbQuery(staticDb, command)
   if stationName:
     return stationName
+  else:
+    return None
+
+#----------------------------------------------------------------------
+def solarSystemName(solarSystemID):
+  """"""
+  command = (f'SELECT "solarSystemName" '
+             f'FROM "mapSolarSystems" '
+             f'WHERE "solarSystemID" = {solarSystemID}')
+
+  systemName = dbQuery(staticDb, command)
+
+  if systemName:
+    return systemName
   else:
     return None
 
@@ -325,16 +345,43 @@ def _marketGroupPath(marketGroupID, retList = []):
   else:
     return retList
 
+#----------------------------------------------------------------------
+def getMarketGroup(typeID):
+  """get the marketgroup of the typeID"""
+  command = (f'SELECT "marketGroupID" '
+             f'FROM "invTypes" '
+             f'WHERE "TypeID" = {typeID}')
+  marketGroupID = dbQuery(staticDb, command)
+
+  return marketGroupID
+
+#----------------------------------------------------------------------
+def rigBonus(typeID):
+  """return true if the typeID is eligible for the material reduction due to citadel rigs"""
+  componentsMarketGroup = 1035
+  shipsMarketGroup = 4
+  structureMarketGroup = 477
+
+  riggedMarketGroups = [componentsMarketGroup,
+                        shipsMarketGroup,
+                        structureMarketGroup]
+
+  prodID = productID(typeID)
+
+  marketGroupID = getMarketGroup(prodID)
+  parentGroups = _marketGroupPath(marketGroupID, [marketGroupID])
+
+  if any([True for ID in parentGroups if ID in riggedMarketGroups]):
+    return True
+  else:
+    return False
 
 #----------------------------------------------------------------------
 def component(typeID):
   """determine if blueprint is a component blueprint or not"""
   componentBlueprintMarketGroup = 800
 
-  command = (f'SELECT "marketGroupID" '
-             f'FROM "invTypes" '
-             f'WHERE "TypeID" = {typeID}')
-  marketGroupID = dbQuery(staticDb, command)
+  marketGroupID = getMarketGroup(typeID)
 
   if marketGroupID:
     marketGroupList = _marketGroupPath(marketGroupID, [marketGroupID])
@@ -474,6 +521,17 @@ def integrate(dictionary, key, value):
     dictionary[key] += value
 
   return dictionary
+
+#----------------------------------------------------------------------
+def millify(n, sigDigits = 2):
+  millnames = ['',' Thousand',' M',' B',' T']
+  n = float(n)
+  millidx = max(0,min(len(millnames)-1,
+                        int(math.floor(0 if n == 0 else math.log10(abs(n))/3))))
+
+  something = n / 10**(3 * millidx)
+  somethat = millnames[millidx]
+  return f'{something:.{sigDigits}f}{somethat}'
 
 #----------------------------------------------------------------------
 def dictSubtraction(minuhend, subtrahend):

@@ -120,27 +120,29 @@ def getAdjustedPrices():
   return adjustedPrices
 
 #----------------------------------------------------------------------
+def getSystemIndices():
+  """"""
+  industryApi = swagger_client.IndustryApi(_apiConfig)
+  methodName = "get_industry_systems"
+
+  systemIndices = _apiCall(industryApi, methodName)
+
+  return systemIndices
+
+#----------------------------------------------------------------------
 def getRegionOrders(typeID):
   """queries the API to obtain the current list of orders for an item in a region"""
   marketApi = swagger_client.MarketApi(_apiConfig)
   methodName = "get_markets_region_id_orders"
 
   orders = _apiCall(marketApi, methodName,
-                         order_type = 'sell',
-                         region_id = 10000043,  #domain
-                         type_id = typeID,
-                         pages= True)
+                    order_type = 'sell',
+                    region_id = 10000043,  #domain
+                    type_id = typeID,
+                    pages= True)
 
   return orders
-#----------------------------------------------------------------------
-def getSystemIndexes():
-  """"""
-  industryApi = swagger_client.IndustryApi(_apiConfig)
-  methodName = "get_industry_systems"
 
-  adjustedPrices = _apiCall(industryApi, methodName)
-
-  return adjustedPrices
 
 #----------------------------------------------------------------------
 def getJournal():

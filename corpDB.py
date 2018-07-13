@@ -232,6 +232,60 @@ def updateMarketOrders():
                           , valuesList)
 
 #----------------------------------------------------------------------
+def updateAdjustedPrices():
+  """"""
+  adjustedPrices = API.getAdjustedPrices()
+
+  valuesList = []
+  for item in adjustedPrices:
+    typeID = item.type_id
+    typeName = utils.idName(typeID)
+    adjPrice = item.adjusted_price
+    avgPrice = item.average_price
+
+    dbRow = (typeID, typeName, adjPrice, avgPrice)
+
+    valuesList.append(dbRow)
+
+  with utils.currentDb:
+    utils.currentDb.executemany( ('INSERT INTO adjPrices '
+                                  'VALUES (?,?,?,?)')
+                                 , valuesList)
+
+#----------------------------------------------------------------------
+def updateSystemIndices():  #
+  """"""
+  systemIndices = API.getSystemIndices()
+
+  possibleIndices = [('reverse_engineering', 0), ('manufacturing', 0),
+                     ('researching_time_efficienct', 0), ('researching_material_efficiency', 0),
+                     ('copying', 0), ('invention', 0), ('reaction', 0)]
+  valuesList = []
+  for item in systemIndices:
+    solarSystemID = item.solar_system_id
+    solarSystemName = utils.solarSystemName(solarSystemID)
+    indexDict = dict(possibleIndices)
+    for cost_index in item.cost_indices:
+      indexDict[cost_index.activity] = cost_index.cost_index
+
+    dbRow = (solarSystemID,
+             solarSystemName,
+             indexDict['manufacturing'],
+             indexDict['researching_time_efficiency'],
+             indexDict['researching_material_efficiency'],
+             indexDict['copying'],
+             indexDict['invention'],
+             indexDict['reaction'],
+             indexDict['reverse_engineering'])
+
+    valuesList.append(dbRow)
+
+  with utils.currentDb:
+    utils.currentDb.executemany( ('INSERT INTO sysIndices '
+                                  'VALUES (?,?,?,?,?,?,?,?,?)')
+                                 , valuesList)
+
+#----------------------------------------------------------------------
 def updateBlueprintPriority():
   """calculate priority for every t2/3 blueprint and push it to db"""
   allInventables = utils.allInventables()
@@ -321,14 +375,18 @@ def updateBlueprintPriority():
                                 rowList)
 
 
+
+
 #----------------------------------------------------------------------
-def _DBWipe(tableNames = []):
+def _DBWipe(tableNames = [], ignore = ['avgPrices']):
   """wipe the database of all entries"""
   if not tableNames:
-    tableRequest = utils.currentDb.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    tableRequest = utils.currentDb.execute("SELECT name FROM sqlite_master WHERE type='table'")
     tableNames = [x[0] for x in tableRequest]
 
   for table in tableNames:
+    if table in ignore:
+      continue
     utils.currentDb.execute(f'DELETE FROM {table}')
 
   utils.currentDb.commit()
@@ -363,7 +421,7 @@ def updateAll():
 
   #database temporary backup
   dump = tempfile.NamedTemporaryFile(mode = 'w', dir = utils.settings.dataFolder)
-  _DBDump(dump.name)
+  #_DBDump(dump.name)
 
   #attempt update
   try:
@@ -374,6 +432,8 @@ def updateAll():
     updateIndustryJobs()
     updateMarketOrders()
     updateBlueprintPriority()
+    updateAdjustedPrices()
+    updateSystemIndices()
   except Exception:
     _DBRestore(dump.name)
     dump.close()
@@ -381,7 +441,9 @@ def updateAll():
 
 
 
-
+if __name__ == "__main__":
+  updateSystemIndices()
+  print('asd')
 
 
 
