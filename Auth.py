@@ -83,6 +83,7 @@ def _login():
     headers = {'Authorization':'Basic '+ secretEncoded,'User-Agent':settings.userAgent}
     r = requests.post(settings.authUrl,params=query,headers=headers)
     response = r.json()
+    print(response)
     settings.accessToken = response['access_token']
     settings.refreshToken = response['refresh_token']
     _saveRefreshToken()

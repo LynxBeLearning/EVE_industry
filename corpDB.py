@@ -178,7 +178,7 @@ def updateIndustryJobs():
     productTypeID = job.product_type_id
     productTypeName = utils.idName(productTypeID)
     installerID = job.installer_id
-    installerName = API.getName(installerID)[0].character_name
+    installerName = API.getName(installerID).name
     activityID = job.activity_id
     activityName = utils.activityID2Name[activityID]
 

@@ -158,9 +158,9 @@ def getJournal():
 def getName(charID):
   """"""
   characterApi = swagger_client.CharacterApi(_apiConfig)
-  methodName = "get_characters_names"
+  methodName = "get_characters_character_id"
 
-  charName = _apiCall(characterApi, methodName, [charID])
+  charName = _apiCall(characterApi, methodName, charID)
 
   return charName
 

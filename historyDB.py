@@ -29,7 +29,7 @@ def updateIndyJobsLog():
         startDate = job.start_date
         endDate = job.end_date
         installerID = job.installer_id
-        installerName = API.getName(installerID)[0].character_name
+        installerName = API.getName(installerID).name
 
         dbRow = (jobID,
            bpID,
