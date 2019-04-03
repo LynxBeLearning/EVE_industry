@@ -5,3 +5,5 @@
 *.sol
 swagger_client/
 eveHistory.log
+LPClasses.py
+main.py
