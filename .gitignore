@@ -4,3 +4,4 @@
 *.mps
 *.sol
 swagger_client/
+eveHistory.log

@@ -35,7 +35,7 @@ def _getCachedAvgPrice(typeID):
         return [None, None]
 
 #----------------------------------------------------------------------
-def processOrders(orders):
+def avgPriceOrders(orders):
     """filter outliers and unwanted orders"""
     amarrStation = 60008494
     processedPrices = []
@@ -63,10 +63,50 @@ def processOrders(orders):
     return processedPrices
 
 
+#----------------------------------------------------------------------
+def sellOrders(orders):
+    """return [price, quantity] tuples sell orders for a station """
+    amarrStation = 60008494
+    amarrPrices = []
 
-#item + 5%
-#
-#
+    for order in orders:
+        price = order.price
+        location = order.location_id
+        isBuyOrder = order.is_buy_order
+        volume = order.volume_remain
+
+        if location == amarrStation and isBuyOrder == False:
+            amarrPrices.append((price, volume))
+
+    amarrSellOrders = sorted(amarrPrices, key=lambda tup: tup[0])
+
+    return amarrSellOrders
+
+
+#----------------------------------------------------------------------
+def buySell(typeID, quantity):
+    """determines how much money is to be made buying items from a sell order"""
+
+    orders = sellOrders(API.getRegionOrders(typeID))
+
+    if len(orders) == 0:
+        print(f"No orders found for {utils.idName(typeID)}, results might be off..")
+        return(0)
+
+    totalCost = 0
+    for order in orders:
+        price = order[0]
+        remainingQuantity = order[1]
+
+        if quantity - remainingQuantity <= 0:
+            totalCost += quantity * price
+            break
+        else:
+            totalCost += remainingQuantity * price
+            quantity -= remainingQuantity
+
+    return totalCost
+
 
 #----------------------------------------------------------------------
 def avgSellPrice(typeID, avgOrders = 5, maxCacheAge = 3600):
@@ -80,7 +120,7 @@ def avgSellPrice(typeID, avgOrders = 5, maxCacheAge = 3600):
     if avgPrice and cacheAge < maxCacheAge:
         return avgPrice
     else:
-        prices = processOrders(API.getRegionOrders(typeID))
+        prices = avgPriceOrders(API.getRegionOrders(typeID))
 
         if len(prices) == 0:
             print(f"No orders found for {utils.idName(typeID)}, results might be off..")
@@ -95,7 +135,28 @@ def avgSellPrice(typeID, avgOrders = 5, maxCacheAge = 3600):
         return mean
 
 #----------------------------------------------------------------------
-def profits(typeIDs, report = True):  #requires dict with typeID:manufSize
+def totalInstantaneousProfits(totalInput, totalOutput):
+    """determines the cost difference between input and output"""
+    totalInputCost = 0
+    totalOutputCost = 0
+
+    for item in totalInput:
+        quantity = totalInput[item]
+        totalInputCost += buySell(item, quantity)
+
+    for item in totalOutput:
+        quantity = totalOutput[item]
+        totalOutputCost += buySell(item, quantity)
+
+    profit = totalOutputCost - totalInputCost
+    markup = (profit / totalInputCost) * 100
+    print((f'Total input value:\n{utils.millify(totalInputCost)}\n'
+           f'Total output value:\n{utils.millify(totalOutputCost)}\n'
+           f'Total Profit:\n{utils.millify(profit)}\n'
+           f'Total Markup:\n{markup}%'))
+
+#----------------------------------------------------------------------
+def itemProfits(typeIDs, report = True):  #requires dict with typeID:manufSize
     """orders items on the basis of expected profit"""
     profits = {}
     priceCosts = {}

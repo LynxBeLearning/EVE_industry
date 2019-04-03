@@ -116,7 +116,7 @@ def chooseItems(mode = 'random', nItems = 10):
 
         return {typeID: typeIDs[typeID] for typeID in chosen}
     elif mode == 'market':
-        profits = market.profits(typeIDs)
+        profits = market.itemProfits(typeIDs)
         sortedProfits = sorted(profits.items(), key=operator.itemgetter(1), reverse= True)
         totalProjectedProfits = utils.millify(sum(x[1] for x in sortedProfits[0:nItems]))
         print(f"expected total profit: {totalProjectedProfits}")
@@ -132,6 +132,8 @@ def materialReport(items, components, materials):
     utils.printDict(components)
     print("\nRAW MATERIALS REQUIRED:\n")
     utils.printDict(materials)
+
+    market.totalInstantaneousProfits(materials, items)
 
 
 #----------------------------------------------------------------------
@@ -206,14 +208,14 @@ def _baseJobCost(typeID):
     return baseJobCost
 
 #----------------------------------------------------------------------
-def totalJobFees(typeID):
+def totalJobFees(typeID, quantity):
     """"""
     taxRate = 0.075  #temp, need to get this automatically
     engComplexBonus = 0.05  #depends on the type of engineering complex, reduces job fees
     systemIndex = getManufacturingIndex()
     baseJobCost = _baseJobCost(typeID)
 
-    unbonusedJobFee = baseJobCost * systemIndex
+    unbonusedJobFee = baseJobCost * systemIndex * quantity
     jobFee = unbonusedJobFee - (unbonusedJobFee * engComplexBonus)
     facilityTax = jobFee * taxRate
     totalJobCost = jobFee + facilityTax
@@ -247,8 +249,8 @@ if __name__ == "__main__":
 
     #manufactureItems(typeIDs= {11962: 1,}, disregardOwnedMats= True)
     #manufactureItems(typeIDs= {utils.idName("Kronos Blueprint"): 1,}, disregardOwnedMats= True)
-    #manufactureItems(nItems= 10, )  # ignoreTypeID=[28662]
+    manufactureItems(nItems= 3, ignoreTypeID=[28662])  # ignoreTypeID=[28662]
     #utils.millify(market.avgSellPrice(utils.idName("Stork"), avgOrders=5))
-    #market.profits({utils.idName("Kronos Blueprint"): 1,})
-    a = totalJobFees(utils.idName('Megathron Blueprint'))
-    print(utils.millify(a, 8))
+    #market.profits({utils.idName("Rapier Blueprint"): 3,})
+    #a = totalJobFees(utils.idName('Megathron Blueprint'))
+    #print(utils.millify(a, 2))
