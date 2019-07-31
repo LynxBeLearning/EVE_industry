@@ -1,9 +1,11 @@
 *.wpu
-*.wpr
-*.pyc
 *.mps
 *.sol
+*.wpr
+*.pyc
 swagger_client/
 eveHistory.log
 LPClasses.py
 main.py
+data/
+swagger-codegen-cli.jar
